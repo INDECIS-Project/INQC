@@ -7,6 +7,17 @@
 # <http://www.gnu.org/licenses/lgpl.html> or contact the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 
+#Updates December, 2018:
+## 1.- Corrected some labels in for the temperature qc output that were erroneous (e.g., toomany instead of toomanymonth and toomanyyear)
+## 2.- Added consolidator, a functions which creates a second version of the qc'd data. Creates a replica of the original series, with the same name 
+## but with the QC column updated to 0 (OK)
+## 3.- Corrected wrong default element flag in selepe (from TN to )
+## 4.- Made a few corrections regarding the chain of functions txtn()<-closestations()<-listas()<-distHaversine() There were a few errors (hopefully, corrected) and now it is much faster
+## just by limiting the station past as candidates to disthaversine to those in a radius of 1deg lat and 1deg lon from the candidate. For the whole ECA&D, the performance is down from 
+## 14 seconds to less than 2!
+
+
+
 
 if(!require(fitdistrplus)){install.packages('fitdistrplus')}
 if(!require(evd)){install.packages('evd')}
@@ -16,6 +27,9 @@ if(!require(dplyr)){install.packages('dplyr')}
 if(!require(geosphere)){install.packages('geosphere')}
 if(!require(zoo)){install.packages('zoo')}
 if(!require(Hmisc)){install.packages('Hmisc')}
+if(!require(RCurl)){install.packages('RCurl')}
+if(!require(utils)){install.packages('unzip')}
+
 
 require(fitdistrplus)
 require(evd)
@@ -25,12 +39,26 @@ require(dplyr)
 require(geosphere)
 require(zoo)
 require(Hmisc)
+require(RCurl)
+require(utils)
+
+
+
 
 
 inqc<-function(homefolder='../Sweden/'){
+
+# OBJECTIVE: wraper for QC'ing all varibales
+# PARAMETERS: 
+# homefolder: the path to the homefolder, as string
+# RETURNS: the QC results, in both formats (verbose and workable file in exact ECA&D format)  
+  
+if(!dir.exists(paste0(homefolder,'QC'))){dir.create(paste0(homefolder,'QC'))}
+if(!dir.exists(paste0(homefolder,'QCConsolidated'))){dir.create(paste0(homefolder,'QCConsolidated'))}
+  
 temperature(home=homefolder,element='TX')  
 temperature(home=homefolder,element='TN')
-temperature(element='TG')
+temperature(home=homefolder,element='TG')
 precip(home=homefolder)
 relhum(home=homefolder)
 selepe(home=homefolder)
@@ -39,6 +67,100 @@ sundur(home=homefolder)
 windspeed(home=homefolder)
 }
 
+downloadator<-function(homefolder='../ecad_updated',
+                     tx="https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_tx.zip",
+                     tx2="https://www.ecad.eu//download/ECA_blend_source_tx.txt",
+                     tn="https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_tn.zip",
+                     tn2="https://www.ecad.eu//download/ECA_blend_source_tn.txt",
+                     tg="https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_tg.zip",
+                     tg2="https://www.ecad.eu//download/ECA_blend_source_tg.txt",
+                     sd="https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_sd.zip",
+                     sd2="https://www.ecad.eu//download/ECA_blend_source_sd.txt",
+                     ss="https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_ss.zip",
+                     ss2="https://www.ecad.eu//download/ECA_blend_source_ss.txt",
+                     rr="https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_rr.zip",
+                     rr2="https://www.ecad.eu//download/ECA_blend_source_rr.txt",
+                     pp="https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_pp.zip",
+                     pp2="https://www.ecad.eu//download/ECA_blend_source_pp.txt",
+                     cc="https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_cc.zip",
+                     cc2="https://www.ecad.eu//download/ECA_blend_source_cc.txt",
+                     hu="https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_hu.zip",
+                     hu2="https://www.ecad.eu//download/ECA_blend_source_hu.txt",
+                     fg="https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_fg.zip",
+                     fg2="https://www.ecad.eu//download/ECA_blend_source_fg.txt"
+                     ){
+
+## OBJECTIVE: downloads latest blended data from ECA&D and saves into "./homefolder/raw (being homefolder configurable)
+## PARAMETERS 
+
+## homefolder: in the form "./homefolder" : the function will store there the station files and create ./homefolder/raw and will store there the data  
+  
+## 1) a set of variables (tx,tn,tg,sd,ss,rr,cc,hu,fg) which represent the variables analyzed at the INDECIS project.They can be either NULL or a working url, expressed
+## as string. Example: tx=NULL (no download attempt) or tx = "https://www.ecad.eu//utils/downloadfile.php?file=download/ECA_nonblend_tx.zip" . 
+##  Defaults are set to the current URLs to download ECA&D files.   
+  
+## 2) a second set of variables (tx2,tn2,tg2,sd2,ss2,rr2,cc2,hu2,fg2) to download the respective station files. Again, options are a working ECA&D URL as string or NULL
+## examples: tx2 = NULL or tx2 =  "https://www.ecad.eu//download/ECA_nonblend_info_tx.txt" 
+##  Defaults are set to the current URLs to download ECA&D files.  
+  
+  
+    
+if(!dir.exists(homefolder)){dir.create(homefolder)}
+rawfolder=paste0(homefolder,'/raw')  
+if(!dir.exists(rawfolder)){dir.create(rawfolder)}
+print(paste(Sys.time(),"Created folders to host downloads"),quote=FALSE)
+
+variables<-c("tx","tn","tg","sd","ss","rr","pp","cc","hu","fg")
+variables2<-c("tx2","tn2","tg2","sd2","ss2","rr2","pp2","cc2","hu2","fg2")
+
+n<-length(variables)
+for(i in 1:n){
+  target<-eval(parse(text=variables[i]))
+
+  if(!is.null(eval(parse(text=variables[i])))){
+    print(paste(Sys.time(),'Downloading & uncompressing', toupper(variables[i]),'Series'),quote=FALSE)
+    download.file(target,destfile = paste0(rawfolder,"/",variables[i],".zip"),quiet=TRUE)
+    unzip(paste0(rawfolder,"/",variables[i],".zip"),exdir=rawfolder)
+    }    
+    target<-eval(parse(text=variables2[i]))
+  if(!is.null(eval(parse(text=variables2[i])))){
+    print(paste(Sys.time(),'Downloading', toupper(variables[i]),'Stations File'),quote=FALSE)
+    download.file(target,destfile = paste0(homefolder,"/ECA_blend_source_",variables[i],".txt"),quiet=TRUE)
+    }    
+  }
+}
+
+consolidator<-function(home='../Sweden/',filename,x){
+
+header<-readheader(paste0(home,'raw/',filename))
+element<-substring(filename,1,2)
+x$consolidated = 0
+
+x$consolidated[which(x$repeatedvalue==1)]<-2
+x$consolidated[which(x$drywetlong==1)]<-2
+x$consolidated[which(x$suspectacumprec==1)]<-2
+x$consolidated[which(x$paretogadget==1)]<-2
+x$consolidated[which(x$jumps==1)]<-2
+x$consolidated[which(x$flat==1)]<-2
+x$consolidated[which(x$roundmax==1)]<-2
+x$consolidated[which(x$IQRoutliers==1)]<-2
+x$consolidated[which(x$toomanymonth==1)]<-2
+x$consolidated[which(x$toomanyyear==1)]<-2
+x$consolidated[which(x$rounding==1)]<-2
+x$consolidated[which(x$large==1)]<-1
+x$consolidated[which(x$small==1)]<-1
+x$consolidated[which(x$weirddate==1)]<-1
+x$consolidated[which(x$dupli==1)]<-1
+x$consolidated[which(x$friki==1)]<-1
+x$consolidated[which(x$txtn==1)]<-1
+grannyu<-ncol(x)
+x<-x[,c(1:4,grannyu)]
+
+write.table(header,paste0(home,'QCConsolidated/',filename),quote=FALSE,col.names=FALSE,row.names=FALSE,sep=',',na='')
+write.table(x,paste0(home,'QCConsolidated/',filename),col.names=FALSE,row.names=FALSE,sep='\t',quote=FALSE,append=TRUE)
+print(paste(Sys.time(),'Wrote QCd file'),quote=FALSE)
+  
+}
 
 
 
