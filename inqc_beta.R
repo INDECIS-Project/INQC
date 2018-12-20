@@ -13,10 +13,14 @@
 ## but with the QC column updated to 0 (OK)
 ## 3.- Corrected wrong default element flag in selepe (from TN to )
 ## 4.- Made a few corrections regarding the chain of functions txtn()<-closestations()<-listas()<-distHaversine() There were a few errors (hopefully, corrected) and now it is much faster
-## just by limiting the station past as candidates to disthaversine to those in a radius of 1deg lat and 1deg lon from the candidate. For the whole ECA&D, the performance is down from 
-## 14 seconds to less than 2!
+##     just by limiting the station past as candidates to disthaversine to those in a radius of 1deg lat and 1deg lon from the candidate. For the whole ECA&D, 
+##     the performance is down from 14 seconds to less than 2!
+## 5.- Further improvements to the txtn() function: does not give an error if the tries to open a file listed but non-existing
 
-
+# NOTE: TX_SOUID101148.txt
+# When you open this file, the header reads: "this is the non-blended series (SOUID: 101148) of station Fokstua, NORWAY (STAID:    330)"
+# meanwhile in the text file, reads: 330,109445,FOKSTUA,NO,+62:07:00,+009:16:59, 952, TX2,19570101,19680531,   22,Hans Olav Hygen    
+# so, a different ID. The id 101148 was unexisting and this produced an error in txtn file. Now is ressistant to this.
 
 
 if(!require(fitdistrplus)){install.packages('fitdistrplus')}
@@ -65,6 +69,7 @@ selepe(home=homefolder)
 snowdepth(home=homefolder)
 sundur(home=homefolder)  
 windspeed(home=homefolder)
+rm(liston)
 }
 
 downloadator<-function(homefolder='../ecad_updated',
@@ -198,15 +203,17 @@ temperature<-function(home='../Sweden/',large=500,small=-500,maxjump=150,maxseq=
     bad<-jumps(x$value,maxjump);x$jump<-0;if(length(bad)!=0){x$jump[bad]<-1}; print(paste(Sys.time(),'Ended jumps'),quote=FALSE)
     bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values'),quote=FALSE)
     bad<-flat(x$value%%10,roundmax);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(paste(Sys.time(),'Ended flat for decimal part'),quote=FALSE)
-    bad<-badfriki(x$date,x$value,margina);x$friki<-0;if(length(bad)!=0){x$flat[bad]<-1} ; print(paste(Sys.time(),'Ended badfriki'),quote=FALSE)
+    bad<-badfriki(x$date,x$value,margina);x$friki<-0;if(length(bad)!=0){x$friki[bad]<-1} ; print(paste(Sys.time(),'Ended badfriki'),quote=FALSE)
     bad<-IQRoutliers(x$date,x$value,level,window);x$IQRoutliers<-0;if(length(bad)!=0){x$IQRoutliers[bad]<-1}; print(paste(Sys.time(),'Ended IQR outliers'),quote=FALSE)
-    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomanymonth<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(paste(Sys.time(),'Ended toomany, monthly'),quote=FALSE)
-    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomanyyear<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(paste(Sys.time(),'Ended toomany, annual'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomanymonth<-0;if(length(bad)!=0){x$toomanymonth[bad]<-1}; print(paste(Sys.time(),'Ended toomany, monthly'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomanyyear<-0;if(length(bad)!=0){x$toomanyyear[bad]<-1}; print(paste(Sys.time(),'Ended toomany, annual'),quote=FALSE)
     bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(paste(Sys.time(),'Ended rounding'),quote=FALSE)
     if(element != 'TG'){bad<-txtn(x[,3:4],tx[i],home);x$txtn<-0;if(length(bad)!=0){x$txtn[bad]<-1}; print(paste(Sys.time(),'Ended txtn'),quote=FALSE)}
     
-    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(Sys.time())
-  }
+    consolidator(home,tx[i],x)
+    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
+    
+      }
   
 }
 
@@ -216,7 +223,7 @@ temperature<-function(home='../Sweden/',large=500,small=-500,maxjump=150,maxseq=
 selepe<-function(home='../Sweden/',large=15000,small=-8000,maxjump=2000,maxseq=3,margina=100,
                level=3,window=11,roundmax=10,blocksize=10,step=30,blockmanymonth=15,blockmanyyear=180,
                blocksizeround=20,
-               element='TN'){
+               element='PP'){
   # OBJECTIVE: this function will centralize temperature-like qc routines. Will create a file in the folder QC
   # with an additional 0/1 column, where "1" means test failed. 
   # home: path to the home directory
@@ -241,19 +248,19 @@ selepe<-function(home='../Sweden/',large=15000,small=-8000,maxjump=2000,maxseq=3
     x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value')
     #pattern(x[,4])
     
-    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(Sys.time())
-    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,small,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(Sys.time())
-    bad<-jumps(x$value,maxjump);x$jump<-0;if(length(bad)!=0){x$jump[bad]<-1}; print(Sys.time())
-    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(Sys.time()) ## this looks at consecutive equal values
-    bad<-flat(x$value%%10,roundmax);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(Sys.time()) #this looks at consecutive decimal parts
-    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-badfriki(x$date,x$value,margina);x$friki<-0;if(length(bad)!=0){x$flat[bad]<-1} ; print(Sys.time())
-    bad<-IQRoutliers(x$date,x$value,level,window);x$IQRoutliers<-0;if(length(bad)!=0){x$IQRoutliers[bad]<-1}; print(Sys.time()) # check
-    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(Sys.time())
-    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(Sys.time())
+    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
+    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1}; print(paste(Sys.time(),'Ended duplas'),quote=FALSE)
+    bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
+    bad<-physics(x$value,small,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
+    bad<-jumps(x$value,maxjump);x$jump<-0;if(length(bad)!=0){x$jump[bad]<-1}; print(paste(Sys.time(),'Ended jumps'),quote=FALSE)
+    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values'),quote=FALSE) ## this looks at consecutive equal values
+    bad<-flat(x$value%%10,roundmax);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(paste(Sys.time(),'Ended flat for decimal part'),quote=FALSE) #this looks at consecutive decimal parts
+    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomanymonth<-0;if(length(bad)!=0){x$toomanymonth[bad]<-1}; print(paste(Sys.time(),'Ended toomany, month'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomanyyear<-0;if(length(bad)!=0){x$toomanyyear[bad]<-1}; print(paste(Sys.time(),'Ended toomany, year'),quote=FALSE)
+    bad<-badfriki(x$date,x$value,margina);x$friki<-0;if(length(bad)!=0){x$flat[bad]<-1} ; print(paste(Sys.time(),'Ended badfriki'),quote=FALSE)
+    bad<-IQRoutliers(x$date,x$value,level,window);x$IQRoutliers<-0;if(length(bad)!=0){x$IQRoutliers[bad]<-1}; print(paste(Sys.time(),'Ended IQRoutliers'),quote=FALSE) # check
+    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(paste(Sys.time(),'Ended rounding'),quote=FALSE)
+    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
   }
   
 }
@@ -279,16 +286,16 @@ relhum<-function(home='../Sweden/', element='HU',maxseq=3,blocksizeround=20,bloc
     print(paste(name,i,'of',ene),quote=FALSE)
     x<-readecad(input=name) ; print(Sys.time())
     x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value')
-    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(Sys.time())
-    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(Sys.time())## this looks at consecutive equal values
-    bad<-flat(x$value%%10,roundmax);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(Sys.time()) #this looks at consecutive decimal parts
-    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,100,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(Sys.time())
-    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(Sys.time())
+    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(paste(Sys.time(),'Ended duplas'),quote=FALSE)
+    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomanymonth<-0;if(length(bad)!=0){x$toomanymonth[bad]<-1}; print(paste(Sys.time(),'Ended toomany, month'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomanyyear<-0;if(length(bad)!=0){x$toomanyyear[bad]<-1}; print(paste(Sys.time(),'Ended toomany, year'),quote=FALSE)
+    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values'),quote=FALSE)## this looks at consecutive equal values
+    bad<-flat(x$value%%10,roundmax);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(paste(Sys.time(),'Ended flat for decimal part'),quote=FALSE) #this looks at consecutive decimal parts
+    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(paste(Sys.time(),'Ended rounding'),quote=FALSE)
+    bad<-physics(x$value,100,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
+    bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
+    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
   }
   
 }
@@ -313,16 +320,16 @@ sundur<-function(home='../Sweden/', element='SS',maxseq=3,blocksizeround=20,bloc
     print(paste(name,i,'of',ene),quote=FALSE)
     x<-readecad(input=name) ; print(Sys.time())
     x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value')
-    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(Sys.time())
-    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(Sys.time())
-    bad<-flat(x$value%%10,roundmax);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(Sys.time()) #this looks at consecutive decimal parts
-    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,240,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(Sys.time())
-    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(Sys.time())
+    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(paste(Sys.time(),'Ended duplas'),quote=FALSE)
+    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomanymonth<-0;if(length(bad)!=0){x$toomanymonth[bad]<-1}; print(paste(Sys.time(),'Ended toomany, month'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomanyyear<-0;if(length(bad)!=0){x$toomanyyear[bad]<-1}; print(paste(Sys.time(),'Ended toomany, year'),quote=FALSE)
+    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values'),quote=FALSE)
+    bad<-flat(x$value%%10,roundmax);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(paste(Sys.time(),'Ended flat for decimal part'),quote=FALSE) #this looks at consecutive decimal parts
+    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(paste(Sys.time(),'Ended rounding'),quote=FALSE)
+    bad<-physics(x$value,240,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
+    bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
+    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
   }
 }
 
@@ -345,15 +352,15 @@ clocov<-function(home='../Sweden/', element='CC',maxseq=3,blocksizeround=20,bloc
     print(paste(name,i,'of',ene),quote=FALSE)
     x<-readecad(input=name) ; print(Sys.time())
     x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value')
-    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(Sys.time())
-    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(Sys.time())
-    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,8,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(Sys.time())
-    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(Sys.time())
+    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(paste(Sys.time(),'Ended duplas'),quote=FALSE)
+    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomanymonth<-0;if(length(bad)!=0){x$toomanymonth[bad]<-1}; print(paste(Sys.time(),'Ended toomany, month'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomanyyear<-0;if(length(bad)!=0){x$toomanyyear[bad]<-1}; print(paste(Sys.time(),'Ended toomany, year'),quote=FALSE)
+    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values'),quote=FALSE)
+    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(paste(Sys.time(),'Ended rounding'),quote=FALSE)
+    bad<-physics(x$value,8,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
+    bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
+    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
   }
 }
 
@@ -369,7 +376,7 @@ windspeed<-function(home='../Sweden/', element='FG',maxseq=3,blocksizeround=20,b
   # maxseq: maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives).  
   # blocksizeround: maximum number of values in a month with the same decimal, FUNCTION:  rounding 
   # blockmanymonth: maximum number of equal values in a month, FUNCTION: toomany
-  # blockmanyyear: maximum number of equal values in a yaer, FUCNTION: toomany
+  # blockmanyyear: maximum number of equal values in a year, FUCNTION: toomany
   
   lista<-list.files(path=paste(home,'raw',sep=''),pattern='SOUID')
   tx<-lista[which(substring(lista,1,2)==element)];ene<-length(tx)
@@ -378,15 +385,15 @@ windspeed<-function(home='../Sweden/', element='FG',maxseq=3,blocksizeround=20,b
     print(paste(name,i,'of',ene),quote=FALSE)
     x<-readecad(input=name) ; print(Sys.time())
     x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value')
-    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(Sys.time())
-    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(Sys.time())
-    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(Sys.time())
-    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(Sys.time())
+    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(paste(Sys.time(),'Ended duplas'),quote=FALSE)
+    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomanymonth<-0;if(length(bad)!=0){x$toomanymonth[bad]<-1}; print(paste(Sys.time(),'Ended toomany, month'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomanyyear<-0;if(length(bad)!=0){x$toomanyyear[bad]<-1}; print(paste(Sys.time(),'Ended toomany, year'),quote=FALSE)
+    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values'),quote=FALSE)
+    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(paste(Sys.time(),'Ended rounding'),quote=FALSE)
+    bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
+    bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
+    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
   }
 }
 
@@ -411,15 +418,15 @@ snowdepth<-function(home='../Sweden/', element='SD',maxseq=3,blocksizeround=20,b
     print(paste(name,i,'of',ene),quote=FALSE)
     x<-readecad(input=name) ; print(Sys.time())
     x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value')
-    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(Sys.time())
-    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(Sys.time())
+    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(paste(Sys.time(),'Ended duplas'),quote=FALSE)
+    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
 #    bad<-toomany(x[,3:4],blockmanymonth,1);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
 #    bad<-toomany(x[,3:4],blockmanyyear,2);x$toomany<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(Sys.time())
-    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(Sys.time())
-    bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(Sys.time())
-    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(Sys.time())
+    bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values'),quote=FALSE)
+    bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(paste(Sys.time(),'Ended rounding'),quote=FALSE)
+    bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
+    bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
+    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
   }
 }
 
@@ -456,19 +463,19 @@ precip<-function(home='../Sweden/',large=5000,small=0,element='RR',ret=500,retor
     x<-readecad(input=name) ; print(Sys.time())
     
     x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value') ; print(Sys.time())
-    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(Sys.time())
+    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(paste(Sys.time(),'Ended duplas '),quote=FALSE)
+    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
     bad<-roundprecip(x[,3:4],blocksizeround,excluido=0);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(Sys.time())
     bad<-repeatedvalue(x[,4],margin,friki);x$repeatedvalue<-0;if(length(bad)!=0){x$repeatedvalue[bad]<-1} ; print(Sys.time())
     bad<-drywetlong(x[,4],retornoracha);x$drywetlong<-0;if(length(bad)!=0){x$drywetlong[bad]<-1} ; print(Sys.time())
-    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(Sys.time())
-    bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1} ; print(Sys.time())
-    bad<-physics(x$value,small,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1} ; print(Sys.time())
-    bad<-suspectacumprec(x[,3:4],limit,tolerance);x$suspectacumprec<-0;if(length(bad)!=0){x$suspectacumprec[bad]<-1} ; print(Sys.time())
-    bad<-paretogadget(x[,4],ret);x$paretogadget<-0;if(length(bad)!=0){x$paretogadget[bad]<-1} ; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanymonth,1,exclude);x$toomanymonth<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
-    bad<-toomany(x[,3:4],blockmanyyear,2,exclude);x$toomanyyear<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(Sys.time())
+    bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1} ; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
+    bad<-physics(x$value,small,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1} ; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
+    bad<-suspectacumprec(x[,3:4],limit,tolerance);x$suspectacumprec<-0;if(length(bad)!=0){x$suspectacumprec[bad]<-1} ; print(paste(Sys.time(),'Ended suspectacumprec'),quote=FALSE)
+    bad<-paretogadget(x[,4],ret);x$paretogadget<-0;if(length(bad)!=0){x$paretogadget[bad]<-1} ; print(paste(Sys.time(),'Ended paretogadget'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanymonth,1,exclude);x$toomanymonth<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(paste(Sys.time(),'Ended toomany, month'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanyyear,2,exclude);x$toomanyyear<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(paste(Sys.time(),'Ended toomany, year'),quote=FALSE)
     
-        write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE)
+    write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
   }
   
   
@@ -708,15 +715,19 @@ txtn<-function(y,id,home){
   # bad: list of positions which do not pass qc
   
   
-  
+
   whoami<-substring(id,1,2);if(whoami=='TX'){targetvariable='TN'}else{targetvariable='TX'}
-  cerca<-closestation(id,targetvar = targetvariable)
+  cerca<-closestation(id,targetvar = targetvariable, home)
+  if(!is.null(cerca)){
   name<-paste(home,'raw/',cerca$closest,sep='')
   x<-readecad(name);x<-x[,3:4]
   if(whoami == 'TX'){names(x)<-c('date','tn');names(y)<-c('date','tx')}
   if(whoami == 'TN'){names(y)<-c('date','tn');names(x)<-c('date','tx')}
   z<-merge(x,y,all.y=TRUE,all.x=FALSE)
   bad<-which(z$tx <= z$tn)
+  } else{
+    bad<-NULL #### this section ensure that the could will not break if there is no suitable station
+  }
 }
 
 
@@ -995,11 +1006,14 @@ IQRoutliers<-function(date,value,level=3,window=11){
 ########### UTILS ###
 
 
-closestation<-function(station='TX_SOUID136678.txt',targetvar='TN'){
+closestation<-function(station='TX_SOUID136678.txt',targetvar='TN',home){
   
   ## OBJECTIVE: looks the closest station for a given variable
   ## $station: a SOUID station, as the default
   ## $targetvar: the target var for which we want the closest neighbor.
+  ## $home, to pass it on to listas()
+  ## $filtertxtn: if set to TRUE, liston will be cut to tx and tn 
+  
   ## OUTPUT
   ## $closest: the name of the closest station and the associated distance
   ## WARNING: depends on listas() to work with the default options  
@@ -1007,39 +1021,61 @@ closestation<-function(station='TX_SOUID136678.txt',targetvar='TN'){
   
   
   if(!exists("liston")){#### this takes quite a lot of time, and better if ran only once. Then, the list is declared as a global variable
-    liston<-listas()
+    liston<-listas(rooty=home)
     lat<-apply(as.data.frame(liston$LAT),1,FUN=decimaldegrees)  
     lon<-apply(as.data.frame(liston$LON),1,FUN=decimaldegrees) 
     coordinates<-data.frame(lat,lon) 
     liston$LAT<-lat
     liston$LON<-lon
+
     assign("liston",liston,envir = .GlobalEnv)
+    
   }
+  
+  
   mylist<-unique(liston[,2:ncol(liston)]) #### getting rid of duplicates
   souid<-substring(station,9,14);target<-which(mylist$SOUID==souid)
   reference<-mylist[target,] ### this is the station we're working with
+  
+ 
+  if(nrow(reference)==0){return(NULL)} 
+  if(nrow(reference) !=0){
   mylist<-mylist[which(substring(mylist$ELEI,1,2) == targetvar),] ## subseting the list to have only the stations of the target variable
-  mylist$dist<-apply(mylist,1,function(x) distHaversine(p2=cbind(mylist$LAT,mylist$LON),p1=cbind(reference$LAT,reference$LON)))[,1] ## computing distances
+  ### lets put an additional filter: only stations in a radius of 1 degrees 
+  mylist$diflat<-abs(reference$LAT-mylist$LAT)
+  mylist$diflon<-abs(reference$LON-mylist$LON)
+  mylist<-mylist[which(mylist$diflat < 1 & mylist$diflon < 1),] ### this limits the data search to a radius of one degree lat and one degree lon
+  mylist$dist<-apply(mylist,1,function(x) distHaversine(p2=cbind(mylist$LON,mylist$LAT),p1=cbind(reference$LON,reference$LAT)))[,1] ## computing distances
   mylist$overlap<-(mylist$START-reference$START)**2 + (mylist$STOP-reference$STOP)**2
   mylist$difid<-abs(mylist$SOUID-reference$SOUID)
- 
-  pegadas<-mylist[which(mylist$dist==min(mylist$dist)),] ## getting the closest one by distance
+  pegadas<-mylist[which(mylist$dist==min(mylist$dist)),]
+    nyu<-0
+  while(nyu==0){
+   ## getting the closest one by distance
+  if(nrow(pegadas)==0){return(NULL)}
   if(nrow(pegadas > 1)){pegadas<-pegadas[which(pegadas$overlap == min(pegadas$overlap)),]} ## if there is a tie, overlap rules
   if(nrow(pegadas > 1)){pegadas<-pegadas[which(pegadas$difid == min(pegadas$difid)),]} ## if there is stull a tie, dif in ids rules
   closest<-sprintf('%s_SOUID%06d.txt', targetvar, as.integer(pegadas$SOUID)) # composes the name Thanks Jose Guijarro for the format tip!
-  
-  
-    return(list(closest=closest,distance=pegadas$dist,overlap=pegadas$overlap,difid=pegadas$difid)) # returns the name and the distance
-}
+  candinumber<-which(mylist$SOUID == pegadas$SOUID)
+  if(file.exists(filclose<-paste0(home,'raw/',closest))){nyu=1}else{mylist<-mylist[-candinumber,]}
+  }}
+       # if there is no suitable station, NULL is returned. This needs to be contra-coded at the  I think it is not necessary, but check
+ 
+     
+   return(list(closest=closest,distance=pegadas$dist,overlap=pegadas$overlap,difid=pegadas$difid)) # returns the name and the distance
+      
+  }
 
-listas<-function(rooty='../Sweden/',country='SE',name='allstations.txt'){
+listas<-function(rooty='../Sweden/',country='all',name='allstations.txt'){ #### NECESITO parametrizar listas. Usar esa parametrizacion par subset de downloads too. 
   # OBJECTIVE:  create listings for stations linking STAID and SOUID
   # it takes all the elements and rbinds them. 
   # INPUT: 
   # $rooty: home directory where the "ECA_blend_source*" files are located
+  # $name: output name, do not touch, default is always good
+  # $country: country for which the list is created. If all, no country filter. 
   # OUTPUT: a data.frame containing all the stations for all elements, linking STAID and SOUID and metadata
-  # DATE: 24/11/2017
-  
+  # 
+  # a file named as specified by name
   
   variables<- c('TX','TN','TG','RR','HU','PP','SS','FG', 'FX', 'DD','SD', 'CC') 
   ene<-length(variables)
@@ -1047,6 +1083,7 @@ listas<-function(rooty='../Sweden/',country='SE',name='allstations.txt'){
   
   for(i in 1:ene){
     list<-paste(rooty,'ECA_blend_source_',tolower(variables[i]),'.txt',sep='')
+    if(file.exists(list)){
     x<-read.fwf(list,widths=15)
     nyu<-grep('STAID,',x[,1])
     nkono=c(5,1,6,1,40,1,2,1,9,1,10,1,4,1,4,1,8,1,8,1,5,1,51)
@@ -1055,13 +1092,15 @@ listas<-function(rooty='../Sweden/',country='SE',name='allstations.txt'){
     x<-x[,c(1,3,5,7,9,11,13,15,17,19,21,23)]
     names(x)<-c('STAID','SOUID','SOUNAME','CN','LAT','LON','HGTH','ELEI','START','STOP','PARID','PARNAME')
     if(i==1){todas<-x}else{todas<-rbind(todas,x)}
+   
+    }
   }
-  
-  todas<-todas[order(todas[,c(1,2)]),]
+  #todas<-todas[order(todas[,c(1,2)]),]
   if(country!='all'){target<-which(todas$CN == country);todas<-todas[target,]}
-  tidos<-rbind(names(x),todas)
-  write.fwf(tidos,paste(rooty,name,sep=''),sep=' ',colnames=FALSE,rownames=FALSE,quote=FALSE,width=theocusters)
-  return(todas)
+  #tidos<-rbind(names(x),todas) ### this seems to be inncessary, as duplicates the header. Commented
+  #write.fwf(tidos,paste(rooty,name,sep=''),sep=' ',colnames=FALSE,rownames=FALSE,quote=FALSE,width=theocusters) ## as a consecuence of the previous comment
+  write.fwf(todas,paste(rooty,name,sep=''),sep=' ',colnames=FALSE,rownames=FALSE,quote=FALSE,width=theocusters) ## as consecuence of the previous action
+    return(todas)
 }
 
 
@@ -1071,7 +1110,6 @@ decimaldegrees <- function(dms,sep = ":") {
   # Initial idea taken from :https://modtools.wordpress.com/2013/09/25/dms2dec/
   # dms: ONE ELEMENT from the LAT or LON field in ECA&D listings
   # sep: the separator between elements, in ECA&D ":"
-  
   deg <- as.numeric(unlist(strsplit(dms, split = sep))[1])
   min <- as.numeric(unlist(strsplit(dms, split = sep))[2])
   sec <- as.numeric(unlist(strsplit(dms, split = sep))[3])
@@ -1172,6 +1210,27 @@ blocks<-function(y,blocksize=10,step=30){####
   bad<-unique(bad)
   return(bad)
 }
+
+
+### new in beta_v2.0
+
+
+readheader<-function(input="SS_STAID000143.txt"){
+  # OBJECTIVE:  reads one eca&d file and returns the header so it can be written in the same way
+  # INPUT: 
+  # input: the filename
+  # missing: missing value code, set to the default eca&d mvc
+  # OUTPUT: 
+  # x: a series with yyyy/mm/dd/value format: n rows; 4 columns
+  x<-read.fwf(input,widths=300,stringsAsFactors=FALSE)
+  nyu<-grep('STAID,',x[,1])
+  return(x[1:nyu,1])
+}
+
+
+
+
+
 
 ###### NOT USED,but retained for future implementation
 
