@@ -74,9 +74,9 @@ inqc<-function(homefolder='../Sweden/'){
 if(!dir.exists(paste0(homefolder,'QC'))){dir.create(paste0(homefolder,'QC'))}
 if(!dir.exists(paste0(homefolder,'QCConsolidated'))){dir.create(paste0(homefolder,'QCConsolidated'))}
   
-#temperature(home=homefolder,element='TX')  
-#temperature(home=homefolder,element='TN')
-#temperature(home=homefolder,element='TG')
+temperature(home=homefolder,element='TX')  
+temperature(home=homefolder,element='TN')
+temperature(home=homefolder,element='TG')
 precip(home=homefolder)
 relhum(home=homefolder)
 selepe(home=homefolder)
@@ -539,7 +539,6 @@ roundprecip<-function(y,blocksize=20,exclude=0){
   
   target<-which(nyu[,3] >= blocksize)
   ene<-length(target)
-  browser()
   if(ene > 0){
     for(i in 1:ene){
       tirget<-nyu[target[i],]   
@@ -550,7 +549,6 @@ roundprecip<-function(y,blocksize=20,exclude=0){
     }  
   }
   bad<-unique(bad)
-  browser()
   return(bad)
 }
 
