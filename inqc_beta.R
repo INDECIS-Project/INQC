@@ -12,15 +12,29 @@
 ## 2.- Added consolidator, a functions which creates a second version of the qc'd data. Creates a replica of the original series, with the same name 
 ## but with the QC column updated to 0 (OK)
 ## 3.- Corrected wrong default element flag in selepe (from TN to )
-## 4.- Made a few corrections regarding the chain of functions txtn()<-closestations()<-listas()<-distHaversine() There were a few errors (hopefully, corrected) and now it is much faster
+## 4.- Made a few corrections regarding the chain of functions txtn()<-closetxtn()<-listas()<-distHaversine() There were a few errors (hopefully, corrected) and now it is much faster
 ##     just by limiting the station past as candidates to disthaversine to those in a radius of 1deg lat and 1deg lon from the candidate. For the whole ECA&D, 
 ##     the performance is down from 14 seconds to less than 2!
-## 5.- Further improvements to the txtn() function: does not give an error if the tries to open a file listed but non-existing
+## 5.- Further improvements to the closesetation() function: does not give an error if the tries to open a file listed but non-existing
+## 6.- Corrected problems in roundprecip and a bad parametrizion in precipip()
+## 7.- Modified potpareto() function to avoid problems with some matrices encountered in drywetlong: myfit<-fpot(xx,threshold,std.err=FALSE)	
+## 8.- Modified drywetlong to avoid problems with desertic locations with almost no rain events
+
+##Updates January, 2019: 
+## 1.- Corrected many problems encountered at roundprecip(). It used to flag most of the values due to an error. This also made the code really slow. Solved. 
+
+## WARNINGS:
+# None at this point
+
+
+
 
 # NOTE: TX_SOUID101148.txt
 # When you open this file, the header reads: "this is the non-blended series (SOUID: 101148) of station Fokstua, NORWAY (STAID:    330)"
 # meanwhile in the text file, reads: 330,109445,FOKSTUA,NO,+62:07:00,+009:16:59, 952, TX2,19570101,19680531,   22,Hans Olav Hygen    
 # so, a different ID. The id 101148 was unexisting and this produced an error in txtn file. Now is ressistant to this.
+
+## NOTE: some series (e.g. TEL AVIV) have wrong start and end dates in the station files
 
 
 if(!require(fitdistrplus)){install.packages('fitdistrplus')}
@@ -60,9 +74,9 @@ inqc<-function(homefolder='../Sweden/'){
 if(!dir.exists(paste0(homefolder,'QC'))){dir.create(paste0(homefolder,'QC'))}
 if(!dir.exists(paste0(homefolder,'QCConsolidated'))){dir.create(paste0(homefolder,'QCConsolidated'))}
   
-temperature(home=homefolder,element='TX')  
-temperature(home=homefolder,element='TN')
-temperature(home=homefolder,element='TG')
+#temperature(home=homefolder,element='TX')  
+#temperature(home=homefolder,element='TN')
+#temperature(home=homefolder,element='TG')
 precip(home=homefolder)
 relhum(home=homefolder)
 selepe(home=homefolder)
@@ -460,14 +474,14 @@ precip<-function(home='../Sweden/',large=5000,small=0,element='RR',ret=500,retor
   
     name<-paste(home,'raw/',tx[i],sep='')
     print(paste(name,i,'of',ene),quote=FALSE)
-    x<-readecad(input=name) ; print(Sys.time())
+    x<-readecad(input=name) ; print(paste(Sys.time(),'Ended readecad'),quote=FALSE)
     
-    x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value') ; print(Sys.time())
+    x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value') 
     bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(paste(Sys.time(),'Ended duplas '),quote=FALSE)
     bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
-    bad<-roundprecip(x[,3:4],blocksizeround,excluido=0);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(Sys.time())
-    bad<-repeatedvalue(x[,4],margin,friki);x$repeatedvalue<-0;if(length(bad)!=0){x$repeatedvalue[bad]<-1} ; print(Sys.time())
-    bad<-drywetlong(x[,4],retornoracha);x$drywetlong<-0;if(length(bad)!=0){x$drywetlong[bad]<-1} ; print(Sys.time())
+    bad<-roundprecip(x[,3:4],blocksizeround,exclude =0);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1};  print(paste(Sys.time(),'Ended roundprecip'),quote=FALSE)
+    bad<-repeatedvalue(x[,4],margin,friki);x$repeatedvalue<-0;if(length(bad)!=0){x$repeatedvalue[bad]<-1} ; print(paste(Sys.time(),'Ended repeatedvalue'),quote=FALSE)
+    bad<-drywetlong(x[,4],retornoracha);x$drywetlong<-0;if(length(bad)!=0){x$drywetlong[bad]<-1} ; print(paste(Sys.time(),'Ended drywetlong'),quote=FALSE)
     bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1} ; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
     bad<-physics(x$value,small,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1} ; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
     bad<-suspectacumprec(x[,3:4],limit,tolerance);x$suspectacumprec<-0;if(length(bad)!=0){x$suspectacumprec[bad]<-1} ; print(paste(Sys.time(),'Ended suspectacumprec'),quote=FALSE)
@@ -507,23 +521,36 @@ roundprecip<-function(y,blocksize=20,exclude=0){
   # bad: list of positions which do not pass qc
   bad<-NULL 
   y[,1]<-as.numeric(substring(y[,1],1,6))
-  zerapio<-which(y[,2] %in% exclude)
+  ### Achtuuung!!!
+  y[,3]<-as.integer(substring(y[,2],nchar(y[,2]),nchar(y[,2]))) ### This is a better way to find the decimal part in ECA&D: it is always the last character. 
+  
+  zerapio<-which(y[,2] %in% exclude | is.na(y[,2]))
+  
+  
   z<-y[-zerapio,]
-  z[,2]<-z[,2]/10;z[,2]<-z[,2]-floor(z[,2])
+  
+  
 
-  nyu<-as.data.frame(table(y[,1],y[,2])) ### this is good, it can identify those which are over the blocksize, but need to now how to extract/label the values
+  #### Warning! This line was erroneous and was: 
+  #nyu<-as.data.frame(table(y[,1],y[,2])) ### this is good, it can identify those which are over the blocksize, but need to now how to extract/label the values
+  # This was causing the code to be really slow, as it was looking at "y" instead of "z". This was labeling most of the values as erroneous and the next loop was taking
+  # forever. 
+  nyu<-as.data.frame(table(z[,1],z[,3])) ### this is good, it can identify those which are over the blocksize, but need to now how to extract/label the values
+  
   target<-which(nyu[,3] >= blocksize)
   ene<-length(target)
+  browser()
   if(ene > 0){
     for(i in 1:ene){
       tirget<-nyu[target[i],]   
       fecha<-tirget[,1]
       valor<-tirget[,2]
-      wanted<-which(y[,1] == fecha & y[,2] == valor)
+      wanted<-which(y[,1] == fecha & y[,3] == valor) ## Modified: y[,3] now contains the "decimal" part. 
       if(i == 1){bad<-wanted}else{bad<-c(bad,wanted)}
     }  
   }
   bad<-unique(bad)
+  browser()
   return(bad)
 }
 
@@ -549,6 +576,7 @@ repeatedvalue<-function(x,margin=20,friki=150){
    #### Achtung! Acomodar para length 0 de ene
    cutposition<-first(which(valores > friki))
    #cutposition<-first(which(diff(valores) > friki))+1
+   if(length(cutposition)==0){return(NULL)} ### if there are no values longer than cutposition, returns NULL. Revisit
    if(!is.na(cutposition)){
    ojete<-valores[cutposition:ene]
    target<-which(x %in% ojete)
@@ -566,7 +594,8 @@ paretogadget<-function(x,ret){
   # x is the series you are going to use (will take precip)
   # ret is the pseudo return period (remember is pareto and I destroyed the years)  
   # Auxiliated by potpareto, returnpotpareto, computecal  
-  nyu<-potpareto(x)
+
+  nyu<-potpareto(x);if(is.null(nyu)){return(NULL)}
   mus<-returnpotpareto(nyu,ret)
   target<-which(x > mus)
   return(target)
@@ -575,8 +604,20 @@ paretogadget<-function(x,ret){
 potpareto<-function(y,thres=0.99){
   target<-which(!is.na(y) & y!=0)
   xx<-y[target]          
-  threshold<-quantile(xx,thres,na.rm=TRUE)
-  myfit<-fpot(xx,threshold)	
+ 
+   threshold<-quantile(xx,thres,na.rm=TRUE)
+  if( threshold >= max(xx)){return(NULL)}
+  
+  #### Now, it is necessary to make this ressistant to desertic places with small number of rainy days
+  
+ 
+  ## myfit<-fpot(xx,threshold). Changed to the line below, as with some matrices the std.err=TRUE gives problems
+  myfit<-fpot(xx,threshold,std.err=FALSE)	
+  
+  
+  
+  
+  
   #  name<-'mypareto.jpg'
   #  name<-paste('potpareto',substring(id,1,10),'%03d.jpg',sep='')
   #  jpeg(name)
@@ -667,15 +708,13 @@ y[seco]<-0  ### dry values set to 0
 y[nohay]<-9 ### NAs set to 9
 y[mojao]<-1 ### wet days set to 1
 nyu<-rle(y)
-
 wetspell<-nyu$lengths[which(nyu$values==1)]
 nyi<-potpareto(wetspell)
-wetlim<-returnpotpareto(nyi,ret)
 
+if(!is.null(nyi)){wetlim<-returnpotpareto(nyi,ret)}else{wetlim<-999999999999999}
 dryspell<-nyu$lengths[which(nyu$values==0)]
 nyi<-potpareto(dryspell)
-drylim<-returnpotpareto(nyi,ret)
-
+if(!is.null(nyi)){drylim<-returnpotpareto(nyi,ret)}else{drylim<-999999999999999}
 
 wetchungo<-which(nyu$lengths > wetlim & nyu$values == 1)
 drychungo<-which(nyu$lengths > drylim & nyu$values == 0)
@@ -717,9 +756,9 @@ txtn<-function(y,id,home){
   
 
   whoami<-substring(id,1,2);if(whoami=='TX'){targetvariable='TN'}else{targetvariable='TX'}
-  cerca<-closestation(id,targetvar = targetvariable, home)
+  cerca<-closetxtn(id,targetvar = targetvariable, home)
   if(!is.null(cerca)){
-  name<-paste(home,'raw/',cerca$closest,sep='')
+  name<-paste(home,'raw/',cerca,sep='')
   x<-readecad(name);x<-x[,3:4]
   if(whoami == 'TX'){names(x)<-c('date','tn');names(y)<-c('date','tx')}
   if(whoami == 'TN'){names(y)<-c('date','tn');names(x)<-c('date','tx')}
@@ -1006,9 +1045,9 @@ IQRoutliers<-function(date,value,level=3,window=11){
 ########### UTILS ###
 
 
-closestation<-function(station='TX_SOUID136678.txt',targetvar='TN',home){
+closetxtn<-function(station='TX_SOUID136678.txt',targetvar='TN',home){
   
-  ## OBJECTIVE: looks the closest station for a given variable
+  ## OBJECTIVE: looks the closest tx station for a tn station and vice versa 
   ## $station: a SOUID station, as the default
   ## $targetvar: the target var for which we want the closest neighbor.
   ## $home, to pass it on to listas()
@@ -1037,34 +1076,62 @@ closestation<-function(station='TX_SOUID136678.txt',targetvar='TN',home){
   souid<-substring(station,9,14);target<-which(mylist$SOUID==souid)
   reference<-mylist[target,] ### this is the station we're working with
   
- 
+  
   if(nrow(reference)==0){return(NULL)} 
   if(nrow(reference) !=0){
   mylist<-mylist[which(substring(mylist$ELEI,1,2) == targetvar),] ## subseting the list to have only the stations of the target variable
   ### lets put an additional filter: only stations in a radius of 1 degrees 
-  mylist$diflat<-abs(reference$LAT-mylist$LAT)
-  mylist$diflon<-abs(reference$LON-mylist$LON)
-  mylist<-mylist[which(mylist$diflat < 1 & mylist$diflon < 1),] ### this limits the data search to a radius of one degree lat and one degree lon
-  mylist$dist<-apply(mylist,1,function(x) distHaversine(p2=cbind(mylist$LON,mylist$LAT),p1=cbind(reference$LON,reference$LAT)))[,1] ## computing distances
-  mylist$overlap<-(mylist$START-reference$START)**2 + (mylist$STOP-reference$STOP)**2
-  mylist$difid<-abs(mylist$SOUID-reference$SOUID)
-  pegadas<-mylist[which(mylist$dist==min(mylist$dist)),]
-    nyu<-0
-  while(nyu==0){
-   ## getting the closest one by distance
-  if(nrow(pegadas)==0){return(NULL)}
-  if(nrow(pegadas > 1)){pegadas<-pegadas[which(pegadas$overlap == min(pegadas$overlap)),]} ## if there is a tie, overlap rules
-  if(nrow(pegadas > 1)){pegadas<-pegadas[which(pegadas$difid == min(pegadas$difid)),]} ## if there is stull a tie, dif in ids rules
-  closest<-sprintf('%s_SOUID%06d.txt', targetvar, as.integer(pegadas$SOUID)) # composes the name Thanks Jose Guijarro for the format tip!
-  candinumber<-which(mylist$SOUID == pegadas$SOUID)
-  if(file.exists(filclose<-paste0(home,'raw/',closest))){nyu=1}else{mylist<-mylist[-candinumber,]}
-  }}
-       # if there is no suitable station, NULL is returned. This needs to be contra-coded at the  I think it is not necessary, but check
- 
-     
-   return(list(closest=closest,distance=pegadas$dist,overlap=pegadas$overlap,difid=pegadas$difid)) # returns the name and the distance
-      
+  mylist$diflat<-(reference$LON-mylist$LON)**2
+  mylist$diflon<-(reference$LON-mylist$LON)**2
+  mylist$EUCLIDIAN<-sqrt((reference$LAT-mylist$LAT)**2+(reference$LON-mylist$LON)**2)
+  mylist<-mylist[which(mylist$EUCLIDIAN < 0.5),] ### first limit
+  if(nrow(mylist) == 0 ){return(NULL)}
+  mylist$DISTHAVER<-distHaversine(p2=cbind(mylist$LON,mylist$LAT),p1=cbind(reference$LON,reference$LAT))
+  # Apparently, no need to use apply. Apply was collapsing when only one station was prefiltered. 
+  #mylist$DISTHAVER<-apply(mylist,1,function(x) distHaversine(p2=cbind(mylist$LON,mylist$LAT),p1=cbind(reference$LON,reference$LAT)))[,1] ## computing distances
+  mylist<-mylist[which(mylist$DISTHAVER < 10000),] ### this limits the data search to a radius 10K
+   # theoretical overlap preparation [this is good if lists are updated, which is not the case]; the larger, the better
+ # computed but not used.   
+  if(nrow(mylist) == 0 ){return(NULL)}
+  mylist$DATE1<-as.Date(as.character(mylist$START),format="%Y%m%d") 
+  mylist$REFDATE1<-as.Date(as.character(reference$START),format="%Y%m%d")
+  mylist$DATE2<-as.Date(as.character(mylist$STOP),format="%Y%m%d") 
+  mylist$REFDATE2<-as.Date(as.character(reference$STOP),format="%Y%m%d")
+  mylist$MAXSTART<-as.Date(apply(cbind(mylist$DATE1,mylist$REFDATE1),1,max))
+  mylist$MINEND<-as.Date(apply(cbind(mylist$DATE2,mylist$REFDATE2),1,min))
+  mylist$OVERLAP<-as.numeric(mylist$MINEND-mylist$MAXSTART)
+  
+  ### check it is the corresponding variable variable 
+  varcode<-as.numeric(substring(reference$ELEI,3,3))
+  mylist$ISELEMENT<-as.numeric(substring(reference$ELEI,3,3))-as.numeric(substring(mylist$ELEI,3,3))
+  
+  ## height (value to compute 3D euclidian)
+  mylist$DROP<-mylist$HGTH-reference$HGTH
+  
+  
+  
+  #### id matching implementation; the smaller, the better
+  mylist$IDDIST<-as.numeric(adist(reference$SOUNAME,mylist$SOUNAME))
+  mylist$DIFID<-abs(mylist$SOUID-reference$SOUID)
+
+  
+  
+  
+  perfect<-mylist[mylist$DISTHAVER == min(mylist$DISTHAVER),] ## FIRST,choosing the closest 
+  # NOTE: removed element check; need to value if this is a requirement, e.g., if are different computations 
+  
+  if(length(perfect)==0){return(NULL)} ### this means that there is no good station
+  if(length(perfect)> 1){perfect<-perfect[which(perfect$DROP == min(perfect$DROP)),]} # TIE BREAKER 1: the ID should be close (removes GTS stations)
+  if(length(perfect)> 1){perfect<-perfect[which(perfect$DIFID == min(perfect$DIFID)),]} # TIE BREAKER 1: the ID should be close (removes GTS stations)
+  if(length(perfect)> 1){perfect<-perfect[which(perfect$OVERLAP == max(perfect$OVERLAP)),]} # TIE BREAKER 2: overlap, good for stations made of segments. 
+  if(length(perfect)> 1){perfect<-perfect[which(perfect$IDDIST == min(perfect$IDDIST)),]}
+  perfect<-perfect$SOUID
+  closest<-sprintf('%s_SOUID%06d.txt', targetvar, as.integer(perfect)) # composes the name Thanks Jose Guijarro for the format tip!
+  filclose<-paste0(home,'raw/',closest)
+  if(file.exists(filclose)){return(closest)}else{return(NULL)}
   }
+  }
+  
 
 listas<-function(rooty='../Sweden/',country='all',name='allstations.txt'){ #### NECESITO parametrizar listas. Usar esa parametrizacion par subset de downloads too. 
   # OBJECTIVE:  create listings for stations linking STAID and SOUID
