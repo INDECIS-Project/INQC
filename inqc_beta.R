@@ -22,6 +22,11 @@
 
 ##Updates January, 2019: 
 ## 1.- Corrected many problems encountered at roundprecip(). It used to flag most of the values due to an error. This also made the code really slow. Solved. 
+## 2.- Made drywetlong() resistant to precip series with almost no data (RR_SOUID102169.txt has only ONE valid value, the rest is NA!!!)
+## 3.- roundprecip() made ressistant to series with no data different than 0. Returns NULL 
+## 4.- potpareto() made ressistant to cases were all values = 0 (e.g, RR_SOUID107781.txt, with < 800 values, and all them 0)
+## 5.- drywetlong(): there was a mistake in rle() usage. Example: rle$values 1 2 2 5, it was interpreted as if the srike labelled with "5" was starting in position 10, when actually
+##     runs from 6 to 10!!!. 
 
 ## WARNINGS:
 # None at this point
@@ -470,6 +475,8 @@ precip<-function(home='../Sweden/',large=5000,small=0,element='RR',ret=500,retor
   
   lista<-list.files(path=paste(home,'raw',sep=''),pattern='SOUID')
   tx<-lista[which(substring(lista,1,2)==element)];ene<-length(tx)
+  
+  ### provisional
   for(i in 1:ene){
   
     name<-paste(home,'raw/',tx[i],sep='')
@@ -523,13 +530,12 @@ roundprecip<-function(y,blocksize=20,exclude=0){
   y[,1]<-as.numeric(substring(y[,1],1,6))
   ### Achtuuung!!!
   y[,3]<-as.integer(substring(y[,2],nchar(y[,2]),nchar(y[,2]))) ### This is a better way to find the decimal part in ECA&D: it is always the last character. 
-  
   zerapio<-which(y[,2] %in% exclude | is.na(y[,2]))
   
   
   z<-y[-zerapio,]
   
-  
+  if(nrow(z) == 0){return(NULL)} ### This is to make it ressistant to series with no values different than zero!
 
   #### Warning! This line was erroneous and was: 
   #nyu<-as.data.frame(table(y[,1],y[,2])) ### this is good, it can identify those which are over the blocksize, but need to now how to extract/label the values
@@ -600,9 +606,10 @@ paretogadget<-function(x,ret){
   }
 
 potpareto<-function(y,thres=0.99){
+
   target<-which(!is.na(y) & y!=0)
   xx<-y[target]          
- 
+  if(length(target) == 0){return(NULL)} #### this is activated if all the values are 0!!!
    threshold<-quantile(xx,thres,na.rm=TRUE)
   if( threshold >= max(xx)){return(NULL)}
   
@@ -706,27 +713,32 @@ y[seco]<-0  ### dry values set to 0
 y[nohay]<-9 ### NAs set to 9
 y[mojao]<-1 ### wet days set to 1
 nyu<-rle(y)
+
+
 wetspell<-nyu$lengths[which(nyu$values==1)]
+if(length(wetspell) > 0){ ### some VERY short series do not have even a wetspell
 nyi<-potpareto(wetspell)
-
-if(!is.null(nyi)){wetlim<-returnpotpareto(nyi,ret)}else{wetlim<-999999999999999}
-dryspell<-nyu$lengths[which(nyu$values==0)]
-nyi<-potpareto(dryspell)
-if(!is.null(nyi)){drylim<-returnpotpareto(nyi,ret)}else{drylim<-999999999999999}
-
+if(!is.null(nyi)){wetlim<-returnpotpareto(nyi,ret)}else{wetlim<-999999999999999} ### when the paretp apparel does not find a value higher than the quantile, fails. Solved (needs to be improved)
 wetchungo<-which(nyu$lengths > wetlim & nyu$values == 1)
+}else{wetchungo=NULL}
+
+dryspell<-nyu$lengths[which(nyu$values==0)]
+if(length(dryspell) > 0){ ### some VERY short series do not have even a dryspell
+nyi<-potpareto(dryspell)
+if(!is.null(nyi)){drylim<-returnpotpareto(nyi,ret)}else{drylim<-999999999999999}### when the paretp apparel does not find a value higher than the quantile, fails. Solved (needs to be improved)
 drychungo<-which(nyu$lengths > drylim & nyu$values == 0)
-
-
+}else{drychungo=NULL}
 chungos<-c(wetchungo,drychungo)
 if(length(chungos) !=0 ){
 ene<-length(chungos)
+
+#### ACHTUUUNG!!! Corrected in January 2019: it was erroneously considered that rle "values" were signaling begining of strike and they are END OF STRIKE. 
 for(i in 1:ene){
-  start<-sum(nyu$lengths[1:chungos[i]]) 
-  end<-start+nyu$lengths[chungos[i]]-1
+  rocha<-nyu$lengths[chungos[i]] ### the value exceeding the tolerated strike
+  end<-sum(nyu$lengths[1:chungos[i]]) 
+  start<-end-rocha+1
   if(i==1){todo<-c(start:end)}else{todo<-c(todo,start:end)}
 }
-
 return(todo)
 }
 
