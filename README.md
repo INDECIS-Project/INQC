@@ -1,5 +1,8 @@
 # INQC
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/OlegSkrynyk/INQC/workflows/R-CMD-check/badge.svg)](https://github.com/OlegSkrynyk/INQC/actions)
+<!-- badges: end -->
 
 ### THIS CODE IS MADE by ENRIC AGUILAR, Centre for Climate Change, C3, URV, Tarragona, Spain  
 ### It is provided free under the terms of the GNU Lesser General Public License as published by the Free Software Foundation,
