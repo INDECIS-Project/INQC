@@ -1,0 +1,25 @@
+Package: INQC
+Title: Quality Control of Climetological Daily Time Series
+Version: 2.0.0
+Authors@R: c(
+    person(given = "Enric", family = "Aguilar", role = c("aut", "cre"), email = "enric.aguilar@urv.cat", comment = c(ORCID = "0000-0002-8384-377X")),
+    person(given = "Oleg", family = "Skrynyk", role = "aut", email = "oleg.y.skrynyk@gmail.com", comment = c(ORCID = "0000-0001-8827-0280")))
+Description: The package performs quality control (QC) of climetological daily time series (e.g. the ECA&D station data).
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    evd,
+    fitdistrplus,
+    gdata,
+    geosphere,
+    Hmisc,
+    RCurl,
+    spatial,
+    suncalc,
+    stats,
+    utils,
+    zoo
