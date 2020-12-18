@@ -1,2 +1,4 @@
 ^readme\.pdf$
 ^LICENSE\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
