@@ -1,0 +1,96 @@
+precip<-function(large=5000,small=0,element='RR',ret=500,retornoracha=500,margin=20,friki=150,blocksizeround=20,
+                 blockmanymonth=15,blockmanyyear=180,limit=1500,tolerance=8,maxseq=3,roundmax=10,level=15,window=30,
+                 margina=0.999,inisia=FALSE){
+
+  #' QC for Atmospheric Precipitation (RR)
+  #' @description This function will centralize precipitation-like qc routines. Will create a file in the folder QC
+  #' with an additional 0/1 column, where "1" means test failed. 
+  # @param home path to the home directory
+  #' @param large value above which the observation is considered physically impossible for the region
+  #' @param small value below which the observation is considered physically impossible for the region
+  #' @param element two-letters ECA&D code for the element (RR for precipitation)
+  #' @param ret pseudo-return period for the pareto outliers
+  #' @param retornoracha return period for the calculation of the maximum dry and wet spell
+  #' @param margin frequency difference between consecutive values for repeatedvalue()
+  #' @param friki minimum value to be considered by repeatedvalue()
+  #' @param blocksizeround the maximum number of repeated values, FUNCTION roundprecip
+  #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany
+  #' @param blockmanyyear maximum number of equal values in a yaer, FUCNTION: toomany
+  #' @param limit cut threshold for FUNCTION suspectacumprec
+  #' @param tolerance number of NA or 0s before allowed before the limit, FUNCTION suspectacumprec
+  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives)
+  #' @param roundmax maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)
+  #' @param level level for IQRoutliers
+  #' @param window window for IQRoutliers
+  #' @param margina should be described later
+  #' @param inisia a logical flag
+  # NOTE: parameters exclude, excluido and alike are not included anymore. No need to paramatrize the obvious and unchanging: always
+  # need to exclude 0 for precipitation
+  #' @return results of QC for RR
+  #' @export
+
+  ##This is old version (v1.0)
+  ##**************************
+  #lista<-list.files(path=paste(home,'raw',sep=''),pattern='SOUID')
+  #tx<-lista[which(substring(lista,1,2)==element)];ene<-length(tx)
+  #if(length(tx)==0){return()}
+  ### provisional
+  #for(i in 3000:ene){
+  #  name<-paste(home,'raw/',tx[i],sep='')
+  #  print(paste(name,i,'of',ene),quote=FALSE)
+  #  x<-readecad(input=name) ; print(paste(Sys.time(),'Ended readecad'),quote=FALSE)
+  #  x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value') 
+  #  bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(paste(Sys.time(),'Ended duplas '),quote=FALSE)
+  #  bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
+  #  bad<-roundprecip(x[,3:4],blocksizeround,exclude =0);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1};  print(paste(Sys.time(),'Ended roundprecip'),quote=FALSE)
+  #  bad<-repeatedvalue(x[,4],margin,friki);x$repeatedvalue<-0;if(length(bad)!=0){x$repeatedvalue[bad]<-1} ; print(paste(Sys.time(),'Ended repeatedvalue'),quote=FALSE)
+  #  bad<-drywetlong(x[,4],retornoracha);x$drywetlong<-0;if(length(bad)!=0){x$drywetlong[bad]<-1} ; print(paste(Sys.time(),'Ended drywetlong'),quote=FALSE)
+  #  bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1} ; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
+  #  bad<-physics(x$value,small,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1} ; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
+  #  bad<-suspectacumprec(x[,3:4],limit,tolerance);x$suspectacumprec<-0;if(length(bad)!=0){x$suspectacumprec[bad]<-1} ; print(paste(Sys.time(),'Ended suspectacumprec'),quote=FALSE)
+  #  bad<-paretogadget(x[,4],ret);x$paretogadget<-0;if(length(bad)!=0){x$paretogadget[bad]<-1} ; print(paste(Sys.time(),'Ended paretogadget'),quote=FALSE)
+  #  bad<-toomany(x[,3:4],blockmanymonth,1,0);x$toomanymonth<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(paste(Sys.time(),'Ended toomany, month'),quote=FALSE)
+  #  bad<-toomany(x[,3:4],blockmanyyear,2,0);x$toomanyyear<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(paste(Sys.time(),'Ended toomany, year'),quote=FALSE)
+  #  bad<-newfriki(x$date,x$value,margina,times=3);x$friki<-0;if(length(bad)!=0){x$friki[bad]<-1} ; print(paste(Sys.time(),'Ended newfriki for errors'),quote=FALSE)
+  #  bad<-newfriki(x$date,x$value,margina,times=1.5);x$frikilight<-0;if(length(bad)!=0){x$frikilight[bad]<-1} ; print(paste(Sys.time(),'Ended newfriki for suspect'),quote=FALSE)
+  #  bad<-flat(x$value,maxseq,exclude=0);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values. Sequences with 0 are excluded'),quote=FALSE)
+  #  bad<-flat(x$value%%10,roundmax,exclude=0);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(paste(Sys.time(),'Ended flat for decimal part'),quote=FALSE) #this looks at consecutive decimal parts
+  #  bad<-IQRoutliers(x[,3],x[,4],exclude=0,window=window,level = level);x$IQRoutliers<-0;if(length(bad)!=0){x$IQRoutliers[bad]<-1}; print(paste(Sys.time(),'Ended IQROutliers'),quote=FALSE)
+  #  consolidator(home,tx[i],x)
+  #  utils::write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
+  #}
+  ##*************************
+
+  #Get values of 'Global variables' 'blend' and 'homefolder'
+  blend <- getOption("blend")
+  homefolder <- getOption("homefolder")
+  if(inisia){inithome()}
+  tx<-lister(element)
+  ene<-length(tx)
+  if(ene==0){return()}
+  ### provisional
+  for(i in 1:ene){
+    name<-paste(homefolder,'raw/',tx[i],sep='')
+    print(paste(name,i,'of',ene),quote=FALSE)
+    x<-readecad(input=name) ; print(paste(Sys.time(),'Ended readecad'),quote=FALSE)
+    if(!'STAID' %in% colnames(x) & ncol(x)==4){x<-cbind(STAID=as.numeric(substring(tx[i],9,14)),x)}
+    x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value') 
+    bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(paste(Sys.time(),'Ended duplas '),quote=FALSE)
+    bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
+    bad<-roundprecip(x[,3:4],blocksizeround,exclude =0);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1};  print(paste(Sys.time(),'Ended roundprecip'),quote=FALSE)
+    bad<-repeatedvalue(x[,4],margin,friki);x$repeatedvalue<-0;if(length(bad)!=0){x$repeatedvalue[bad]<-1} ; print(paste(Sys.time(),'Ended repeatedvalue'),quote=FALSE)
+    bad<-drywetlong(x[,4],retornoracha);x$drywetlong<-0;if(length(bad)!=0){x$drywetlong[bad]<-1} ; print(paste(Sys.time(),'Ended drywetlong'),quote=FALSE)
+    bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1} ; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
+    bad<-physics(x$value,small,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1} ; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
+    bad<-suspectacumprec(x[,3:4],limit,tolerance);x$suspectacumprec<-0;if(length(bad)!=0){x$suspectacumprec[bad]<-1} ; print(paste(Sys.time(),'Ended suspectacumprec'),quote=FALSE)
+    bad<-paretogadget(x[,4],ret);x$paretogadget<-0;if(length(bad)!=0){x$paretogadget[bad]<-1} ; print(paste(Sys.time(),'Ended paretogadget'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanymonth,1,0);x$toomanymonth<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(paste(Sys.time(),'Ended toomany, month'),quote=FALSE)
+    bad<-toomany(x[,3:4],blockmanyyear,2,0);x$toomanyyear<-0;if(length(bad)!=0){x$toomany[bad]<-1}; print(paste(Sys.time(),'Ended toomany, year'),quote=FALSE)
+    bad<-newfriki(x$date,x$value,margina,times=3);x$friki<-0;if(length(bad)!=0){x$friki[bad]<-1} ; print(paste(Sys.time(),'Ended newfriki for errors'),quote=FALSE)
+    bad<-newfriki(x$date,x$value,margina,times=1.5);x$frikilight<-0;if(length(bad)!=0){x$frikilight[bad]<-1} ; print(paste(Sys.time(),'Ended newfriki for suspect'),quote=FALSE)
+    bad<-flat(x$value,maxseq,exclude=0);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values. Sequences with 0 are excluded'),quote=FALSE)
+    bad<-flat(x$value%%10,roundmax,exclude=0);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(paste(Sys.time(),'Ended flat for decimal part'),quote=FALSE) #this looks at consecutive decimal parts
+    bad<-IQRoutliers(x[,3],x[,4],exclude=0,window=window,level = level);x$IQRoutliers<-0;if(length(bad)!=0){x$IQRoutliers[bad]<-1}; print(paste(Sys.time(),'Ended IQROutliers'),quote=FALSE)
+    consolidator(tx[i],x)
+  }
+}
