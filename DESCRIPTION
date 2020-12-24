@@ -1,11 +1,14 @@
 Package: INQC
-Title: Quality Control of Climetological Daily Time Series
+Title: Quality Control of Climatological Daily Time Series
 Version: 2.0.0
+Date: 2020-12-24
 Authors@R: c(
     person(given = "Enric", family = "Aguilar", role = c("aut", "cre"), email = "enric.aguilar@urv.cat", comment = c(ORCID = "0000-0002-8384-377X")),
     person(given = "Oleg", family = "Skrynyk", role = "aut", email = "oleg.y.skrynyk@gmail.com", comment = c(ORCID = "0000-0001-8827-0280")))
 Description: The package performs quality control (QC) of climetological daily time series (e.g. the ECA&D station data).
 License: GPL (>= 3)
+URL: https://github.com/INDECIS-Project/INQC
+BugReports: https://github.com/INDECIS-Project/INQC/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

@@ -24,13 +24,13 @@ windspeed(
 
 \item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives)}
 
-\item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION:  rounding}
+\item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding()}
 
-\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
+\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a year, FUCNTION: toomany}
+\item{blockmanyyear}{maximum number of equal values in a year, FUCNTION: toomany()}
 
-\item{large}{value above which the observation is considered physically impossible for the region, FUNCTION: physics}
+\item{large}{value above which the observation is considered physically impossible for the region, FUNCTION: physics()}
 
 \item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)}
 
@@ -38,7 +38,7 @@ windspeed(
 
 \item{window}{window, in days, for IQR outliers}
 
-\item{ret}{pseudo-return period for the pareto outliers}
+\item{ret}{pseudo-return period for the Pareto outliers}
 
 \item{margina}{quantile for newfriki function}
 
@@ -48,6 +48,6 @@ windspeed(
 results of QC for FG
 }
 \description{
-This function will centralize temperature-like qc routines. Will create a file in the folder QC
+This function will centralize temperature-like qc routines. It will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
 }

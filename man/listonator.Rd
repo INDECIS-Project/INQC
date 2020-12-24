@@ -2,7 +2,7 @@
 % Please edit documentation in R/listonator.R
 \name{listonator}
 \alias{listonator}
-\title{Create a list (as 'Global/package' variable) of stations to be QCed.}
+\title{Creates a list (as 'Global' variable) of stations to be QCed.}
 \usage{
 listonator(check = TRUE)
 }
@@ -13,6 +13,6 @@ listonator(check = TRUE)
 a list of stations to be QCed (liston)
 }
 \description{
-This function creates a list (and makes it as 'Global/package' variable) of stations to be QCed.
-It can be 'blended' or 'non-blanded' stations. Geographical cordinates are transphormed into decimal degrees.
+This function creates a list (and makes it 'Global' variable) of stations to be QCed.
+It can be 'blended' or 'non-blanded' stations. Geographical cordinates are transphormed into decimal degrees
 }

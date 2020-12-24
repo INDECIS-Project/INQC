@@ -1,13 +1,13 @@
 jumps2<-function(date,value,quanty=0.999,times=1,force=NULL){
 
-  #' Labels interdiurnal differences considered too large
-  #' @description The function labels interdiurnal differences considered too large
-  #' @param date it should be described later
-  #' @param value vector of values
-  #' @param quanty it should be described later
-  #' @param times it should be described later
-  #' @param force it should be described later
-  #' @return chungo both values involved in the jump are returned. Need an additional function to decide which is the culprit
+  #' Labels interdiurnal large differences
+  #' @description This function labels interdiurnal differences considered too large
+  #' @param date a vector of dates
+  #' @param value a vector of values
+  #' @param quanty a numeric value (quantile of the differences) used to aggregate daily diferences
+  #' @param times a multiplicator for daily values diferences threshold
+  #' @param force a value of threshold for daily values diferences to be forced
+  #' @return both values involved in the jump are returned. Need an additional function to decide which is the culprit
   #' @export
 
   chungo<-NULL
@@ -19,7 +19,7 @@ jumps2<-function(date,value,quanty=0.999,times=1,force=NULL){
   x<-x[order(x$date),]
   x$threshold=x$threshold*times
   if(!is.null(force)){x$threshold=force}
-  ## this isolates  differences over the threshold
+  ## this isolates differences over the threshold
   chungo<-which(abs(x$difs)>x$threshold)
   ene<-length(chungo)
   if(ene==0){return(NULL)}

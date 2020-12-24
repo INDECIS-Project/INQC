@@ -11,12 +11,12 @@ newfriki(date, value, margina = 0.999, times = 2)
 
 \item{value}{a vector of data values}
 
-\item{margina}{the tolerence margin, expressed as quantile of the differences}
+\item{margina}{a tolerence margin, expressed as quantile of the differences}
 
-\item{times}{multiplicator to the tolerance margin. Intended usage is to run this twice. Once with times = 1 and flag values as suspect; once with times = 2 and flag as error}
+\item{times}{a multiplicator to the tolerance margin. Intended usage is to run this twice. Once with times = 1 and flag values as suspect; once with times = 2 and flag as error}
 }
 \value{
-description should be completed
+positions which do not pass this QC test
 }
 \description{
 The function isolates values which are not continuous in the distribution. If the gap is larger than a preset big margin,

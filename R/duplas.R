@@ -1,9 +1,9 @@
 duplas<-function(x){
 
-  #' Detect duplicated dates
-  #' @description This function detects duplicated dates
-  #' @param x a vector of dates in ECA&D format (YYYYMMDD)
-  #' @return a vector with the list of positions which do not pass this test. If all positions pass the test, returns NULL
+  #' Detects duplicated dates
+  #' @description This function detects duplicated dates in the input time series
+  #' @param x a vector of dates in the ECA&D format (YYYYMMDD)
+  #' @return a vector with the list of positions which do not pass this QC test. If all positions pass the test, returns NULL
   #' @export
 
   total<-NULL

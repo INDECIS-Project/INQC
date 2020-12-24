@@ -2,11 +2,10 @@ suspectacumprec<-function(datos,limit=2000,tolerance=10){
 
   #' Detect precipitation values above limit
   #' @description This function detects values above limit preceded by a number of "non precip days", given by tolerance
-  #' pretende la detección de precipitación acumulada
-  #' @param datos a two columns vector, date and data, in the ECA&D format
-  #' @param limit el valor de corte para estudiar la precipitacion
-  #' @param tolerance cuantos días consecutivos con 0 o NA necesita para saltar
-  #' @return el indice de los días que no pasan el qc($chungos) and la serie rellenada con computecal (es decir, sin huecos) ($px)
+  #' @param datos two columns vector, date and data, in the ECA&D format
+  #' @param limit threshold/limit value for atmospheric precipitation
+  #' @param tolerance how many consecutive days with 0 or NA you need to jump
+  #' @return list of positions which do not pass this QC test
   #' @export
 
   bisco<-NULL
@@ -43,7 +42,7 @@ suspectacumprec<-function(datos,limit=2000,tolerance=10){
   for(jj in 1:length(chungo)){
     busco<-which(y[,1] == px[chungo[jj],1] & y[,2] == px[chungo[jj],2] & y[,3] == px[chungo[jj],3])
     if(jj==1){bisco<-busco}else{bisco<-c(bisco,busco)}
-  } # there must be a more elegant way to da this than with a loop ... but works
+  } # there must be a more elegant way to do this than with a loop, but works
   #Qachtung
   return(bisco) ### need to revert this to real indices, it seems that they're altered by computecal! [CHECK!!!!!!!!! ACHTUUUUNGGGGG!!!!!]
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/drywetlong.R
 \name{drywetlong}
 \alias{drywetlong}
-\title{Detect wet and dry days}
+\title{Detects wet/dry long periods}
 \usage{
 drywetlong(x, ret = 300, sueco = 9.9, dry = TRUE, wet = TRUE)
 }
@@ -18,7 +18,7 @@ drywetlong(x, ret = 300, sueco = 9.9, dry = TRUE, wet = TRUE)
 \item{wet}{same as previous, for wet sequences}
 }
 \value{
-list of positions which do not pass qc (bad)
+list of positions in the input data timeseries which do not pass QC test
 }
 \description{
 This function detects episodes of too many consecutive wet or dry days

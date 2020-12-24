@@ -9,13 +9,13 @@ sunafterdark(y, code = "991274")
 \arguments{
 \item{y}{ECA&D style two columns with date (yyyymmdd) and  values (expressed in 0.1 hours)}
 
-\item{code}{the "numeric" part of the ECA&D SOUID, expressed as character, to avoid trouble with leading zeroes}
+\item{code}{"numeric" part of the ECA&D SOUID, expressed as character, to avoid trouble with leading zeroes}
 }
 \value{
 vector with the list of positions which do not pass this test. If all positions pass the test, returns NULL
 }
 \description{
-Compares sunshine data to the maximum theoretical sunshine an ECA&D station, according the day, lat and lon.
+This function compares sunshine data to the maximum theoretical sunshine an ECA&D station, according the day, lat and lon.
 Maximum sunshine hours are computed from the 'suncalc' package, using "night" and "dawn" parameters.
 This contrasts quite a lot with other functions computing "daylength". This formulation is more conservative
 }

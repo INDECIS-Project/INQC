@@ -7,10 +7,10 @@
 weirddate(x)
 }
 \arguments{
-\item{x}{a two-columns dataframe. First column is date in the ECA&D format (yyyymmdd), second columns is value}
+\item{x}{two-columns dataframe. First column is date in the ECA&D format (yyyymmdd), second columns is value}
 }
 \value{
-vector with the list of positions which do not pass this test. If all positions pass the test, returns NULL
+list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
 This function is intended to flag impossible dates (e.g., 19990230 or 29990112, etc)

@@ -1,17 +1,17 @@
 drywetlong<-function(x,ret=300,sueco=9.9,dry=TRUE,wet=TRUE){
 
-  #' Detect wet and dry days
+  #' Detects wet/dry long periods
   #' @description This function detects episodes of too many consecutive wet or dry days
   #' @param x vector with values
   #' @param ret pseudo-return period (pareto-based) to compute the maximum tolerable spell
   #' @param sueco threshold for dividing dry and wet. This is useful to label other binary sequences, e.g. for 0 radiation. Now it is <= and >, instead of < and >=
   #' @param dry if set to TRUE, dry sequences are sent to result; if FALSE, omitted
   #' @param wet same as previous, for wet sequences
-  #' @return list of positions which do not pass qc (bad)
+  #' @return list of positions in the input data timeseries which do not pass QC test
   #' @export
 
-  todo<-NULL  
-  seco<-which( x<= sueco) # using the 1 mm threshold as in RClimdex
+  todo<-NULL
+  seco<-which(x<= sueco) # using the 1 mm threshold as in RClimdex
   mojao<-which(x >sueco)
   nohay<-which(is.na(x))
   y<-x

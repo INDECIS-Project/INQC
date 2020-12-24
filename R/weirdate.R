@@ -2,10 +2,10 @@ weirddate<-function(x){
 
   #' Locate impossible dates
   #' @description This function is intended to flag impossible dates (e.g., 19990230 or 29990112, etc)
-  #' @param x a two-columns dataframe. First column is date in the ECA&D format (yyyymmdd), second columns is value
+  #' @param x two-columns dataframe. First column is date in the ECA&D format (yyyymmdd), second columns is value
   # @param minyear a numeric value identifiying the first year which can contain data. Defaulted to 1800, understanding that most series
   # will not have 18th century data. Customize according to the dataset.
-  #' @return vector with the list of positions which do not pass this test. If all positions pass the test, returns NULL
+  #' @return list of positions which do not pass this QC test. If all positions pass the test, returns NULL
   #' @export
 
   ##This is old version (v1.0)

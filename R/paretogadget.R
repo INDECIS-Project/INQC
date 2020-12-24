@@ -1,15 +1,18 @@
 paretogadget<-function(x,ret){
 
-  #' It should be described later
-  #' @description This function should be described later
-  #' @param x the series you are going to use (will take precip)
-  #' @param ret the pseudo return period (remember is pareto and I destroyed the years)
-  #' @return list of values which did not pass the test
+  #' Finds outliyers
+  #' @description This function finds outliyers for variables which can be described/evaluated by means of the Pareto distribution (e.g. atmospheric precipitation or wind speed)
+  #' @param x a vector of values (a series) to be analyzed
+  #' @param ret a pseudo return period
+  #' @return a list of positions where corresponding values do not pass this QC test (which can be considered as outliyers)
   #' @export
 
   # Auxiliated by potpareto, returnpotpareto, computecal
   target<-NULL
-  nyu<-potpareto(x);if(is.null(nyu)){return(NULL)}
+  nyu<-potpareto(x)
+  if(is.null(nyu)){
+    return(NULL)
+  }
   mus<-returnpotpareto(nyu,ret)
   target<-which(x > mus)
   return(target)

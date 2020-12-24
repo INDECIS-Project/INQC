@@ -2,7 +2,7 @@
 % Please edit documentation in R/lister.R
 \name{lister}
 \alias{lister}
-\title{Create a list of blended or non-bladed files to be QCed}
+\title{Creates a list of blended/non-bladed files for some climate variable}
 \usage{
 lister(element)
 }
@@ -10,7 +10,7 @@ lister(element)
 \item{element}{a climatological element (defined by means of two letters, i.e. 'TX')}
 }
 \value{
-a a list of blended or non-bladed files to be QCed
+a list of blended or non-bladed files to be QCed
 }
 \description{
 This function create a list of blended or non-bladed files contaning data of a specified element to be QCed.

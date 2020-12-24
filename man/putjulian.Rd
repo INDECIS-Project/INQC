@@ -2,16 +2,26 @@
 % Please edit documentation in R/putjulian.R
 \name{putjulian}
 \alias{putjulian}
-\title{Merge julian days}
+\title{Merges julian days}
 \usage{
 putjulian(x)
 }
 \arguments{
-\item{x}{nxn with year,month,day and data columns}
+\item{x}{data frame with year, month, day and data columns}
 }
 \value{
-nxn+1 columns with year,month,day, julian and data
+the same data frame with added 1 column: year, month, day, julian and data
 }
 \description{
 This function merges julian days to a yyyy,mm,dd and data
+}
+\examples{
+date<-c('20201230','20201231','20210101')
+value<-c(-10,-12,-9)
+df<-data.frame(date,value)
+year<-as.numeric(substring(date,1,4))
+month<-as.numeric(substring(date,5,6))
+day<-as.numeric(substring(date,7,8))
+x<-data.frame(year,month,day,date,value)
+y<-putjulian(x)
 }

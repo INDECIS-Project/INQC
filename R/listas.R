@@ -1,11 +1,11 @@
 listas<-function(country='all',name='allstations.txt'){ #NECESITO parametrizar listas. Usar esa parametrizacion par subset de downloads too.
 
-  #' Create listings for stations linking STAID and SOUID
-  #' @description This function takes all the elements and rbinds them.
+  #' Creates listings for stations linking STAID and SOUID
+  #' @description This function takes all the elements and rbinds them into a single list to process
   # @param rooty home directory where the "ECA_blend_source*" files are located
   #' @param country country for which the list is created. If all, no country filter.
   #' @param name output file name, do not touch, default is always good.
-  #' @return a data.frame containing all the stations for all elements, linking STAID and SOUID and metadata (a file named as specified by name)
+  #' @return a data frame containing all the stations for all elements, linking STAID and SOUID and metadata (a file named as specified by name)
   #' @export
 
   #Get value of 'Global variable' 'homefolder'

@@ -1,10 +1,10 @@
 inithome<-function(){
 
-  #' Create necessary folders (if not exist)
-  #' @description This function will checks if all necessary folders ('QCSummary, QC and QCConsolidated) exist and if not, creates them. Not intended as a stand-alone function.
-  #' Called from other routinees
+  #' Creates necessary folders (if not exist)
+  #' @description This function will checks if all necessary folders ('QCSummary, QC and QCConsolidated) exist and if not, creates them.
+  #' Not intended as a stand-alone function. Called from other routinees.
   # @param homefolder homefolder, defaulted to './'
-  #' @return does not return any values, creates the described folders if they do not exist
+  #' @return it does not return any values, just creates the described folders if they do not exist
   #' @export
 
   ##This is old version (v1.0)

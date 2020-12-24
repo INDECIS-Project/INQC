@@ -5,9 +5,9 @@
 \title{QC for Atmospheric Precipitation (RR)}
 \usage{
 precip(
+  element = "RR",
   large = 5000,
   small = 0,
-  element = "RR",
   ret = 500,
   retornoracha = 500,
   margin = 20,
@@ -26,11 +26,11 @@ precip(
 )
 }
 \arguments{
+\item{element}{two-letters ECA&D code for the element (RR for precipitation)}
+
 \item{large}{value above which the observation is considered physically impossible for the region}
 
 \item{small}{value below which the observation is considered physically impossible for the region}
-
-\item{element}{two-letters ECA&D code for the element (RR for precipitation)}
 
 \item{ret}{pseudo-return period for the pareto outliers}
 
@@ -40,32 +40,32 @@ precip(
 
 \item{friki}{minimum value to be considered by repeatedvalue()}
 
-\item{blocksizeround}{the maximum number of repeated values, FUNCTION roundprecip}
+\item{blocksizeround}{maximum number of repeated values with the same decimal, FUNCTION: roundprecip()}
 
-\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
+\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany}
+\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany()}
 
-\item{limit}{cut threshold for FUNCTION suspectacumprec}
+\item{limit}{cut threshold for FUNCTION suspectacumprec()}
 
-\item{tolerance}{number of NA or 0s before allowed before the limit, FUNCTION suspectacumprec}
+\item{tolerance}{number of NA or 0s before allowed before the limit, FUNCTION: suspectacumprec()}
 
-\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives)}
+\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutives)}
 
-\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)}
+\item{roundmax}{maximum number of consecutive decimal part values, FUNCTION: flat() (10.0, 11.0, 12.0 would be 3 consecutive)}
 
-\item{level}{level for IQRoutliers}
+\item{level}{number of IQRs, FUNCTION: IQRoutliers()}
 
-\item{window}{window for IQRoutliers}
+\item{window}{number of days to be considered (including the target), FUNCTION: IQRoutliers()}
 
-\item{margina}{should be described later}
+\item{margina}{a tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki()}
 
-\item{inisia}{a logical flag}
+\item{inisia}{a logical flag. If it is TRUE inithome() will be called}
 }
 \value{
 results of QC for RR
 }
 \description{
-This function will centralize precipitation-like qc routines. Will create a file in the folder QC
+This function will centralize precipitation-like qc routines. It will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
 }

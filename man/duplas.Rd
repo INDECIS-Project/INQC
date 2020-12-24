@@ -2,16 +2,16 @@
 % Please edit documentation in R/duplas.R
 \name{duplas}
 \alias{duplas}
-\title{Detect duplicated dates}
+\title{Detects duplicated dates}
 \usage{
 duplas(x)
 }
 \arguments{
-\item{x}{a vector of dates in ECA&D format (YYYYMMDD)}
+\item{x}{a vector of dates in the ECA&D format (YYYYMMDD)}
 }
 \value{
-a vector with the list of positions which do not pass this test. If all positions pass the test, returns NULL
+a vector with the list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
-This function detects duplicated dates
+This function detects duplicated dates in the input time series
 }

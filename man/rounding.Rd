@@ -9,11 +9,11 @@ rounding(y, blocksize = 20)
 \arguments{
 \item{y}{two columns with date in the ECA&D format (yyyymmdd) and data}
 
-\item{blocksize}{the maximum number of repeated values allowed on each block (blocks =  months)}
+\item{blocksize}{the maximum number of repeated values with the same decimal allowed on each block (blocks = months)}
 }
 \value{
-vector with the list of positions which do not pass this test. If all positions pass the test, returns NULL
+list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
-Splits data by month and looks if a decimal value is repeated too many times
+This function splits data by month and looks if a decimal value is repeated too many times
 }

@@ -2,20 +2,20 @@
 % Please edit documentation in R/returnpotpareto.R
 \name{returnpotpareto}
 \alias{returnpotpareto}
-\title{It should be described later}
+\title{Threshold percentile for the Pareto outliyers}
 \usage{
 returnpotpareto(pato, ret, w = 1.65)
 }
 \arguments{
-\item{pato}{it should be described later}
+\item{pato}{list with results of modelling/fitting the generalized Pareto distribution}
 
-\item{ret}{it should be described later}
+\item{ret}{pseudo return period}
 
-\item{w}{it should be described later}
+\item{w}{multiplicator used to calculate a threshold probability}
 }
 \value{
-list of values which did not pass the test
+percentile of the generalized Pareto distribution coresponding to a threshold probability calculated based on a peudo return period
 }
 \description{
-This function should be described later
+This function returns a value of a threshold percentile for the Pareto outliyers
 }

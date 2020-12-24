@@ -3,13 +3,13 @@ repeatedvalue<-function(x,margin=20,friki=150){
   ### WARNING: eval this function, as probably does the same than newfriki, but in a less efficient and more time consuming way
   ### also, parametrization is less objective
 
-  #' Find repeated values
+  #' Finds repeated values
   #' @description This function looks for a value which repeats too many times and, given the decaying shape of preciptiation empirical distro,
   #' is considered too large to happen that many times
   #' @param x preciptiation time series
-  #' @param margin the difference in frequency of the nearest value
-  #' @param friki the minimum value to be considered
-  #' @return list of values which do not pass QC (target)
+  #' @param margin difference in frequency of the nearest value
+  #' @param friki minimum value to be considered
+  #' @return list of positions which do not pass this QC test. If all positions pass the test, returns NULL
   #' @export
 
   target<-NULL

@@ -1,7 +1,7 @@
 dostats<-function(){
 
-  #' Get QC summary
-  #' @description This function provides a summary of QCs performed
+  #' Create QC statistical summary
+  #' @description This function creates two report files (Mystats.txt and CasesSummary.txt) with a statistical summary of QCs performed over the whole data set
   #' @return files with QC summary
   #' @export
 

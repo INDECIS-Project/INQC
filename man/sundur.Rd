@@ -19,18 +19,18 @@ sundur(
 
 \item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details}
 
-\item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding}
+\item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding()}
 
-\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
+\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany}
+\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany()}
 
-\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)}
+\item{roundmax}{maximum number of consecutive decimal part value, for flat() function (10.0, 11.0, 12.0 would be 3 consecutive)}
 
 \item{inisia}{a logical flag. If it is TRUE inithome() will be called}
 }
 \value{
-results of QC for
+results of QC for SS
 }
 \description{
 This function will centralize temperature-like qc routines. Will create a file in the folder QC

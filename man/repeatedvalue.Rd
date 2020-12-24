@@ -2,19 +2,19 @@
 % Please edit documentation in R/repeatedvalue.R
 \name{repeatedvalue}
 \alias{repeatedvalue}
-\title{Find repeated values}
+\title{Finds repeated values}
 \usage{
 repeatedvalue(x, margin = 20, friki = 150)
 }
 \arguments{
 \item{x}{preciptiation time series}
 
-\item{margin}{the difference in frequency of the nearest value}
+\item{margin}{difference in frequency of the nearest value}
 
-\item{friki}{the minimum value to be considered}
+\item{friki}{minimum value to be considered}
 }
 \value{
-list of values which do not pass QC (target)
+list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
 This function looks for a value which repeats too many times and, given the decaying shape of preciptiation empirical distro,

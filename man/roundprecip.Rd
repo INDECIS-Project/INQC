@@ -9,12 +9,12 @@ roundprecip(y, blocksize = 20, exclude = 0)
 \arguments{
 \item{y}{two columns with date and data}
 
-\item{blocksize}{the maximum number of repeated values}
+\item{blocksize}{maximum number of repeated values with the same decimal}
 
-\item{exclude}{the value to be excluded (zero for precip)}
+\item{exclude}{value to be excluded (zero for precip)}
 }
 \value{
-list of positions which do not pass qc (bad)
+list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
 This function splits data by month and looks if a decimal value is repeated too many times

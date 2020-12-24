@@ -5,6 +5,7 @@
 \title{QC for Atmospheric Pressure (PP)}
 \usage{
 selepe(
+  element = "PP",
   large = 15000,
   small = 8000,
   maxjump = 2000,
@@ -13,37 +14,32 @@ selepe(
   level = 5,
   window = 30,
   roundmax = 10,
-  blocksize = 10,
-  step = 30,
   blockmanymonth = 15,
   blockmanyyear = 180,
   blocksizeround = 20,
   qjump = 0.999,
   tjump = 1.5,
-  element = "PP",
   inisia = FALSE
 )
 }
 \arguments{
+\item{element}{two-letters ECA&D code for the element (PP for sea level pressure)}
+
 \item{large}{value above which the observation is considered physically impossible for the region}
 
 \item{small}{value below which the observation is considered physically impossible for the region}
 
-\item{maxjump}{it should be described later}
+\item{maxjump}{forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.}
 
 \item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives)}
 
-\item{margina}{quantile for newfriki function}
+\item{margina}{tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
 
 \item{level}{number of IQRs for IQR outliers}
 
 \item{window}{window, in days, for IQR outliers}
 
 \item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)}
-
-\item{blocksize}{should be described later}
-
-\item{step}{should be described later}
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
 
@@ -54,8 +50,6 @@ selepe(
 \item{qjump}{quantile for the calculated maximum jump allowed}
 
 \item{tjump}{factor to multiply the qjump computed differences}
-
-\item{element}{two-letters ECA&D code for the element (PP for sea level pressure)}
 
 \item{inisia}{a logical flag. If it is TRUE inithome() will be called}
 }

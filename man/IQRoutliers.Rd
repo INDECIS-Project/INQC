@@ -18,7 +18,7 @@ IQRoutliers(date, value, level = 3, window = 11, exclude = NULL)
 \item{exclude}{if it is not null, the code will exlcude this value from the analyisis (i.e., good to exclude 0 for precip)}
 }
 \value{
-positions which do not pass this test (bad)
+positions which do not pass this QC test
 }
 \description{
 This function computes outliers centralized around a day, using a number of days around it

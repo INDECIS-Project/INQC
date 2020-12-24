@@ -2,14 +2,14 @@
 % Please edit documentation in R/inithome.R
 \name{inithome}
 \alias{inithome}
-\title{Create necessary folders (if not exist)}
+\title{Creates necessary folders (if not exist)}
 \usage{
 inithome()
 }
 \value{
-does not return any values, creates the described folders if they do not exist
+it does not return any values, just creates the described folders if they do not exist
 }
 \description{
-This function will checks if all necessary folders ('QCSummary, QC and QCConsolidated) exist and if not, creates them. Not intended as a stand-alone function.
-Called from other routinees
+This function will checks if all necessary folders ('QCSummary, QC and QCConsolidated) exist and if not, creates them.
+Not intended as a stand-alone function. Called from other routinees.
 }

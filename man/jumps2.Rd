@@ -2,24 +2,24 @@
 % Please edit documentation in R/jumps2.R
 \name{jumps2}
 \alias{jumps2}
-\title{Labels interdiurnal differences considered too large}
+\title{Labels interdiurnal large differences}
 \usage{
 jumps2(date, value, quanty = 0.999, times = 1, force = NULL)
 }
 \arguments{
-\item{date}{it should be described later}
+\item{date}{a vector of dates}
 
-\item{value}{vector of values}
+\item{value}{a vector of values}
 
-\item{quanty}{it should be described later}
+\item{quanty}{a numeric value (quantile of the differences) used to aggregate daily diferences}
 
-\item{times}{it should be described later}
+\item{times}{a multiplicator for daily values diferences threshold}
 
-\item{force}{it should be described later}
+\item{force}{a value of threshold for daily values diferences to be forced}
 }
 \value{
-chungo both values involved in the jump are returned. Need an additional function to decide which is the culprit
+both values involved in the jump are returned. Need an additional function to decide which is the culprit
 }
 \description{
-The function labels interdiurnal differences considered too large
+This function labels interdiurnal differences considered too large
 }

@@ -7,14 +7,14 @@
 physics(x, nyu = 0, compare = 1)
 }
 \arguments{
-\item{x}{data vector}
+\item{x}{a data vector}
 
-\item{nyu}{the threshold, numeric}
+\item{nyu}{a threshold, numeric}
 
-\item{compare}{logical operation to apply over the threshold. 1: larger; 2: larger or equal; 3: smaller; 4: smaller or equal; 5 equal}
+\item{compare}{a logical operation to apply over the threshold. 1: larger; 2: larger or equal; 3: smaller; 4: smaller or equal; 5 equal}
 }
 \value{
-vector with the list of positions which do not pass this test. If all positions pass the test, returns NULL
+a vector with the list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
 Given a data vector, the function will compare the values to the specified threshold

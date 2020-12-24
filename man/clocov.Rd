@@ -18,7 +18,7 @@ clocov(
 
 \item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives).}
 
-\item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION:  rounding}
+\item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding}
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
 
@@ -27,7 +27,7 @@ clocov(
 \item{inisia}{a logical flag. If it is TRUE inithome() will be called}
 }
 \value{
-results of QC for CC
+QC results for CC
 }
 \description{
 This function will centralize temperature-like qc routines. It will create a file in the folder QC

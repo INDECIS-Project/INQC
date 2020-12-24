@@ -7,7 +7,7 @@ IQRoutliers<-function(date,value,level=3,window=11,exclude=NULL){
   #' @param level a number of IQRs
   #' @param window a number of days to be considered (including the target)
   #' @param exclude if it is not null, the code will exlcude this value from the analyisis (i.e., good to exclude 0 for precip)
-  #' @return positions which do not pass this test (bad)
+  #' @return positions which do not pass this QC test
   #' @export
 
   bad<-NULL

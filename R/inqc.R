@@ -1,10 +1,10 @@
 inqc<-function(homefolder='./',blend=TRUE){
 
   #' Wraper for QC'ing all varibales
-  #' @description This function call functions which perform QC for all variables
-  #' @param homefolder the path to the homefolder, as string
-  #' @param blend a logical flag which means performing (if TRUE) QC on blended time series (?)
-  #' @return the QC results, in both formats (verbose and workable file in exact ECA&D format)
+  #' @description This function calls functions which perform QC for all climate variables
+  #' @param homefolder a path to the homefolder, as string
+  #' @param blend a logical flag which means performing (if TRUE) QC on blended time series
+  #' @return QC results, in both formats (verbose and workable file in exact ECA&D format)
   #' @export
 
   ##Two command below cause a note message during the check. It seems that packages aren't supposed to assign values to the global environment

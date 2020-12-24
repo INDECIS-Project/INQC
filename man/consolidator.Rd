@@ -13,10 +13,10 @@ XXXXXX is the ECA&D SOUID code and ".txt" is literal}
 \item{x}{the QC'd series, formated as date, value, qcflag}
 }
 \value{
-Does not return any value. Each time it is called, it will create three files.
-Summary file,  placed at ./QCSumamry/SummaryVV_SOUIDXXXXXX.txt
-QC consolidated file, placed at ./QCConsolidated/VV_SOUIDXXXXXX.txt
-Verbose QC file, placed at ./QC/qc_VV_SOUIDXXXXXX.txt
+It does not return any value. Each time when called, it will create three files:
+Summary file,  placed at ./QCSumamry/SummaryVV_SOUIDXXXXXX.txt;
+QC consolidated file, placed at ./QCConsolidated/VV_SOUIDXXXXXX.txt;
+Verbose QC file, placed at ./QC/qc_VV_SOUIDXXXXXX.txt.
 }
 \description{
 This function is not intended to be called as a stand-alone function. It is automatically called each time a file ends its QC.

@@ -5,9 +5,9 @@ newfriki<-function(date,value,margina=0.999,times=2){
   #' the values above (or below) are flagged
   #' @param date a vector of dates with the format of yyyymmdd
   #' @param value a vector of data values
-  #' @param margina the tolerence margin, expressed as quantile of the differences
-  #' @param times multiplicator to the tolerance margin. Intended usage is to run this twice. Once with times = 1 and flag values as suspect; once with times = 2 and flag as error
-  #' @return description should be completed
+  #' @param margina a tolerence margin, expressed as quantile of the differences
+  #' @param times a multiplicator to the tolerance margin. Intended usage is to run this twice. Once with times = 1 and flag values as suspect; once with times = 2 and flag as error
+  #' @return positions which do not pass this QC test
   #' @export
 
   bad<-NULL

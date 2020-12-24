@@ -19,10 +19,10 @@ consolidator<-function(filename,x){
   #' @param filename the ECA&D file name, expressed as VV_SOUIDXXXXXX.txt, where "VV" is the two-letters variable code, "SOUID" is literal,
   #' XXXXXX is the ECA&D SOUID code and ".txt" is literal
   #' @param x the QC'd series, formated as date, value, qcflag
-  #' @return  Does not return any value. Each time it is called, it will create three files.
-  #' Summary file,  placed at ./QCSumamry/SummaryVV_SOUIDXXXXXX.txt
-  #' QC consolidated file, placed at ./QCConsolidated/VV_SOUIDXXXXXX.txt
-  #' Verbose QC file, placed at ./QC/qc_VV_SOUIDXXXXXX.txt
+  #' @return It does not return any value. Each time when called, it will create three files:
+  #' Summary file,  placed at ./QCSumamry/SummaryVV_SOUIDXXXXXX.txt;
+  #' QC consolidated file, placed at ./QCConsolidated/VV_SOUIDXXXXXX.txt;
+  #' Verbose QC file, placed at ./QC/qc_VV_SOUIDXXXXXX.txt.
   #' @export
 
   ##This is old version (v1.0)
