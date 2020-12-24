@@ -7,12 +7,12 @@
 potpareto(y, thres = 0.99)
 }
 \arguments{
-\item{y}{a vector of values (a series) to be analyzed}
+\item{y}{vector of values (a series) to be analyzed}
 
-\item{thres}{a threshold value of probability to define a coresponding threshold percentile}
+\item{thres}{threshold value of probability to define a coresponding threshold percentile}
 }
 \value{
-a list containing results of modelling/fitting the generalized Pareto distribution
+list containing results of modelling/fitting the generalized Pareto distribution
 }
 \description{
 This function fits the Generalized Pareto distrebution for exeedances over a threshold
