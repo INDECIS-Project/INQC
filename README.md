@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/OlegSkrynyk/INQC/workflows/R-CMD-check/badge.svg)](https://github.com/OlegSkrynyk/INQC/actions)
+[![R-CMD-check](https://github.com/INDECIS-Project/INQC/workflows/R-CMD-check/badge.svg)](https://github.com/INDECIS-Project/INQC/actions)
 <!-- badges: end -->
 
 The goal of INQC is to perform quality control (QC) of climatological
