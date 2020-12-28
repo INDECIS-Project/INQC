@@ -2,7 +2,7 @@
 % Please edit documentation in R/decimaldegrees.R
 \name{decimaldegrees}
 \alias{decimaldegrees}
-\title{Converter of geograpical coordinates from the ECA&D format into decimal degrees}
+\title{Converter for geograpical coordinates from the ECA&D format into decimal degrees}
 \usage{
 decimaldegrees(dms, sep = ":")
 }
@@ -16,5 +16,5 @@ geographical coordinates (latitude or longitude) in decimal degrees
 }
 \description{
 This function takes sexagesimal degrees in the ECA&D format and converts them into decimal degrees.
-Initial idea taken from: https://modtools.wordpress.com/2013/09/25/dms2dec/
+Initial idea was taken from: https://modtools.wordpress.com/2013/09/25/dms2dec/
 }

@@ -9,13 +9,13 @@ txtnblend(y, id)
 \arguments{
 \item{y}{two columns with date and data}
 
-\item{id}{the id we are working with}
+\item{id}{id we are working with}
 }
 \value{
-list of positions which do not pass qc (bad)
+list of positions which do not pass this QC test.
 }
 \description{
-This function first looks for the closest station and then merges both dataframes.
+This function first looks for the closest station and then merges both data frames.
 If one value is flagged, looks at the ecdfs of tx and tn. If the target variable (e.g tx) is central
 (between quantiles 0.2 and 0.8) and the other variable (e.g. tn) is outside this range, the value is
 not flagged, assuming the other variable is the culprit

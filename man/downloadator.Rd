@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadator.R
 \name{downloadator}
 \alias{downloadator}
-\title{Downloads latest blended data from ECA&D}
+\title{Downloads the latest version of blended data from the ECA&D website}
 \usage{
 downloadator(
   homefolder = "../ecad_updated",
@@ -32,45 +32,45 @@ downloadator(
 \item{homefolder}{full path to local folder in the form './homefolder'. The function will store there the station files and create ./homefolder/raw
 and will store there the data}
 
-\item{tx}{link to download daily maximum temperature or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{tx}{link to download daily maximum temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{tx2}{link to download daily maximu temperatures station list  or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{tx2}{link to download daily maximu temperatures station list  or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{tn}{link to download daily minimum temperature or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{tn}{link to download daily minimum temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{tn2}{link to download daily maximu temperature station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{tn2}{link to download daily maximu temperature station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{tg}{link to download daily average temperature or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{tg}{link to download daily average temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{tg2}{link to download daily average temperature station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{tg2}{link to download daily average temperature station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{sd}{link to download daily snow depth or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{sd}{link to download daily snow depth or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{sd2}{link to download snow depth station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{sd2}{link to download snow depth station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{ss}{link to download daily sunshine duration or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{ss}{link to download daily sunshine duration or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{ss2}{link to download daily sunshine duration station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{ss2}{link to download daily sunshine duration station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{rr}{link to download daily rainfall or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{rr}{link to download daily rainfall or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{rr2}{link to download daily rainfall station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{rr2}{link to download daily rainfall station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{pp}{link to download daily sea level pressure or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{pp}{link to download daily sea level pressure or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{pp2}{link to download daily sea level pressure station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{pp2}{link to download daily sea level pressure station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{cc}{link to download daily cloud coverage or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{cc}{link to download daily cloud coverage or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{cc2}{link to download daily cloud coverage station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{cc2}{link to download daily cloud coverage station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{hu}{link to download daily relative humidity or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{hu}{link to download daily relative humidity or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{hu2}{link to download daily relative humidity station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{hu2}{link to download daily relative humidity station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{fg}{link to download daily wind speed or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{fg}{link to download daily wind speed or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{fg2}{link to download daily wind speed station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.}
+\item{fg2}{link to download daily wind speed station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 }
 \value{
 For each valid link, a the corresponding file will be downloaded. Data files will be unzipped to the ./raw folder (as requested by INQC)

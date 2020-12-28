@@ -2,7 +2,7 @@
 % Please edit documentation in R/listas.R
 \name{listas}
 \alias{listas}
-\title{Create listings for stations linking STAID and SOUID}
+\title{Creates listings for stations linking STAID and SOUID}
 \usage{
 listas(country = "all", name = "allstations.txt")
 }
@@ -12,8 +12,8 @@ listas(country = "all", name = "allstations.txt")
 \item{name}{output file name, do not touch, default is always good.}
 }
 \value{
-a data.frame containing all the stations for all elements, linking STAID and SOUID and metadata (a file named as specified by name)
+a data frame containing all the stations for all elements, linking STAID and SOUID and metadata (a file named as specified by name)
 }
 \description{
-This function takes all the elements and rbinds them.
+This function takes all the elements and rbinds them into a single list to process
 }

@@ -1,9 +1,9 @@
 lister<-function(element){
 
-  #' Create a list of blended or non-bladed files to be QCed
+  #' Creates a list of blended/non-bladed files for some climate variable
   #' @description This function create a list of blended or non-bladed files contaning data of a specified element to be QCed.
   #' @param element a climatological element (defined by means of two letters, i.e. 'TX')
-  #' @return a a list of blended or non-bladed files to be QCed
+  #' @return a list of blended or non-bladed files to be QCed
   #' @export
 
   #Get values of 'Global variables' 'blend' and 'homefolder'

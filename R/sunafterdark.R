@@ -1,11 +1,11 @@
 sunafterdark<-function(y,code='991274'){
 
   #' Maximum sunshine hours
-  #' @description Compares sunshine data to the maximum theoretical sunshine an ECA&D station, according the day, lat and lon.
+  #' @description This function compares sunshine data to the maximum theoretical sunshine an ECA&D station, according the day, lat and lon.
   #' Maximum sunshine hours are computed from the 'suncalc' package, using "night" and "dawn" parameters.
   #' This contrasts quite a lot with other functions computing "daylength". This formulation is more conservative
   #' @param y ECA&D style two columns with date (yyyymmdd) and  values (expressed in 0.1 hours)
-  #' @param code the "numeric" part of the ECA&D SOUID, expressed as character, to avoid trouble with leading zeroes
+  #' @param code "numeric" part of the ECA&D SOUID, expressed as character, to avoid trouble with leading zeroes
   # @param casa the homefolder
   #' @return vector with the list of positions which do not pass this test. If all positions pass the test, returns NULL
   #' @details depends on either a previous execution of listas() or on a proper execution of listas() to run properly

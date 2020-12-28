@@ -1,10 +1,10 @@
 potpareto<-function(y,thres=0.99){
 
-  #' It should be described later
-  #' @description This function should be described later
-  #' @param y it should be described later
-  #' @param thres it should be described later
-  #' @return list of values which did not pass the test
+  #' Peaks over threshold modelling
+  #' @description This function fits the Generalized Pareto distrebution for exeedances over a threshold
+  #' @param y vector of values (a series) to be analyzed
+  #' @param thres threshold value of probability to define a coresponding threshold percentile
+  #' @return list containing results of modelling/fitting the generalized Pareto distribution
   #' @export
 
   target<-which(!is.na(y) & y!=0)

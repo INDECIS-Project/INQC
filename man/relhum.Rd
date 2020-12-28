@@ -19,7 +19,7 @@ relhum(
 
 \item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details}
 
-\item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding}
+\item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding()}
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
 

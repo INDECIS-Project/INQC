@@ -2,7 +2,7 @@
 % Please edit documentation in R/readheader.R
 \name{readheader}
 \alias{readheader}
-\title{Read the header of an ECA&D file}
+\title{Reads the header of an ECA&D file}
 \usage{
 readheader(input = "SS_STAID000143.txt")
 }
@@ -10,8 +10,8 @@ readheader(input = "SS_STAID000143.txt")
 \item{input}{an ECA&D filename}
 }
 \value{
-The header of an ECA&D file
+header of an ECA&D file
 }
 \description{
-Reads one ECA&D file and returns the header, so it can be written in the same way
+This function reads one ECA&D file and returns the header (an introductory part of the ECA&D file), so it can be written in the same way
 }

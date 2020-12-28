@@ -1,15 +1,15 @@
 txtn<-function(y,id){
 
   #' Comparison of tx an tn data
-  #' @description This function compares tx an tn. First it looks for the closest station and then merges both
-  #' dataframes. If one value is flagged, looks at the ecdfs of tx and tn. If the target variable (e.g tx) is central
+  #' @description This function compares tx an tn data. First it looks for the closest station and then merges both
+  #' data frames. If one value is flagged, looks at the ecdfs of tx and tn. If the target variable (e.g tx) is central
   #' (between quantiles 0.2 and 0.8) and the other variable (e.g. tn) is outside this range, the value is not flagged,
   #' assuming the other variable is the culprit.
   #' @param y two columns with date and data
-  #' @param id the id we are working with
+  #' @param id id we are working with
   # @param home home folder, need to add "raw" inside the fucntion
   # @param liston a list file with all time series
-  #' @return list of positions which do not pass qc (bad)
+  #' @return list of positions which do not pass this QC test. If all positions pass the test, returns NULL
   #' @export
 
   #Get values of 'Global variables' 'liston' and 'homefolder'

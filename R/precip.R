@@ -1,29 +1,29 @@
-precip<-function(large=5000,small=0,element='RR',ret=500,retornoracha=500,margin=20,friki=150,blocksizeround=20,
+precip<-function(element='RR',large=5000,small=0,ret=500,retornoracha=500,margin=20,friki=150,blocksizeround=20,
                  blockmanymonth=15,blockmanyyear=180,limit=1500,tolerance=8,maxseq=3,roundmax=10,level=15,window=30,
                  margina=0.999,inisia=FALSE){
 
   #' QC for Atmospheric Precipitation (RR)
-  #' @description This function will centralize precipitation-like qc routines. Will create a file in the folder QC
-  #' with an additional 0/1 column, where "1" means test failed. 
+  #' @description This function will centralize precipitation-like qc routines. It will create a file in the folder QC
+  #' with an additional 0/1 column, where "1" means test failed.
   # @param home path to the home directory
+  #' @param element two-letters ECA&D code for the element (RR for precipitation)
   #' @param large value above which the observation is considered physically impossible for the region
   #' @param small value below which the observation is considered physically impossible for the region
-  #' @param element two-letters ECA&D code for the element (RR for precipitation)
   #' @param ret pseudo-return period for the pareto outliers
   #' @param retornoracha return period for the calculation of the maximum dry and wet spell
   #' @param margin frequency difference between consecutive values for repeatedvalue()
   #' @param friki minimum value to be considered by repeatedvalue()
-  #' @param blocksizeround the maximum number of repeated values, FUNCTION roundprecip
-  #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany
-  #' @param blockmanyyear maximum number of equal values in a yaer, FUCNTION: toomany
-  #' @param limit cut threshold for FUNCTION suspectacumprec
-  #' @param tolerance number of NA or 0s before allowed before the limit, FUNCTION suspectacumprec
-  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives)
-  #' @param roundmax maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)
-  #' @param level level for IQRoutliers
-  #' @param window window for IQRoutliers
-  #' @param margina should be described later
-  #' @param inisia a logical flag
+  #' @param blocksizeround maximum number of repeated values with the same decimal, FUNCTION: roundprecip()
+  #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
+  #' @param blockmanyyear maximum number of equal values in a yaer, FUCNTION: toomany()
+  #' @param limit cut threshold for FUNCTION suspectacumprec()
+  #' @param tolerance number of NA or 0s before allowed before the limit, FUNCTION: suspectacumprec()
+  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutives)
+  #' @param roundmax maximum number of consecutive decimal part values, FUNCTION: flat() (10.0, 11.0, 12.0 would be 3 consecutive)
+  #' @param level number of IQRs, FUNCTION: IQRoutliers()
+  #' @param window number of days to be considered (including the target), FUNCTION: IQRoutliers()
+  #' @param margina a tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki()
+  #' @param inisia a logical flag. If it is TRUE inithome() will be called
   # NOTE: parameters exclude, excluido and alike are not included anymore. No need to paramatrize the obvious and unchanging: always
   # need to exclude 0 for precipitation
   #' @return results of QC for RR

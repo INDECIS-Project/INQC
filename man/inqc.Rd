@@ -7,13 +7,13 @@
 inqc(homefolder = "./", blend = TRUE)
 }
 \arguments{
-\item{homefolder}{the path to the homefolder, as string}
+\item{homefolder}{a path to the homefolder, as string}
 
-\item{blend}{a logical flag which means performing (if TRUE) QC on blended time series (?)}
+\item{blend}{a logical flag which means performing (if TRUE) QC on blended time series}
 }
 \value{
-the QC results, in both formats (verbose and workable file in exact ECA&D format)
+QC results, in both formats (verbose and workable file in exact ECA&D format)
 }
 \description{
-This function call functions which perform QC for all variables
+This function calls functions which perform QC for all climate variables
 }

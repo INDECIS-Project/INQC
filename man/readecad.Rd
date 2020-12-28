@@ -2,17 +2,17 @@
 % Please edit documentation in R/readecad.R
 \name{readecad}
 \alias{readecad}
-\title{Read an ECA&D data/sources/stations(?) file}
+\title{Reads an ECA&D data/sources/stations file}
 \usage{
 readecad(input = "SS_STAID000143.txt", missing = -9999)
 }
 \arguments{
-\item{input}{the ECA&D filename}
+\item{input}{ECA&D filename}
 
 \item{missing}{missing value code, set to the default ECA&D mvc}
 }
 \value{
-a table of data read from ECA&D file (a header of ECA&D file is skipped)
+data frame containing data (time series) from the ECA&D file. An introductory part of the ECA&D file with meta data information is skipped
 }
 \description{
 This function reads one ECA&D file and puts it in yyyy/mm/dd/value. Data is NOT divided by 10, to transform it into true units

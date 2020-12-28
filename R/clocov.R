@@ -6,11 +6,11 @@ clocov<-function(element='CC',maxseq=8,blocksizeround=20,blockmanymonth=20,block
   # @param home path to the home directory
   #' @param element two-letters ECA&D code for the element (CC for cloud cover)
   #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives).
-  #' @param blocksizeround maximum number of values in a month with the same decimal, FUNCTION:  rounding
+  #' @param blocksizeround maximum number of values in a month with the same decimal, FUNCTION: rounding
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany
   #' @param blockmanyyear maximum number of equal values in a yaer, FUCNTION: toomany
   #' @param inisia a logical flag. If it is TRUE inithome() will be called
-  #' @return results of QC for CC
+  #' @return QC results for CC
   #' @export
 
   ##This is old version (v1.0)

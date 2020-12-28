@@ -16,7 +16,7 @@ toomany(y, blockmany = 15, scope = 1, exclude = NULL)
 \item{exclude}{values to exclude, e.g. if precip, 0 must be excluded}
 }
 \value{
-a list of positions which do not pass qc (bad)
+list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
 This function splits data by month and looks if a value is repeated too many times

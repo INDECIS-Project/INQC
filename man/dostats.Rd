@@ -2,7 +2,7 @@
 % Please edit documentation in R/dostats.R
 \name{dostats}
 \alias{dostats}
-\title{Get QC summary}
+\title{Create QC statistical summary}
 \usage{
 dostats()
 }
@@ -10,5 +10,5 @@ dostats()
 files with QC summary
 }
 \description{
-This function provides a summary of QCs performed
+This function creates two report files (Mystats.txt and CasesSummary.txt) with a statistical summary of QCs performed over the whole data set
 }

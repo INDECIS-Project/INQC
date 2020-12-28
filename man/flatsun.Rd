@@ -2,23 +2,23 @@
 % Please edit documentation in R/flatsun.R
 \name{flatsun}
 \alias{flatsun}
-\title{This function is a flat}
+\title{Flat sequences for sunshine duration}
 \usage{
 flatsun(x, maxseq, id, modonube = FALSE)
 }
 \arguments{
 \item{x}{data.frame date/value (need dates in this implementation of flat)}
 
-\item{maxseq}{the maximum number of contiguous repetitions of a value (e.g., if 3, sequences of 4 will be flagged)}
+\item{maxseq}{a maximum number of contiguous repetitions of a value (e.g., if 3, sequences of 4 will be flagged)}
 
 \item{id}{SOUID_SSxxxxxx.txt}
 
 \item{modonube}{a logical flag}
 }
 \value{
-list of positions which do not pass qc (bad)
+a list of positions which do not pass this QC test
 }
 \description{
-This function is a flat (actually, uses flat) modified with "smart" comparison with clouds.
+This function uses flat() and modifies it with "smart" comparison with clouds.
 If close to 8 and close to 0 clouds, allowed; if close to maxsundur and clouds near 0, allowed
 }

@@ -6,12 +6,12 @@ sundur<-function(element='SS',maxseq=3,blocksizeround=20,blockmanymonth=15,block
   # @param home path to the home directory
   #' @param element two-letters ECA&D code for the element (SS for sunshine duration)
   #' @param maxseq maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details
-  #' @param blocksizeround maximum number of values in a month with the same decimal, FUNCTION: rounding
-  #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany
-  #' @param blockmanyyear maximum number of equal values in a yaer, FUCNTION: toomany
-  #' @param roundmax maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)
+  #' @param blocksizeround maximum number of values in a month with the same decimal, FUNCTION: rounding()
+  #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
+  #' @param blockmanyyear maximum number of equal values in a yaer, FUCNTION: toomany()
+  #' @param roundmax maximum number of consecutive decimal part value, for flat() function (10.0, 11.0, 12.0 would be 3 consecutive)
   #' @param inisia a logical flag. If it is TRUE inithome() will be called
-  #' @return results of QC for 
+  #' @return results of QC for SS
   #' @export
 
   ##This is old version (v1.0)

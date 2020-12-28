@@ -50,32 +50,32 @@ downloadator<-function(homefolder='../ecad_updated',
                        #********************
                        #tx,tx2,tn,tn2,tg,tg2,sd,sd2,ss,ss2,rr,rr2,pp,pp2,cc,cc2,hu,hu2,fg,fg2){
 
-  #' Downloads latest blended data from ECA&D
+  #' Downloads the latest version of blended data from the ECA&D website
   #' @description This function will use the default or specified links to download one or several files from ECA&D and place them for their use
   #' with INQC. For each variable a data file and a station file will/should be specifiied.
   ## When a parameter is not specified or the link does not exist, the function will skip this variable.
   #' @param homefolder full path to local folder in the form './homefolder'. The function will store there the station files and create ./homefolder/raw
   #' and will store there the data
-  #' @param tx  link to download daily maximum temperature or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param tx2 link to download daily maximu temperatures station list  or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param tn  link to download daily minimum temperature or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param tn2 link to download daily maximu temperature station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param tg  link to download daily average temperature or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param tg2 link to download daily average temperature station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param sd  link to download daily snow depth or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param sd2 link to download snow depth station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param ss  link to download daily sunshine duration or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param ss2 link to download daily sunshine duration station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param rr  link to download daily rainfall or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param rr2 link to download daily rainfall station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param pp  link to download daily sea level pressure or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param pp2 link to download daily sea level pressure station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param cc  link to download daily cloud coverage or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param cc2 link to download daily cloud coverage station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param hu  link to download daily relative humidity or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param hu2 link to download daily relative humidity station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param fg  link to download daily wind speed or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
-  #' @param fg2 link to download daily wind speed station list or NULL. Default set to working ECA&D link, as of 11/11/2020. Provided link MUST exist.
+  #' @param tx  link to download daily maximum temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param tx2 link to download daily maximu temperatures station list  or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param tn  link to download daily minimum temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param tn2 link to download daily maximu temperature station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param tg  link to download daily average temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param tg2 link to download daily average temperature station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param sd  link to download daily snow depth or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param sd2 link to download snow depth station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param ss  link to download daily sunshine duration or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param ss2 link to download daily sunshine duration station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param rr  link to download daily rainfall or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param rr2 link to download daily rainfall station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param pp  link to download daily sea level pressure or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param pp2 link to download daily sea level pressure station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param cc  link to download daily cloud coverage or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param cc2 link to download daily cloud coverage station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param hu  link to download daily relative humidity or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param hu2 link to download daily relative humidity station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param fg  link to download daily wind speed or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param fg2 link to download daily wind speed station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
   #' @return For each valid link, a the corresponding file will be downloaded. Data files will be unzipped to the ./raw folder (as requested by INQC)
   #' and sation files will be stored at the specified homefolder
   # @examples downloadator('./data')

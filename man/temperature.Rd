@@ -5,6 +5,7 @@
 \title{QC for Air Temperature (TX/TN/TG)}
 \usage{
 temperature(
+  element = "TX",
   large = 500,
   small = -500,
   maxjump = 200,
@@ -13,50 +14,43 @@ temperature(
   level = 4,
   window = 11,
   roundmax = 10,
-  blocksize = 10,
-  step = 30,
   blockmanymonth = 15,
   blockmanyyear = 180,
   blocksizeround = 20,
   qjump = 0.999,
   tjump = 1.5,
-  element = "TX",
   inisia = FALSE
 )
 }
 \arguments{
+\item{element}{two-letters ECA&D code for the element ('TX' for daily maximum temperature,
+'TN' for daily minimum temperature, 'TG' for daily mean temperature) passed as character string}
+
 \item{large}{value above which the observation is considered physically impossible for the region. Defaulted to 500. Passed on to physics(). See ?physics for details}
 
 \item{small}{value below which the observation is considered physically impossible for the region. Defaulted to -500. Passed on to physics(). See ?physics for details}
 
-\item{maxjump}{forcing for jump2 in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.}
+\item{maxjump}{forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.}
 
 \item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details}
 
-\item{margina}{quantile. Passed on to newfriki(). See ?newfriki for details}
+\item{margina}{tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
 
-\item{level}{should be described later}
+\item{level}{number of IQRs for IQRoutliers()}
 
-\item{window}{should be described later}
+\item{window}{number of days to be considered (including the target), FUNCTION: IQRoutliers()}
 
 \item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive). Passed on to flat()}
 
-\item{blocksize}{should be described later}
+\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{step}{should be described later}
+\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany()}
 
-\item{blockmanymonth}{should be described later}
-
-\item{blockmanyyear}{should be described later}
-
-\item{blocksizeround}{should be described later}
+\item{blocksizeround}{the maximum number of repeated values with the same decimal, FUNCTION: roundprecip()}
 
 \item{qjump}{quantile for jump2 in quantile mode. Passed on to jump2(). See ?jump2 for further details.}
 
 \item{tjump}{factor to multiply the quantile value for jump2. Passed on to jump2(). See ?jump2 for further details.}
-
-\item{element}{two-letters ECA&D code for the element ('TX' for daily maximum temperature,
-'TN' for daily minimum temperature, 'TG' for daily mean temperature) passed as character string}
 
 \item{inisia}{a logical flag. If it is TRUE inithome() will be called}
 }
@@ -65,7 +59,7 @@ results of QC for TX/TN/TG
 }
 \description{
 This function will centralize temperature-like qc routines. It will QC files for temperature. Reads all the temperature data in the
-./raw folder (TX, TN or TG) and quality controls each of them. Notice that ECA&D stores temperature in 1/10th of ªC when entering new parameter values
+./raw folder (TX, TN or TG) and quality controls each of them. Notice that ECA&D stores temperature in 1/10th of Celsius degrees when entering new parameter values
 }
 \seealso{
 consolidator(), duplas(), flat(), IQRoutliers(), jumps2(), newfriki(), physics(), toomany(), rounding(), txtn(), weirdate()

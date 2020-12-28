@@ -1,9 +1,9 @@
 readheader<-function(input="SS_STAID000143.txt"){
 
-  #' Read the header of an ECA&D file
-  #' @description Reads one ECA&D file and returns the header, so it can be written in the same way
+  #' Reads the header of an ECA&D file
+  #' @description This function reads one ECA&D file and returns the header (an introductory part of the ECA&D file), so it can be written in the same way
   #' @param input an ECA&D filename
-  #' @return The header of an ECA&D file
+  #' @return header of an ECA&D file
   #' @export
 
   ##This is old version (v1.0)

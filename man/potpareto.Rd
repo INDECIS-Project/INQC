@@ -2,18 +2,18 @@
 % Please edit documentation in R/potpareto.R
 \name{potpareto}
 \alias{potpareto}
-\title{It should be described later}
+\title{Peaks over threshold modelling}
 \usage{
 potpareto(y, thres = 0.99)
 }
 \arguments{
-\item{y}{it should be described later}
+\item{y}{vector of values (a series) to be analyzed}
 
-\item{thres}{it should be described later}
+\item{thres}{threshold value of probability to define a coresponding threshold percentile}
 }
 \value{
-list of values which did not pass the test
+list containing results of modelling/fitting the generalized Pareto distribution
 }
 \description{
-This function should be described later
+This function fits the Generalized Pareto distrebution for exeedances over a threshold
 }

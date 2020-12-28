@@ -3,9 +3,9 @@ roundprecip<-function(y,blocksize=20,exclude=0){
   #' Rounding in precipitation data
   #' @description This function splits data by month and looks if a decimal value is repeated too many times
   #' @param y two columns with date and data
-  #' @param blocksize the maximum number of repeated values
-  #' @param exclude the value to be excluded (zero for precip)
-  #' @return list of positions which do not pass qc (bad)
+  #' @param blocksize maximum number of repeated values with the same decimal
+  #' @param exclude value to be excluded (zero for precip)
+  #' @return list of positions which do not pass this QC test. If all positions pass the test, returns NULL
   #' @export
 
   bad<-NULL 

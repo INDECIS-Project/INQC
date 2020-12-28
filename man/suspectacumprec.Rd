@@ -7,16 +7,15 @@
 suspectacumprec(datos, limit = 2000, tolerance = 10)
 }
 \arguments{
-\item{datos}{a two columns vector, date and data, in the ECA&D format}
+\item{datos}{two columns vector, date and data, in the ECA&D format}
 
-\item{limit}{el valor de corte para estudiar la precipitacion}
+\item{limit}{threshold/limit value for atmospheric precipitation}
 
-\item{tolerance}{cuantos días consecutivos con 0 o NA necesita para saltar}
+\item{tolerance}{how many consecutive days with 0 or NA you need to jump}
 }
 \value{
-el indice de los días que no pasan el qc($chungos) and la serie rellenada con computecal (es decir, sin huecos) ($px)
+list of positions which do not pass this QC test
 }
 \description{
 This function detects values above limit preceded by a number of "non precip days", given by tolerance
-pretende la detección de precipitación acumulada
 }
