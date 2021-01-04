@@ -7,11 +7,11 @@
 lister(element)
 }
 \arguments{
-\item{element}{a climatological element (defined by means of two letters, i.e. 'TX')}
+\item{element}{climatological element (defined by means of two letters, i.e. 'TX')}
 }
 \value{
-a list of blended or non-bladed files to be QCed
+list of blended or non-bladed files to be QCed
 }
 \description{
-This function create a list of blended or non-bladed files contaning data of a specified element to be QCed.
+This function create a list of blended or non-bladed files containing data of a specified element to be QCed.
 }

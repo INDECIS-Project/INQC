@@ -58,7 +58,7 @@ precip(
 
 \item{window}{number of days to be considered (including the target), FUNCTION: IQRoutliers()}
 
-\item{margina}{a tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki()}
+\item{margina}{a tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki()}
 
 \item{inisia}{a logical flag. If it is TRUE inithome() will be called}
 }

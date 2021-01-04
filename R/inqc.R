@@ -1,6 +1,6 @@
 inqc<-function(homefolder='./',blend=TRUE){
 
-  #' Wraper for QC'ing all varibales
+  #' Wrapper for QC'ing all variables
   #' @description This function calls functions which perform QC for all climate variables
   #' @param homefolder a path to the homefolder, as string
   #' @param blend a logical flag which means performing (if TRUE) QC on blended time series
@@ -25,8 +25,8 @@ inqc<-function(homefolder='./',blend=TRUE){
   #pkg.env$times.changed <- 0
   #assign('times.changed', 0, pkg.env)
   ##Unfortunately, this does not work as well. Actually, it is checked without any errors/warnings/notes but when running the package (after installation)
-  ##pkg.env is not seen (it cuases an error message).
-  ##Here is another sollution from the same site (https://stackoverflow.com/questions/12598242/global-variables-in-packages-in-r)
+  ##pkg.env is not seen (it causes an error message).
+  ##Here is another solution from the same site (https://stackoverflow.com/questions/12598242/global-variables-in-packages-in-r)
   options("homefolder"=homefolder)
   options("blend"=blend)
   inithome()

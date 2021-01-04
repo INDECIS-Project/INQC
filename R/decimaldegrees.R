@@ -1,6 +1,6 @@
 decimaldegrees <- function(dms,sep = ":"){
 
-  #' Converter for geograpical coordinates from the ECA&D format into decimal degrees
+  #' Converter for geographical coordinates from the ECA&D format into decimal degrees
   #' @description This function takes sexagesimal degrees in the ECA&D format and converts them into decimal degrees.
   #' Initial idea was taken from: https://modtools.wordpress.com/2013/09/25/dms2dec/
   #' @param dms ONE ELEMENT from the LAT or LON field in ECA&D listings

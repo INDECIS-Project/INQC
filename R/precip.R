@@ -22,7 +22,7 @@ precip<-function(element='RR',large=5000,small=0,ret=500,retornoracha=500,margin
   #' @param roundmax maximum number of consecutive decimal part values, FUNCTION: flat() (10.0, 11.0, 12.0 would be 3 consecutive)
   #' @param level number of IQRs, FUNCTION: IQRoutliers()
   #' @param window number of days to be considered (including the target), FUNCTION: IQRoutliers()
-  #' @param margina a tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki()
+  #' @param margina a tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki()
   #' @param inisia a logical flag. If it is TRUE inithome() will be called
   # NOTE: parameters exclude, excluido and alike are not included anymore. No need to paramatrize the obvious and unchanging: always
   # need to exclude 0 for precipitation

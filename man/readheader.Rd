@@ -7,7 +7,7 @@
 readheader(input = "SS_STAID000143.txt")
 }
 \arguments{
-\item{input}{an ECA&D filename}
+\item{input}{ECA&D filename}
 }
 \value{
 header of an ECA&D file

@@ -17,5 +17,5 @@ suspectacumprec(datos, limit = 2000, tolerance = 10)
 list of positions which do not pass this QC test
 }
 \description{
-This function detects values above limit preceded by a number of "non precip days", given by tolerance
+This function detects values above limit preceded by a number of "non precipitation days", given by tolerance
 }

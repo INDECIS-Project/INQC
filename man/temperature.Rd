@@ -34,7 +34,7 @@ temperature(
 
 \item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details}
 
-\item{margina}{tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
+\item{margina}{tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
 
 \item{level}{number of IQRs for IQRoutliers()}
 
@@ -52,7 +52,7 @@ temperature(
 
 \item{tjump}{factor to multiply the quantile value for jump2. Passed on to jump2(). See ?jump2 for further details.}
 
-\item{inisia}{a logical flag. If it is TRUE inithome() will be called}
+\item{inisia}{logical flag. If it is TRUE inithome() will be called}
 }
 \value{
 results of QC for TX/TN/TG

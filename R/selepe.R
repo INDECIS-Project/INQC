@@ -12,14 +12,14 @@ selepe<-function(element='PP',large=15000,small=8000,maxjump=2000,maxseq=3,margi
   #' @param small value below which the observation is considered physically impossible for the region
   #' @param maxjump forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.
   #' @param maxseq maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives)
-  #' @param margina tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details
+  #' @param margina tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details
   #' @param level number of IQRs for IQR outliers
   #' @param window window, in days, for IQR outliers
   #' @param roundmax maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)
   # @param blocksize such parameter (blocksize=10) was included into the arguments of the function but not used in the calculations
   # @param step such parameter (step=30) was included into the arguments of the function but not used in the calculations
-  #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany
-  #' @param blockmanyyear maximum number of equal values in a yaer, FUCNTION: toomany
+  #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
+  #' @param blockmanyyear maximum number of equal values in a year, FUCNTION: toomany()
   #' @param blocksizeround maximum number of values in a month with the same decimal, for rounding function
   #' @param qjump quantile for the calculated maximum jump allowed
   #' @param tjump factor to multiply the qjump computed differences

@@ -2,7 +2,7 @@
 % Please edit documentation in R/inqc.R
 \name{inqc}
 \alias{inqc}
-\title{Wraper for QC'ing all varibales}
+\title{Wrapper for QC'ing all variables}
 \usage{
 inqc(homefolder = "./", blend = TRUE)
 }

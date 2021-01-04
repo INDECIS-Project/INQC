@@ -2,10 +2,10 @@ listonator<-function(check=TRUE){
 
   #' Creates a list (as 'Global' variable) of stations to be QCed.
   #' @description This function creates a list (and makes it 'Global' variable) of stations to be QCed.
-  #' It can be 'blended' or 'non-blanded' stations. Geographical cordinates are transphormed into decimal degrees
+  #' It can be 'blended' or 'non-blanded' stations. Geographical coordinates are transformed into decimal degrees
   # @param casa home directory where the "ECA_blend_source*" files are located(?).
-  #' @param check a logical parameter TRUE/FALSE. If check=TRUE a list of stations is created.
-  #' @return a list of stations to be QCed (liston)
+  #' @param check logical parameter TRUE/FALSE. If check=TRUE a list of stations is created.
+  #' @return list of stations to be QCed
   #' @export
 
   ##This is old version (v1.0)

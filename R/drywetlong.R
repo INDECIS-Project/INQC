@@ -7,7 +7,7 @@ drywetlong<-function(x,ret=300,sueco=9.9,dry=TRUE,wet=TRUE){
   #' @param sueco threshold for dividing dry and wet. This is useful to label other binary sequences, e.g. for 0 radiation. Now it is <= and >, instead of < and >=
   #' @param dry if set to TRUE, dry sequences are sent to result; if FALSE, omitted
   #' @param wet same as previous, for wet sequences
-  #' @return list of positions in the input data timeseries which do not pass QC test
+  #' @return list of positions in the input data time series which do not pass QC test
   #' @export
 
   todo<-NULL

@@ -34,11 +34,11 @@ and will store there the data}
 
 \item{tx}{link to download daily maximum temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{tx2}{link to download daily maximu temperatures station list  or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
+\item{tx2}{link to download daily maximum temperatures station list  or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
 \item{tn}{link to download daily minimum temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{tn2}{link to download daily maximu temperature station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
+\item{tn2}{link to download daily minimum temperature station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
 \item{tg}{link to download daily average temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
@@ -73,10 +73,10 @@ and will store there the data}
 \item{fg2}{link to download daily wind speed station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 }
 \value{
-For each valid link, a the corresponding file will be downloaded. Data files will be unzipped to the ./raw folder (as requested by INQC)
-and sation files will be stored at the specified homefolder
+For each valid link, the corresponding file will be downloaded. Data files will be unzipped to the ./raw folder (as requested by INQC)
+and station files will be stored at the specified homefolder
 }
 \description{
 This function will use the default or specified links to download one or several files from ECA&D and place them for their use
-with INQC. For each variable a data file and a station file will/should be specifiied.
+with INQC. For each variable a data file and a station file will/should be specified.
 }

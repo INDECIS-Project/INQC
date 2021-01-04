@@ -9,7 +9,7 @@ toomany(y, blockmany = 15, scope = 1, exclude = NULL)
 \arguments{
 \item{y}{two columns with date and data}
 
-\item{blockmany}{the maximum number of repeated values in a month, year, or season}
+\item{blockmany}{maximum number of repeated values in a month, year, or season}
 
 \item{scope}{monthly (1), annual (2)}
 

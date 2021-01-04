@@ -1,9 +1,9 @@
 potpareto<-function(y,thres=0.99){
 
   #' Peaks over threshold modelling
-  #' @description This function fits the Generalized Pareto distrebution for exeedances over a threshold
+  #' @description This function fits the Generalized Pareto distribution for exeedances over a threshold
   #' @param y vector of values (a series) to be analyzed
-  #' @param thres threshold value of probability to define a coresponding threshold percentile
+  #' @param thres threshold value of probability to define a corresponding threshold percentile
   #' @return list containing results of modelling/fitting the generalized Pareto distribution
   #' @export
 

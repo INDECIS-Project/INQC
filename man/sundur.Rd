@@ -23,11 +23,11 @@ sundur(
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany()}
+\item{blockmanyyear}{maximum number of equal values in a year, FUCNTION: toomany()}
 
 \item{roundmax}{maximum number of consecutive decimal part value, for flat() function (10.0, 11.0, 12.0 would be 3 consecutive)}
 
-\item{inisia}{a logical flag. If it is TRUE inithome() will be called}
+\item{inisia}{logical flag. If it is TRUE inithome() will be called}
 }
 \value{
 results of QC for SS

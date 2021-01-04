@@ -11,7 +11,7 @@ roundprecip(y, blocksize = 20, exclude = 0)
 
 \item{blocksize}{maximum number of repeated values with the same decimal}
 
-\item{exclude}{value to be excluded (zero for precip)}
+\item{exclude}{value to be excluded (zero for precipitation)}
 }
 \value{
 list of positions which do not pass this QC test. If all positions pass the test, returns NULL

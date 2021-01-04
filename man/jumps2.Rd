@@ -7,15 +7,15 @@
 jumps2(date, value, quanty = 0.999, times = 1, force = NULL)
 }
 \arguments{
-\item{date}{a vector of dates}
+\item{date}{vector of dates}
 
-\item{value}{a vector of values}
+\item{value}{vector of values}
 
-\item{quanty}{a numeric value (quantile of the differences) used to aggregate daily diferences}
+\item{quanty}{numeric value (quantile of the differences) used to aggregate daily differences}
 
-\item{times}{a multiplicator for daily values diferences threshold}
+\item{times}{multiplier for daily values differences threshold}
 
-\item{force}{a value of threshold for daily values diferences to be forced}
+\item{force}{value of threshold for daily values differences to be forced}
 }
 \value{
 both values involved in the jump are returned. Need an additional function to decide which is the culprit

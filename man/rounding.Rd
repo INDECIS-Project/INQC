@@ -9,7 +9,7 @@ rounding(y, blocksize = 20)
 \arguments{
 \item{y}{two columns with date in the ECA&D format (yyyymmdd) and data}
 
-\item{blocksize}{the maximum number of repeated values with the same decimal allowed on each block (blocks = months)}
+\item{blocksize}{maximum number of repeated values with the same decimal allowed on each block (blocks = months)}
 }
 \value{
 list of positions which do not pass this QC test. If all positions pass the test, returns NULL

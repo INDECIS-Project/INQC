@@ -2,7 +2,7 @@
 % Please edit documentation in R/decimaldegrees.R
 \name{decimaldegrees}
 \alias{decimaldegrees}
-\title{Converter for geograpical coordinates from the ECA&D format into decimal degrees}
+\title{Converter for geographical coordinates from the ECA&D format into decimal degrees}
 \usage{
 decimaldegrees(dms, sep = ":")
 }

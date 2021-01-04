@@ -3,7 +3,7 @@ rounding<-function(y,blocksize=20){
   #' Detects rounded sections
   #' @description This function splits data by month and looks if a decimal value is repeated too many times
   #' @param y two columns with date in the ECA&D format (yyyymmdd) and data
-  #' @param blocksize the maximum number of repeated values with the same decimal allowed on each block (blocks = months)
+  #' @param blocksize maximum number of repeated values with the same decimal allowed on each block (blocks = months)
   #' @return list of positions which do not pass this QC test. If all positions pass the test, returns NULL
   # @examples
   # y<-readecad('./inst/extdata/raw/TX_SOUID99094.txt')[,3:4]

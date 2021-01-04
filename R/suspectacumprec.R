@@ -1,7 +1,7 @@
 suspectacumprec<-function(datos,limit=2000,tolerance=10){
 
   #' Detect precipitation values above limit
-  #' @description This function detects values above limit preceded by a number of "non precip days", given by tolerance
+  #' @description This function detects values above limit preceded by a number of "non precipitation days", given by tolerance
   #' @param datos two columns vector, date and data, in the ECA&D format
   #' @param limit threshold/limit value for atmospheric precipitation
   #' @param tolerance how many consecutive days with 0 or NA you need to jump

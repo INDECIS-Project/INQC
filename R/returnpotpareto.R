@@ -1,11 +1,11 @@
 returnpotpareto<-function(pato,ret,w=1.65){
 
-  #' Threshold percentile for the Pareto outliyers
+  #' Threshold percentile for the Pareto outliers
   #' @description This function returns a value of a threshold percentile for the Pareto outliyers
   #' @param pato list with results of modelling/fitting the generalized Pareto distribution
   #' @param ret pseudo return period
   #' @param w multiplicator used to calculate a threshold probability
-  #' @return percentile of the generalized Pareto distribution coresponding to a threshold probability calculated based on a peudo return period
+  #' @return percentile of the generalized Pareto distribution corresponding to a threshold probability calculated based on the peudo return period
   #' @export
 
   loc<-pato$threshold

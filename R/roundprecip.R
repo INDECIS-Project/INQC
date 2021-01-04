@@ -4,7 +4,7 @@ roundprecip<-function(y,blocksize=20,exclude=0){
   #' @description This function splits data by month and looks if a decimal value is repeated too many times
   #' @param y two columns with date and data
   #' @param blocksize maximum number of repeated values with the same decimal
-  #' @param exclude value to be excluded (zero for precip)
+  #' @param exclude value to be excluded (zero for precipitation)
   #' @return list of positions which do not pass this QC test. If all positions pass the test, returns NULL
   #' @export
 
@@ -14,7 +14,7 @@ roundprecip<-function(y,blocksize=20,exclude=0){
   y[,3]<-as.integer(substring(y[,2],nchar(y[,2]),nchar(y[,2]))) ### This is a better way to find the decimal part in ECA&D: it is always the last character. 
   zerapio<-which(y[,2] %in% exclude | is.na(y[,2]))
   z<-y[-zerapio,]
-  if(nrow(z) == 0){return(NULL)} ### This is to make it ressistant to series with no values different than zero!
+  if(nrow(z) == 0){return(NULL)} ### This is to make it resistant to series with no values different than zero!
   #### Warning! This line was erroneous and was: 
   #nyu<-as.data.frame(table(y[,1],y[,2])) ### this is good, it can identify those which are over the blocksize, but need to now how to extract/label the values
   # This was causing the code to be really slow, as it was looking at "y" instead of "z". This was labeling most of the values as erroneous and the next loop was

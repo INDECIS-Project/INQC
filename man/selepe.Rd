@@ -33,7 +33,7 @@ selepe(
 
 \item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives)}
 
-\item{margina}{tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
+\item{margina}{tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
 
 \item{level}{number of IQRs for IQR outliers}
 
@@ -41,9 +41,9 @@ selepe(
 
 \item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)}
 
-\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
+\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany}
+\item{blockmanyyear}{maximum number of equal values in a year, FUCNTION: toomany()}
 
 \item{blocksizeround}{maximum number of values in a month with the same decimal, for rounding function}
 

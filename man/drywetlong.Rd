@@ -18,7 +18,7 @@ drywetlong(x, ret = 300, sueco = 9.9, dry = TRUE, wet = TRUE)
 \item{wet}{same as previous, for wet sequences}
 }
 \value{
-list of positions in the input data timeseries which do not pass QC test
+list of positions in the input data time series which do not pass QC test
 }
 \description{
 This function detects episodes of too many consecutive wet or dry days

@@ -8,10 +8,10 @@ snowdepth<-function(element='SD',maxseq=20,blocksizeround=20,blockmanymonth=20,b
   #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutives)
   #' @param blocksizeround maximum number of values in a month with the same decimal, FUNCTION: rounding()
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
-  #' @param blockmanyyear maximum number of equal values in a yaer, FUCNTION: toomany()
+  #' @param blockmanyyear maximum number of equal values in a year, FUCNTION: toomany()
   #' @param large value above which the observation is considered physically impossible for the region, FUNCTION: physics()
   #' @param exclude value to be excluded from a function (in this case, 0 for flats)
-  #' @param inisia a logical flag. If it is TRUE inithome() will be called
+  #' @param inisia logical flag. If it is TRUE inithome() will be called
   #' @return results of QC for SD
   #' @export
 

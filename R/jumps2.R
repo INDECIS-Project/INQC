@@ -2,11 +2,11 @@ jumps2<-function(date,value,quanty=0.999,times=1,force=NULL){
 
   #' Labels interdiurnal large differences
   #' @description This function labels interdiurnal differences considered too large
-  #' @param date a vector of dates
-  #' @param value a vector of values
-  #' @param quanty a numeric value (quantile of the differences) used to aggregate daily diferences
-  #' @param times a multiplicator for daily values diferences threshold
-  #' @param force a value of threshold for daily values diferences to be forced
+  #' @param date vector of dates
+  #' @param value vector of values
+  #' @param quanty numeric value (quantile of the differences) used to aggregate daily differences
+  #' @param times multiplier for daily values differences threshold
+  #' @param force value of threshold for daily values differences to be forced
   #' @return both values involved in the jump are returned. Need an additional function to decide which is the culprit
   #' @export
 

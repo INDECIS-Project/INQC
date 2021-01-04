@@ -7,7 +7,7 @@
 repeatedvalue(x, margin = 20, friki = 150)
 }
 \arguments{
-\item{x}{preciptiation time series}
+\item{x}{precipitation time series}
 
 \item{margin}{difference in frequency of the nearest value}
 
@@ -17,6 +17,6 @@ repeatedvalue(x, margin = 20, friki = 150)
 list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
-This function looks for a value which repeats too many times and, given the decaying shape of preciptiation empirical distro,
+This function looks for a value which repeats too many times and, given the decaying shape of precipitation empirical distro,
 is considered too large to happen that many times
 }

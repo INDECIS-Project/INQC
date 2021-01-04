@@ -9,14 +9,14 @@ flatsun(x, maxseq, id, modonube = FALSE)
 \arguments{
 \item{x}{data.frame date/value (need dates in this implementation of flat)}
 
-\item{maxseq}{a maximum number of contiguous repetitions of a value (e.g., if 3, sequences of 4 will be flagged)}
+\item{maxseq}{maximum number of contiguous repetitions of a value (e.g., if 3, sequences of 4 will be flagged)}
 
 \item{id}{SOUID_SSxxxxxx.txt}
 
-\item{modonube}{a logical flag}
+\item{modonube}{logical flag}
 }
 \value{
-a list of positions which do not pass this QC test
+list of positions which do not pass this QC test
 }
 \description{
 This function uses flat() and modifies it with "smart" comparison with clouds.

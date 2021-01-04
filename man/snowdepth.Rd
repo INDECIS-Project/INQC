@@ -24,13 +24,13 @@ snowdepth(
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany()}
+\item{blockmanyyear}{maximum number of equal values in a year, FUCNTION: toomany()}
 
 \item{large}{value above which the observation is considered physically impossible for the region, FUNCTION: physics()}
 
 \item{exclude}{value to be excluded from a function (in this case, 0 for flats)}
 
-\item{inisia}{a logical flag. If it is TRUE inithome() will be called}
+\item{inisia}{logical flag. If it is TRUE inithome() will be called}
 }
 \value{
 results of QC for SD

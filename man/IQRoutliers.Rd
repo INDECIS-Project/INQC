@@ -7,15 +7,15 @@
 IQRoutliers(date, value, level = 3, window = 11, exclude = NULL)
 }
 \arguments{
-\item{date}{a vector with dates}
+\item{date}{vector with dates}
 
-\item{value}{a vector with data values}
+\item{value}{vector with data values}
 
-\item{level}{a number of IQRs}
+\item{level}{number of IQRs}
 
-\item{window}{a number of days to be considered (including the target)}
+\item{window}{number of days to be considered (including the target)}
 
-\item{exclude}{if it is not null, the code will exlcude this value from the analyisis (i.e., good to exclude 0 for precip)}
+\item{exclude}{if it is not null, the code will exclude this value from the analysis (i.e., good to exclude 0 for precip)}
 }
 \value{
 positions which do not pass this QC test

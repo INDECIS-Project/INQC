@@ -15,7 +15,7 @@ temperature<-function(element='TX',large=500,small=-500,maxjump=200,maxseq=3,mar
   #' @param small value below which the observation is considered physically impossible for the region. Defaulted to -500. Passed on to physics(). See ?physics for details
   #' @param maxjump forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.
   #' @param maxseq maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details
-  #' @param margina tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details
+  #' @param margina tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details
   #' @param level number of IQRs for IQRoutliers()
   #' @param window number of days to be considered (including the target), FUNCTION: IQRoutliers()
   #' @param roundmax maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive). Passed on to flat()
@@ -26,7 +26,7 @@ temperature<-function(element='TX',large=500,small=-500,maxjump=200,maxseq=3,mar
   #' @param blocksizeround the maximum number of repeated values with the same decimal, FUNCTION: roundprecip()
   #' @param qjump quantile for jump2 in quantile mode. Passed on to jump2(). See ?jump2 for further details.
   #' @param tjump factor to multiply the quantile value for jump2. Passed on to jump2(). See ?jump2 for further details.
-  #' @param inisia a logical flag. If it is TRUE inithome() will be called
+  #' @param inisia logical flag. If it is TRUE inithome() will be called
   #' @return results of QC for TX/TN/TG
   #' @export
 

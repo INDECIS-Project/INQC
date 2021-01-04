@@ -13,12 +13,12 @@ consolidator<-function(filename,x){
   #' 9: Missing value.
   #'
   #' A second file is placed in the subfolder QC and includes all date, value and a column for each QC test ran over this file. Values passing/not passing QC
-  #' are labelled with 0/1. A third file sumarizes the number of values falling on each category (0,1,2,3,4,9) and the number of values failing each test
+  #' are labelled with 0/1. A third file summarizes the number of values falling on each category (0,1,2,3,4,9) and the number of values failing each test
   #'
   # @param home homefolder of the ECA&D file name. Defaulted to ./data
   #' @param filename the ECA&D file name, expressed as VV_SOUIDXXXXXX.txt, where "VV" is the two-letters variable code, "SOUID" is literal,
   #' XXXXXX is the ECA&D SOUID code and ".txt" is literal
-  #' @param x the QC'd series, formated as date, value, qcflag
+  #' @param x the QC'd series, formatted as date, value, qcflag
   #' @return It does not return any value. Each time when called, it will create three files:
   #' Summary file,  placed at ./QCSumamry/SummaryVV_SOUIDXXXXXX.txt;
   #' QC consolidated file, placed at ./QCConsolidated/VV_SOUIDXXXXXX.txt;
