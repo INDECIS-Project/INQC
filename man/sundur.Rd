@@ -17,15 +17,15 @@ sundur(
 \arguments{
 \item{element}{two-letters ECA&D code for the element (SS for sunshine duration)}
 
-\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details}
+\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutive values). Passed on to flat(). See ?flat for details}
 
 \item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding()}
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a year, FUCNTION: toomany()}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany()}
 
-\item{roundmax}{maximum number of consecutive decimal part value, for flat() function (10.0, 11.0, 12.0 would be 3 consecutive)}
+\item{roundmax}{maximum number of consecutive decimal part value, for flat() function (10.0, 11.0, 12.0 would be 3 consecutive values)}
 
 \item{inisia}{logical flag. If it is TRUE inithome() will be called}
 }
@@ -33,6 +33,6 @@ sundur(
 results of QC for SS
 }
 \description{
-This function will centralize temperature-like qc routines. Will create a file in the folder QC
+This function will centralize temperature-like QC routines. Will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed
 }

@@ -32,7 +32,7 @@ temperature(
 
 \item{maxjump}{forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.}
 
-\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details}
+\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutive values). Passed on to flat(). See ?flat for details}
 
 \item{margina}{tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
 
@@ -40,11 +40,11 @@ temperature(
 
 \item{window}{number of days to be considered (including the target), FUNCTION: IQRoutliers()}
 
-\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive). Passed on to flat()}
+\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive value). Passed on to flat()}
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany()}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany()}
 
 \item{blocksizeround}{the maximum number of repeated values with the same decimal, FUNCTION: roundprecip()}
 
@@ -58,7 +58,7 @@ temperature(
 results of QC for TX/TN/TG
 }
 \description{
-This function will centralize temperature-like qc routines. It will QC files for temperature. Reads all the temperature data in the
+This function will centralize temperature-like QC routines. It will QC files for temperature. Reads all the temperature data in the
 ./raw folder (TX, TN or TG) and quality controls each of them. Notice that ECA&D stores temperature in 1/10th of Celsius degrees when entering new parameter values
 }
 \seealso{

@@ -2,16 +2,16 @@ windspeed<-function(element='FG',maxseq=3,blocksizeround=20,blockmanymonth=20,bl
                     large=3000,roundmax=10,level=5,window=30,ret=500,margina=0.999,inisia=FALSE){
 
   #' QC for Wind Speed (FG)
-  #' @description This function will centralize temperature-like qc routines. It will create a file in the folder QC
+  #' @description This function will centralize temperature-like QC routines. It will create a file in the folder QC
   #' with an additional 0/1 column, where "1" means test failed. 
   # @param home path to the home directory
   #' @param element two-letters ECA&D code for the element (e.g., FG for wind speed)
-  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives)
+  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutive values)
   #' @param blocksizeround maximum number of values in a month with the same decimal, FUNCTION: rounding()
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
-  #' @param blockmanyyear maximum number of equal values in a year, FUCNTION: toomany()
+  #' @param blockmanyyear maximum number of equal values in a year, FUNCTION: toomany()
   #' @param large value above which the observation is considered physically impossible for the region, FUNCTION: physics()
-  #' @param roundmax maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)
+  #' @param roundmax maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive values)
   #' @param level number of IQRs for IQR outliers
   #' @param window window, in days, for IQR outliers
   #' @param ret pseudo-return period for the Pareto outliers

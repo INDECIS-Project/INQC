@@ -16,13 +16,13 @@ clocov(
 \arguments{
 \item{element}{two-letters ECA&D code for the element (CC for cloud cover)}
 
-\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives).}
+\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutive values).}
 
 \item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding}
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany}
 
 \item{inisia}{a logical flag. If it is TRUE inithome() will be called}
 }
@@ -30,6 +30,6 @@ clocov(
 QC results for CC
 }
 \description{
-This function will centralize temperature-like qc routines. It will create a file in the folder QC
+This function will centralize temperature-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
 }

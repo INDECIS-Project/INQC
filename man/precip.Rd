@@ -44,15 +44,15 @@ precip(
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany()}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany()}
 
 \item{limit}{cut threshold for FUNCTION suspectacumprec()}
 
 \item{tolerance}{number of NA or 0s before allowed before the limit, FUNCTION: suspectacumprec()}
 
-\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutives)}
+\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutive values)}
 
-\item{roundmax}{maximum number of consecutive decimal part values, FUNCTION: flat() (10.0, 11.0, 12.0 would be 3 consecutive)}
+\item{roundmax}{maximum number of consecutive decimal part values, FUNCTION: flat() (10.0, 11.0, 12.0 would be 3 consecutive values)}
 
 \item{level}{number of IQRs, FUNCTION: IQRoutliers()}
 
@@ -66,6 +66,6 @@ precip(
 results of QC for RR
 }
 \description{
-This function will centralize precipitation-like qc routines. It will create a file in the folder QC
+This function will centralize precipitation-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
 }

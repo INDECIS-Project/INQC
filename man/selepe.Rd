@@ -31,7 +31,7 @@ selepe(
 
 \item{maxjump}{forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.}
 
-\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives)}
+\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutive values)}
 
 \item{margina}{tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
 
@@ -39,11 +39,11 @@ selepe(
 
 \item{window}{window, in days, for IQR outliers}
 
-\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)}
+\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive values)}
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a year, FUCNTION: toomany()}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany()}
 
 \item{blocksizeround}{maximum number of values in a month with the same decimal, for rounding function}
 
@@ -57,6 +57,6 @@ selepe(
 results of QC for PP
 }
 \description{
-This function will centralize temperature-like qc routines. It will create a file in the folder QC
+This function will centralize temperature-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column where "1" means test failed.
 }

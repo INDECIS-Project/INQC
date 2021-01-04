@@ -6,7 +6,7 @@ newfriki<-function(date,value,margina=0.999,times=2){
   #' @param date vector of dates with the format of yyyymmdd
   #' @param value vector of data values
   #' @param margina tolerance margin, expressed as quantile of the differences
-  #' @param times multiplicator to the tolerance margin. Intended usage is to run this twice. Once with times = 1 and flag values as suspect; once with times = 2 and flag as error
+  #' @param times multiplier for the tolerance margin. Intended usage is to run this twice. Once with times = 1 and flag values as suspect; once with times = 2 and flag as error
   #' @return positions which do not pass this QC test
   #' @export
 

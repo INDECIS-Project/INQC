@@ -5,7 +5,7 @@ toomany<-function(y,blockmany=15,scope=1,exclude=NULL){
   #' @param y two columns with date and data
   #' @param blockmany maximum number of repeated values in a month, year, or season
   #' @param scope monthly (1), annual (2)
-  #' @param exclude values to exclude, e.g. if precip, 0 must be excluded
+  #' @param exclude values to exclude, e.g. if precipitation, 0 must be excluded
   #' @return list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 
   bad<-NULL

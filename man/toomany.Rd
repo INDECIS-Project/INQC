@@ -13,7 +13,7 @@ toomany(y, blockmany = 15, scope = 1, exclude = NULL)
 
 \item{scope}{monthly (1), annual (2)}
 
-\item{exclude}{values to exclude, e.g. if precip, 0 must be excluded}
+\item{exclude}{values to exclude, e.g. if precipitation, 0 must be excluded}
 }
 \value{
 list of positions which do not pass this QC test. If all positions pass the test, returns NULL

@@ -1,10 +1,10 @@
 repeatedvalue<-function(x,margin=20,friki=150){
 
   ### WARNING: eval this function, as probably does the same than newfriki, but in a less efficient and more time consuming way
-  ### also, parametrization is less objective
+  ### also, parameterization is less objective
 
   #' Finds repeated values
-  #' @description This function looks for a value which repeats too many times and, given the decaying shape of precipitation empirical distro,
+  #' @description This function looks for a value which repeats too many times and, given the decaying shape of precipitation of empirical distribution,
   #' is considered too large to happen that many times
   #' @param x precipitation time series
   #' @param margin difference in frequency of the nearest value

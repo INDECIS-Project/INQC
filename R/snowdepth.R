@@ -1,14 +1,14 @@
 snowdepth<-function(element='SD',maxseq=20,blocksizeround=20,blockmanymonth=20,blockmanyyear=200,large=5000,exclude=0,inisia=FALSE){
 
   #' QC for Snow Depth (SD)
-  #' @description This function will centralize temperature-like qc routines. It will create a file in the folder QC
+  #' @description This function will centralize temperature-like QC routines. It will create a file in the folder QC
   #' with an additional 0/1 column, where "1" means test failed.
   # @param home path to the home directory
   #' @param element two-letters ECA&D code for the element (SD for snow depth)
-  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutives)
+  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutive values)
   #' @param blocksizeround maximum number of values in a month with the same decimal, FUNCTION: rounding()
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
-  #' @param blockmanyyear maximum number of equal values in a year, FUCNTION: toomany()
+  #' @param blockmanyyear maximum number of equal values in a year, FUNCTION: toomany()
   #' @param large value above which the observation is considered physically impossible for the region, FUNCTION: physics()
   #' @param exclude value to be excluded from a function (in this case, 0 for flats)
   #' @param inisia logical flag. If it is TRUE inithome() will be called

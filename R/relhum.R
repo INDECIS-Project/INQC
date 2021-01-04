@@ -1,15 +1,15 @@
 relhum<-function(element='HU',maxseq=3,blocksizeround=20,blockmanymonth=15,blockmanyyear=180,roundmax=10,inisia=FALSE){
 
   #' QC for Relative Humidity (HU)
-  #' @description This function will centralize temperature-like qc routines. Will create a file in the folder QC
+  #' @description This function will centralize temperature-like QC routines. Will create a file in the folder QC
   #' with an additional 0/1 column, where "1" means test failed.
   # @param home path to the home directory
   #' @param element two-letters ECA&D code for the element (HU for relative humidity)
-  #' @param maxseq maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details
+  #' @param maxseq maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutive values). Passed on to flat(). See ?flat for details
   #' @param blocksizeround maximum number of values in a month with the same decimal, FUNCTION: rounding()
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
-  #' @param blockmanyyear maximum number of equal values in a year, FUCNTION: toomany()
-  #' @param roundmax maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)
+  #' @param blockmanyyear maximum number of equal values in a year, FUNCTION: toomany()
+  #' @param roundmax maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive values)
   #' @param inisia a logical flag. If it is TRUE inithome() will be called
   #' @return results of QC for HU
   #' @export

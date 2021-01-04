@@ -11,7 +11,7 @@ flat(y, maxseq, exclude = NULL)
 
 \item{maxseq}{the maximum number of contiguous repetitions of a value (e.g., if 3, sequences of 4 will be flagged)}
 
-\item{exclude}{values to be excluded. This is useful for variables where a single value is expected to repeat many times, e.g. 0.0 in precip.}
+\item{exclude}{values to be excluded. This is useful for variables where a single value is expected to repeat many times, e.g. 0.0 in precipitation.}
 }
 \value{
 list of positions which do not pass this QC test. If all positions pass the test, returns NULL

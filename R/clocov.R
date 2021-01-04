@@ -1,14 +1,14 @@
 clocov<-function(element='CC',maxseq=8,blocksizeround=20,blockmanymonth=20,blockmanyyear=200,inisia=FALSE){
 
   #' QC for Cloud Cover (CC)
-  #' @description This function will centralize temperature-like qc routines. It will create a file in the folder QC
+  #' @description This function will centralize temperature-like QC routines. It will create a file in the folder QC
   #' with an additional 0/1 column, where "1" means test failed.
   # @param home path to the home directory
   #' @param element two-letters ECA&D code for the element (CC for cloud cover)
-  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives).
+  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutive values).
   #' @param blocksizeround maximum number of values in a month with the same decimal, FUNCTION: rounding
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany
-  #' @param blockmanyyear maximum number of equal values in a yaer, FUCNTION: toomany
+  #' @param blockmanyyear maximum number of equal values in a year, FUNCTION: toomany
   #' @param inisia a logical flag. If it is TRUE inithome() will be called
   #' @return QC results for CC
   #' @export

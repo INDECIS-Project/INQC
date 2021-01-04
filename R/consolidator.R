@@ -3,7 +3,7 @@ consolidator<-function(filename,x){
   #' Consolidates QC files
   #' @description This function is not intended to be called as a stand-alone function. It is automatically called each time a file ends its QC.
   #' It will write the quality control files. One file will be placed in a subfolder of the homefolder named QCConslidated. It will use the exact ECA&D
-  #' format (date, value, qcflag). The QCflag file includes:
+  #' format (date, value, QC flag). The QC flags include:
   #'
   #' 0: Passed QC;
   #' 1: ERROR;
@@ -16,9 +16,9 @@ consolidator<-function(filename,x){
   #' are labelled with 0/1. A third file summarizes the number of values falling on each category (0,1,2,3,4,9) and the number of values failing each test
   #'
   # @param home homefolder of the ECA&D file name. Defaulted to ./data
-  #' @param filename the ECA&D file name, expressed as VV_SOUIDXXXXXX.txt, where "VV" is the two-letters variable code, "SOUID" is literal,
+  #' @param filename ECA&D file name, expressed as VV_SOUIDXXXXXX.txt, where "VV" is the two-letters variable code, "SOUID" is literal,
   #' XXXXXX is the ECA&D SOUID code and ".txt" is literal
-  #' @param x the QC'd series, formatted as date, value, qcflag
+  #' @param x QC'd series, formatted as date, value, QC flag
   #' @return It does not return any value. Each time when called, it will create three files:
   #' Summary file,  placed at ./QCSumamry/SummaryVV_SOUIDXXXXXX.txt;
   #' QC consolidated file, placed at ./QCConsolidated/VV_SOUIDXXXXXX.txt;

@@ -15,7 +15,7 @@ IQRoutliers(date, value, level = 3, window = 11, exclude = NULL)
 
 \item{window}{number of days to be considered (including the target)}
 
-\item{exclude}{if it is not null, the code will exclude this value from the analysis (i.e., good to exclude 0 for precip)}
+\item{exclude}{if it is not null, the code will exclude this value from the analysis (i.e., good to exclude 0 for precipitation)}
 }
 \value{
 positions which do not pass this QC test

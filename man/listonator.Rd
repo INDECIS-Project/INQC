@@ -14,5 +14,5 @@ list of stations to be QCed
 }
 \description{
 This function creates a list (and makes it 'Global' variable) of stations to be QCed.
-It can be 'blended' or 'non-blanded' stations. Geographical coordinates are transformed into decimal degrees
+It can be 'blended' or 'non-blended' stations. Geographical coordinates are transformed into decimal degrees
 }

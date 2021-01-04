@@ -17,6 +17,6 @@ repeatedvalue(x, margin = 20, friki = 150)
 list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
-This function looks for a value which repeats too many times and, given the decaying shape of precipitation empirical distro,
+This function looks for a value which repeats too many times and, given the decaying shape of precipitation of empirical distribution,
 is considered too large to happen that many times
 }

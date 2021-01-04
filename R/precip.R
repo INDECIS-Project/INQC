@@ -3,7 +3,7 @@ precip<-function(element='RR',large=5000,small=0,ret=500,retornoracha=500,margin
                  margina=0.999,inisia=FALSE){
 
   #' QC for Atmospheric Precipitation (RR)
-  #' @description This function will centralize precipitation-like qc routines. It will create a file in the folder QC
+  #' @description This function will centralize precipitation-like QC routines. It will create a file in the folder QC
   #' with an additional 0/1 column, where "1" means test failed.
   # @param home path to the home directory
   #' @param element two-letters ECA&D code for the element (RR for precipitation)
@@ -15,16 +15,16 @@ precip<-function(element='RR',large=5000,small=0,ret=500,retornoracha=500,margin
   #' @param friki minimum value to be considered by repeatedvalue()
   #' @param blocksizeround maximum number of repeated values with the same decimal, FUNCTION: roundprecip()
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
-  #' @param blockmanyyear maximum number of equal values in a yaer, FUCNTION: toomany()
+  #' @param blockmanyyear maximum number of equal values in a year, FUNCTION: toomany()
   #' @param limit cut threshold for FUNCTION suspectacumprec()
   #' @param tolerance number of NA or 0s before allowed before the limit, FUNCTION: suspectacumprec()
-  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutives)
-  #' @param roundmax maximum number of consecutive decimal part values, FUNCTION: flat() (10.0, 11.0, 12.0 would be 3 consecutive)
+  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutive values)
+  #' @param roundmax maximum number of consecutive decimal part values, FUNCTION: flat() (10.0, 11.0, 12.0 would be 3 consecutive values)
   #' @param level number of IQRs, FUNCTION: IQRoutliers()
   #' @param window number of days to be considered (including the target), FUNCTION: IQRoutliers()
   #' @param margina a tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki()
   #' @param inisia a logical flag. If it is TRUE inithome() will be called
-  # NOTE: parameters exclude, excluido and alike are not included anymore. No need to paramatrize the obvious and unchanging: always
+  # NOTE: parameters exclude, excluido and alike are not included anymore. No need to parameterize the obvious and unchanging: always
   # need to exclude 0 for precipitation
   #' @return results of QC for RR
   #' @export

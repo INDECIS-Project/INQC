@@ -11,11 +11,11 @@ returnpotpareto(pato, ret, w = 1.65)
 
 \item{ret}{pseudo return period}
 
-\item{w}{multiplicator used to calculate a threshold probability}
+\item{w}{multiplier used to calculate a threshold probability}
 }
 \value{
-percentile of the generalized Pareto distribution corresponding to a threshold probability calculated based on the peudo return period
+percentile of the generalized Pareto distribution corresponding to a threshold probability calculated based on the pseudo return period
 }
 \description{
-This function returns a value of a threshold percentile for the Pareto outliyers
+This function returns a value of a threshold percentile for the Pareto outliers
 }
