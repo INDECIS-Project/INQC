@@ -4,7 +4,11 @@ computecal=function(fy,ly){
   #' @description This function prepares a calendar frame and returns it as year,month,day (i.e., the 3 first columns of RClimdex format)
   #' @param fy first year to work with (past)
   #' @param ly last year to work with (present)
-  #' @return 3 columns containing year,month,day (calframe)
+  #' @return 3 columns containing year,month,day
+  #' @examples
+  #' fy<-1981
+  #' ly<-2020
+  #' clndr<-computecal(fy,ly)
   #' @export
 
   fy<-paste(fy,1,1,sep='/')

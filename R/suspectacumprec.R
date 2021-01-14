@@ -1,11 +1,18 @@
 suspectacumprec<-function(datos,limit=2000,tolerance=10){
 
   #' Detect precipitation values above limit
-  #' @description This function detects values above limit preceded by a number of "non precip days", given by tolerance
+  #' @description This function detects values above limit preceded by a number of "non precipitation days", given by tolerance
   #' @param datos two columns vector, date and data, in the ECA&D format
   #' @param limit threshold/limit value for atmospheric precipitation
   #' @param tolerance how many consecutive days with 0 or NA you need to jump
   #' @return list of positions which do not pass this QC test
+  #' @examples
+  #' #Extract the ECA&D data file from the example data folder
+  #' path2inptfl<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
+  #' #Read the data file
+  #' datos<-readecad(input=path2inptfl,missing= -9999)[,3:4]
+  #' #Find all suspicious positions in the precipitation time series
+  #' suspectacumprec(datos,limit=2000,tolerance=10)
   #' @export
 
   bisco<-NULL

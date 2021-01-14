@@ -18,24 +18,48 @@ snowdepth(
 \arguments{
 \item{element}{two-letters ECA&D code for the element (SD for snow depth)}
 
-\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutives)}
+\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutive values)}
 
 \item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding()}
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany()}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany()}
 
 \item{large}{value above which the observation is considered physically impossible for the region, FUNCTION: physics()}
 
 \item{exclude}{value to be excluded from a function (in this case, 0 for flats)}
 
-\item{inisia}{a logical flag. If it is TRUE inithome() will be called}
+\item{inisia}{logical flag. If it is TRUE inithome() will be called}
 }
 \value{
 results of QC for SD
 }
 \description{
-This function will centralize temperature-like qc routines. It will create a file in the folder QC
+This function will centralize temperature-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
+}
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2sdlist<-system.file("extdata", "ECA_blend_source_sd.txt", package = "INQC")
+sdlist<-readr::read_lines_raw(path2sdlist)
+readr::write_lines(sdlist,'ECA_blend_source_sd.txt')
+path2sddata<-system.file("extdata", "SD_SOUID132731.txt", package = "INQC")
+sddata<-readr::read_lines_raw(path2sddata)
+readr::write_lines(sddata, file=paste(wd,'\\\\raw\\\\SD_SOUID132731.txt',sep=''))
+#Perform QC of Snow Depth data
+snowdepth(inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
 }

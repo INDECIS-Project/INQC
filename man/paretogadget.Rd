@@ -2,18 +2,18 @@
 % Please edit documentation in R/paretogadget.R
 \name{paretogadget}
 \alias{paretogadget}
-\title{Finds outliyers}
+\title{Finds outliers}
 \usage{
 paretogadget(x, ret)
 }
 \arguments{
-\item{x}{a vector of values (a series) to be analyzed}
+\item{x}{vector of values (a series) to be analyzed}
 
-\item{ret}{a pseudo return period}
+\item{ret}{pseudo return period}
 }
 \value{
-a list of positions where corresponding values do not pass this QC test (which can be considered as outliyers)
+list of positions which do not pass this QC test (which can be considered as outliers)
 }
 \description{
-This function finds outliyers for variables which can be described/evaluated by means of the Pareto distribution (e.g. atmospheric precipitation or wind speed)
+This function finds outliers for variables which can be described/evaluated by means of the Pareto distribution (e.g. atmospheric precipitation or wind speed)
 }

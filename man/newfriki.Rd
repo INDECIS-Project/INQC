@@ -7,13 +7,13 @@
 newfriki(date, value, margina = 0.999, times = 2)
 }
 \arguments{
-\item{date}{a vector of dates with the format of yyyymmdd}
+\item{date}{vector of dates with the format of yyyymmdd}
 
-\item{value}{a vector of data values}
+\item{value}{vector of data values}
 
-\item{margina}{a tolerence margin, expressed as quantile of the differences}
+\item{margina}{tolerance margin, expressed as quantile of the differences}
 
-\item{times}{a multiplicator to the tolerance margin. Intended usage is to run this twice. Once with times = 1 and flag values as suspect; once with times = 2 and flag as error}
+\item{times}{multiplier for the tolerance margin. Intended usage is to run this twice. Once with times = 1 and flag values as suspect; once with times = 2 and flag as error}
 }
 \value{
 positions which do not pass this QC test

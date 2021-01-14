@@ -16,13 +16,13 @@ clocov(
 \arguments{
 \item{element}{two-letters ECA&D code for the element (CC for cloud cover)}
 
-\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutives).}
+\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutive values).}
 
 \item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding}
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany}
 
 \item{inisia}{a logical flag. If it is TRUE inithome() will be called}
 }
@@ -30,6 +30,30 @@ clocov(
 QC results for CC
 }
 \description{
-This function will centralize temperature-like qc routines. It will create a file in the folder QC
+This function will centralize temperature-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
+}
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2cclist<-system.file("extdata", "ECA_blend_source_cc.txt", package = "INQC")
+cclist<-readr::read_lines_raw(path2cclist)
+readr::write_lines(cclist,'ECA_blend_source_cc.txt')
+path2ccdata<-system.file("extdata", "CC_SOUID132727.txt", package = "INQC")
+ccdata<-readr::read_lines_raw(path2ccdata)
+readr::write_lines(ccdata, file=paste(wd,'\\\\raw\\\\CC_SOUID132727.txt',sep=''))
+#Perform QC of Cloud Cover data
+clocov(inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
 }

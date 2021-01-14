@@ -20,7 +20,7 @@ list of positions which do not pass this QC test. If all positions pass the test
 Given a data vector, the function will compare the values to the specified threshold
 }
 \examples{
-x<-rnorm(100);
-x[10]<-100;
+x<-rnorm(100)
+x[10]<-100
 physics(x,5,1)
 }

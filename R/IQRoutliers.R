@@ -2,12 +2,20 @@ IQRoutliers<-function(date,value,level=3,window=11,exclude=NULL){
 
   #' Computes outliers
   #' @description This function computes outliers centralized around a day, using a number of days around it
-  #' @param date a vector with dates
-  #' @param value a vector with data values
-  #' @param level a number of IQRs
-  #' @param window a number of days to be considered (including the target)
-  #' @param exclude if it is not null, the code will exlcude this value from the analyisis (i.e., good to exclude 0 for precip)
+  #' @param date vector with dates
+  #' @param value vector with data values
+  #' @param level number of IQRs
+  #' @param window number of days to be considered (including the target)
+  #' @param exclude if it is not null, the code will exclude this value from the analysis (i.e., good to exclude 0 for precipitation)
   #' @return positions which do not pass this QC test
+  #' @examples
+  #' #Extract the ECA&D data file from the example data folder
+  #' path2inptfl<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
+  #' #Read the data file
+  #' date<-readecad(input=path2inptfl,missing= -9999)[,3]
+  #' value<-readecad(input=path2inptfl,missing= -9999)[,4]
+  #' #Find all suspicious positions in the time series
+  #' IQRoutliers(date,value,level=3,window=11,exclude=NULL)
   #' @export
 
   bad<-NULL

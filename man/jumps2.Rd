@@ -7,19 +7,31 @@
 jumps2(date, value, quanty = 0.999, times = 1, force = NULL)
 }
 \arguments{
-\item{date}{a vector of dates}
+\item{date}{vector of dates}
 
-\item{value}{a vector of values}
+\item{value}{vector of values}
 
-\item{quanty}{a numeric value (quantile of the differences) used to aggregate daily diferences}
+\item{quanty}{numeric value (quantile of the differences) used to aggregate daily differences}
 
-\item{times}{a multiplicator for daily values diferences threshold}
+\item{times}{factor to multiply the quantile value}
 
-\item{force}{a value of threshold for daily values diferences to be forced}
+\item{force}{value of threshold for daily value differences to be forced}
 }
 \value{
-both values involved in the jump are returned. Need an additional function to decide which is the culprit
+list of positions which do not pass this QC test
 }
 \description{
 This function labels interdiurnal differences considered too large
+}
+\examples{
+#Extract the ECA&D data file from the example data folder
+path2inptfl<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
+#Read the data file
+date<-readecad(input=path2inptfl,missing= -9999)[,3]
+value<-readecad(input=path2inptfl,missing= -9999)[,4]
+#Find all suspicious positions in the time series
+jumps2(date,value,quanty=0.999,times=1)
+
+#Find all suspicious positions in the time series
+jumps2(date,value,force=100)
 }

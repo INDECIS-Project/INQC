@@ -17,5 +17,13 @@ suspectacumprec(datos, limit = 2000, tolerance = 10)
 list of positions which do not pass this QC test
 }
 \description{
-This function detects values above limit preceded by a number of "non precip days", given by tolerance
+This function detects values above limit preceded by a number of "non precipitation days", given by tolerance
+}
+\examples{
+#Extract the ECA&D data file from the example data folder
+path2inptfl<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
+#Read the data file
+datos<-readecad(input=path2inptfl,missing= -9999)[,3:4]
+#Find all suspicious positions in the precipitation time series
+suspectacumprec(datos,limit=2000,tolerance=10)
 }

@@ -11,5 +11,5 @@ it does not return any values, just creates the described folders if they do not
 }
 \description{
 This function will checks if all necessary folders ('QCSummary, QC and QCConsolidated) exist and if not, creates them.
-Not intended as a stand-alone function. Called from other routinees.
+Not intended as a stand-alone function. Called from other routines.
 }

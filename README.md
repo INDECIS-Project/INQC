@@ -14,10 +14,9 @@ a wide range of QC tests for almost all types of errors in daily data
 and almost all climate variables such as air temperature, atmospheric
 precipitation, pressure etc. Originally, INQC was created in order to QC
 the [ECA\&D](https://www.ecad.eu/dailydata/predefinedseries.php) station
-data in the frame of the [INDECIS](http://www.indecis.eu/) project.
-However, INQC’s functions can be used to deal with quality control
-problems in any other climatological data set with the daily time
-resolution.
+data in the frame of the INDECIS project. However, INQC’s functions can
+be used to deal with quality control problems in any other
+climatological data set with the daily time resolution.
 
 ## Installation
 

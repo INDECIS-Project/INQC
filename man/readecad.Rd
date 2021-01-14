@@ -17,3 +17,9 @@ data frame containing data (time series) from the ECA&D file. An introductory pa
 \description{
 This function reads one ECA&D file and puts it in yyyy/mm/dd/value. Data is NOT divided by 10, to transform it into true units
 }
+\examples{
+#Extract the ECA&D data file from the example data folder
+path2inptfl<-system.file("extdata", "CC_SOUID132727.txt", package = "INQC")
+#Read the data file
+df<-readecad(input=path2inptfl,missing= -9999) 
+}

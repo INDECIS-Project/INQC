@@ -17,15 +17,15 @@ relhum(
 \arguments{
 \item{element}{two-letters ECA&D code for the element (HU for relative humidity)}
 
-\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details}
+\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutive values). Passed on to flat(). See ?flat for details}
 
 \item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding()}
 
-\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
+\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany()}
 
-\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)}
+\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive values)}
 
 \item{inisia}{a logical flag. If it is TRUE inithome() will be called}
 }
@@ -33,6 +33,30 @@ relhum(
 results of QC for HU
 }
 \description{
-This function will centralize temperature-like qc routines. Will create a file in the folder QC
+This function will centralize temperature-like QC routines. Will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
+}
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2hulist<-system.file("extdata", "ECA_blend_source_hu.txt", package = "INQC")
+hulist<-readr::read_lines_raw(path2hulist)
+readr::write_lines(hulist,'ECA_blend_source_hu.txt')
+path2hudata<-system.file("extdata", "HU_SOUID132735.txt", package = "INQC")
+hudata<-readr::read_lines_raw(path2hudata)
+readr::write_lines(hudata, file=paste(wd,'\\\\raw\\\\HU_SOUID132735.txt',sep=''))
+#Perform QC of Relative Humidity data
+relhum(inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
 }

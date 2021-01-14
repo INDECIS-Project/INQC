@@ -4,14 +4,14 @@ flatsun<-function(x,maxseq,id,modonube=FALSE){
   #' @description This function uses flat() and modifies it with "smart" comparison with clouds.
   #' If close to 8 and close to 0 clouds, allowed; if close to maxsundur and clouds near 0, allowed
   #  CAUTION: While E. Coyote Genius Masterpiece updated to test cloud flats; Rationale: add "modononube"; if TRUE, changes are made to end
-  #  up with "sun" in x and "clouds" in y therafter, everything remains the same.
+  #  up with "sun" in x and "clouds" in y thereafter, everything remains the same.
   #' @param x data.frame date/value (need dates in this implementation of flat)
-  #' @param maxseq a maximum number of contiguous repetitions of a value (e.g., if 3, sequences of 4 will be flagged)
+  #' @param maxseq maximum number of contiguous repetitions of a value (e.g., if 3, sequences of 4 will be flagged)
   #' @param id SOUID_SSxxxxxx.txt
   # @param casa does not include raw, e.g. '../mickeymouse/'
-  #' @param modonube a logical flag
+  #' @param modonube logical flag
   # @param liston a list file with all time series
-  #' @return a list of positions which do not pass this QC test
+  #' @return list of positions which do not pass this QC test
   #' @export
 
   bad<-NULL

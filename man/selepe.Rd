@@ -31,19 +31,19 @@ selepe(
 
 \item{maxjump}{forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.}
 
-\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives)}
+\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutive values)}
 
-\item{margina}{tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
+\item{margina}{tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
 
 \item{level}{number of IQRs for IQR outliers}
 
 \item{window}{window, in days, for IQR outliers}
 
-\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive)}
+\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive values)}
 
-\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany}
+\item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany()}
 
 \item{blocksizeround}{maximum number of values in a month with the same decimal, for rounding function}
 
@@ -57,6 +57,30 @@ selepe(
 results of QC for PP
 }
 \description{
-This function will centralize temperature-like qc routines. It will create a file in the folder QC
+This function will centralize temperature-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column where "1" means test failed.
+}
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2pplist<-system.file("extdata", "ECA_blend_source_pp.txt", package = "INQC")
+pplist<-readr::read_lines_raw(path2pplist)
+readr::write_lines(pplist,'ECA_blend_source_pp.txt')
+path2ppdata<-system.file("extdata", "PP_SOUID132729.txt", package = "INQC")
+ppdata<-readr::read_lines_raw(path2ppdata)
+readr::write_lines(ppdata, file=paste(wd,'\\\\raw\\\\PP_SOUID132729.txt',sep=''))
+#Perform QC of Atmospheric Pressure data
+selepe(inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
 }

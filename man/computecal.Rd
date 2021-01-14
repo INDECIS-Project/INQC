@@ -12,8 +12,13 @@ computecal(fy, ly)
 \item{ly}{last year to work with (present)}
 }
 \value{
-3 columns containing year,month,day (calframe)
+3 columns containing year,month,day
 }
 \description{
 This function prepares a calendar frame and returns it as year,month,day (i.e., the 3 first columns of RClimdex format)
+}
+\examples{
+fy<-1981
+ly<-2020
+clndr<-computecal(fy,ly)
 }

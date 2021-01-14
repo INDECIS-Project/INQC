@@ -44,21 +44,21 @@ precip(
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany()}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany()}
 
 \item{limit}{cut threshold for FUNCTION suspectacumprec()}
 
 \item{tolerance}{number of NA or 0s before allowed before the limit, FUNCTION: suspectacumprec()}
 
-\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutives)}
+\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat() (11.1,11.1,11.1 would be 3 consecutive values)}
 
-\item{roundmax}{maximum number of consecutive decimal part values, FUNCTION: flat() (10.0, 11.0, 12.0 would be 3 consecutive)}
+\item{roundmax}{maximum number of consecutive decimal part values, FUNCTION: flat() (10.0, 11.0, 12.0 would be 3 consecutive values)}
 
 \item{level}{number of IQRs, FUNCTION: IQRoutliers()}
 
 \item{window}{number of days to be considered (including the target), FUNCTION: IQRoutliers()}
 
-\item{margina}{a tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki()}
+\item{margina}{a tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki()}
 
 \item{inisia}{a logical flag. If it is TRUE inithome() will be called}
 }
@@ -66,6 +66,30 @@ precip(
 results of QC for RR
 }
 \description{
-This function will centralize precipitation-like qc routines. It will create a file in the folder QC
+This function will centralize precipitation-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
+}
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2rrlist<-system.file("extdata", "ECA_blend_source_rr.txt", package = "INQC")
+rrlist<-readr::read_lines_raw(path2rrlist)
+readr::write_lines(rrlist,'ECA_blend_source_rr.txt')
+path2rrdata<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
+rrdata<-readr::read_lines_raw(path2rrdata)
+readr::write_lines(rrdata, file=paste(wd,'\\\\raw\\\\RR_SOUID132730.txt',sep=''))
+#Perform QC of Atmospheric Precipitation data
+precip(inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
 }

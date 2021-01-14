@@ -7,10 +7,10 @@
 consolidator(filename, x)
 }
 \arguments{
-\item{filename}{the ECA&D file name, expressed as VV_SOUIDXXXXXX.txt, where "VV" is the two-letters variable code, "SOUID" is literal,
+\item{filename}{ECA&D file name, expressed as VV_SOUIDXXXXXX.txt, where "VV" is the two-letters variable code, "SOUID" is literal,
 XXXXXX is the ECA&D SOUID code and ".txt" is literal}
 
-\item{x}{the QC'd series, formated as date, value, qcflag}
+\item{x}{QC'd series, formatted as date, value, QC flag}
 }
 \value{
 It does not return any value. Each time when called, it will create three files:
@@ -21,7 +21,7 @@ Verbose QC file, placed at ./QC/qc_VV_SOUIDXXXXXX.txt.
 \description{
 This function is not intended to be called as a stand-alone function. It is automatically called each time a file ends its QC.
 It will write the quality control files. One file will be placed in a subfolder of the homefolder named QCConslidated. It will use the exact ECA&D
-format (date, value, qcflag). The QCflag file includes:
+format (date, value, QC flag). The QC flags include:
 
 0: Passed QC;
 1: ERROR;
@@ -31,5 +31,5 @@ format (date, value, qcflag). The QCflag file includes:
 9: Missing value.
 
 A second file is placed in the subfolder QC and includes all date, value and a column for each QC test ran over this file. Values passing/not passing QC
-are labelled with 0/1. A third file sumarizes the number of values falling on each category (0,1,2,3,4,9) and the number of values failing each test
+are labelled with 0/1. A third file summarizes the number of values falling on each category (0,1,2,3,4,9) and the number of values failing each test
 }

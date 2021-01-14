@@ -7,11 +7,24 @@
 duplas(x)
 }
 \arguments{
-\item{x}{a vector of dates in the ECA&D format (YYYYMMDD)}
+\item{x}{vector of dates in the ECA&D format (YYYYMMDD)}
 }
 \value{
-a vector with the list of positions which do not pass this QC test. If all positions pass the test, returns NULL
+vector with the list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
 This function detects duplicated dates in the input time series
+}
+\examples{
+#Extract the ECA&D data file from the example data folder
+path2inptfl<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
+#Read the data file
+x<-readecad(input=path2inptfl,missing= -9999)[,3]
+#Find all duplicated dates in the time series
+duplas(x)
+
+#Introduce the duplicated dates
+x[31]<-'19610130'
+#Find all duplicated dates in the time series
+duplas(x) 
 }

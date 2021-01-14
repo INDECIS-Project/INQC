@@ -32,34 +32,58 @@ temperature(
 
 \item{maxjump}{forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.}
 
-\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutives). Passed on to flat(). See ?flat for details}
+\item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutive values). Passed on to flat(). See ?flat for details}
 
-\item{margina}{tolerence margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
+\item{margina}{tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details}
 
 \item{level}{number of IQRs for IQRoutliers()}
 
 \item{window}{number of days to be considered (including the target), FUNCTION: IQRoutliers()}
 
-\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive). Passed on to flat()}
+\item{roundmax}{maximum number of consecutive decimal part value, for flat function (10.0, 11.0, 12.0 would be 3 consecutive value). Passed on to flat()}
 
 \item{blockmanymonth}{maximum number of equal values in a month, FUNCTION: toomany()}
 
-\item{blockmanyyear}{maximum number of equal values in a yaer, FUCNTION: toomany()}
+\item{blockmanyyear}{maximum number of equal values in a year, FUNCTION: toomany()}
 
 \item{blocksizeround}{the maximum number of repeated values with the same decimal, FUNCTION: roundprecip()}
 
-\item{qjump}{quantile for jump2 in quantile mode. Passed on to jump2(). See ?jump2 for further details.}
+\item{qjump}{quantile for jumps2() in quantile mode. Passed on to jumps2(). See ?jumps2 for further details.}
 
-\item{tjump}{factor to multiply the quantile value for jump2. Passed on to jump2(). See ?jump2 for further details.}
+\item{tjump}{factor to multiply the quantile value for jumps2(). Passed on to jumps2(). See ?jumps2 for further details.}
 
-\item{inisia}{a logical flag. If it is TRUE inithome() will be called}
+\item{inisia}{logical flag. If it is TRUE inithome() will be called}
 }
 \value{
 results of QC for TX/TN/TG
 }
 \description{
-This function will centralize temperature-like qc routines. It will QC files for temperature. Reads all the temperature data in the
+This function will centralize temperature-like QC routines. It will QC files for temperature. Reads all the temperature data in the
 ./raw folder (TX, TN or TG) and quality controls each of them. Notice that ECA&D stores temperature in 1/10th of Celsius degrees when entering new parameter values
+}
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2tnlist<-system.file("extdata", "ECA_blend_source_tn.txt", package = "INQC")
+tnlist<-readr::read_lines_raw(path2tnlist)
+readr::write_lines(tnlist,'ECA_blend_source_tn.txt')
+path2tndata<-system.file("extdata", "TN_SOUID132733.txt", package = "INQC")
+tndata<-readr::read_lines_raw(path2tndata)
+readr::write_lines(tndata, file=paste(wd,'\\\\raw\\\\TN_SOUID132733.txt',sep=''))
+#Perform QC of Air Temperature data
+temperature(element='TN',inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
 }
 \seealso{
 consolidator(), duplas(), flat(), IQRoutliers(), jumps2(), newfriki(), physics(), toomany(), rounding(), txtn(), weirdate()

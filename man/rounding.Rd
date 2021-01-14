@@ -9,11 +9,21 @@ rounding(y, blocksize = 20)
 \arguments{
 \item{y}{two columns with date in the ECA&D format (yyyymmdd) and data}
 
-\item{blocksize}{the maximum number of repeated values with the same decimal allowed on each block (blocks = months)}
+\item{blocksize}{maximum number of repeated values with the same decimal allowed on each block (blocks = months)}
 }
 \value{
 list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
 This function splits data by month and looks if a decimal value is repeated too many times
+}
+\examples{
+#Extract the ECA&D data file from the example data folder
+path2inptfl<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
+#Read the data file
+y<-readecad(input=path2inptfl,missing= -9999)[,3:4]
+#Introduce the rounding errors in first 50 data values
+y[1:50,2]<-round((y[1:50,2])/10)*10
+#Find all suspicious positions in the time series
+rounding(y,blocksize=20)
 }

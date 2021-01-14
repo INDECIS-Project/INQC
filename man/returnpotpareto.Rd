@@ -2,7 +2,7 @@
 % Please edit documentation in R/returnpotpareto.R
 \name{returnpotpareto}
 \alias{returnpotpareto}
-\title{Threshold percentile for the Pareto outliyers}
+\title{Threshold percentile for the Pareto outliers}
 \usage{
 returnpotpareto(pato, ret, w = 1.65)
 }
@@ -11,11 +11,11 @@ returnpotpareto(pato, ret, w = 1.65)
 
 \item{ret}{pseudo return period}
 
-\item{w}{multiplicator used to calculate a threshold probability}
+\item{w}{multiplier used to calculate a threshold probability}
 }
 \value{
-percentile of the generalized Pareto distribution coresponding to a threshold probability calculated based on a peudo return period
+percentile of the generalized Pareto distribution corresponding to a threshold probability calculated based on the pseudo return period
 }
 \description{
-This function returns a value of a threshold percentile for the Pareto outliyers
+This function returns a value of a threshold percentile for the Pareto outliers
 }

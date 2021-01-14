@@ -52,18 +52,18 @@ downloadator<-function(homefolder='../ecad_updated',
 
   #' Downloads the latest version of blended data from the ECA&D website
   #' @description This function will use the default or specified links to download one or several files from ECA&D and place them for their use
-  #' with INQC. For each variable a data file and a station file will/should be specifiied.
+  #' with INQC. For each variable a data file and a station file will/should be specified.
   ## When a parameter is not specified or the link does not exist, the function will skip this variable.
   #' @param homefolder full path to local folder in the form './homefolder'. The function will store there the station files and create ./homefolder/raw
   #' and will store there the data
   #' @param tx  link to download daily maximum temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
-  #' @param tx2 link to download daily maximu temperatures station list  or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param tx2 link to download daily maximum temperatures station list  or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
   #' @param tn  link to download daily minimum temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
-  #' @param tn2 link to download daily maximu temperature station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param tn2 link to download daily minimum temperature station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
   #' @param tg  link to download daily average temperature or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
   #' @param tg2 link to download daily average temperature station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
   #' @param sd  link to download daily snow depth or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
-  #' @param sd2 link to download snow depth station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
+  #' @param sd2 link to download daily snow depth station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
   #' @param ss  link to download daily sunshine duration or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
   #' @param ss2 link to download daily sunshine duration station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
   #' @param rr  link to download daily rainfall or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
@@ -76,9 +76,41 @@ downloadator<-function(homefolder='../ecad_updated',
   #' @param hu2 link to download daily relative humidity station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
   #' @param fg  link to download daily wind speed or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
   #' @param fg2 link to download daily wind speed station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.
-  #' @return For each valid link, a the corresponding file will be downloaded. Data files will be unzipped to the ./raw folder (as requested by INQC)
-  #' and sation files will be stored at the specified homefolder
-  # @examples downloadator('./data')
+  #' @return For each valid link, the corresponding file will be downloaded. Data files will be unzipped to the ./raw folder (as requested by INQC)
+  #' and station files will be stored at the specified homefolder
+  #' @examples
+  #' #Set a temporal working directory:
+  #' wd <- tempdir()
+  #' wd0 <- setwd(wd)
+  #' #Please note, the command below might take a while and will download the ECA&D data
+  #' #with a size more than 0.5GB
+  #' downloadator('./data',
+  #'              tx=NULL,
+  #'              tx2=NULL,
+  #'              tn=NULL,
+  #'              tn2=NULL,
+  #'              tg=NULL,
+  #'              tg2=NULL,
+  #'              sd=NULL,
+  #'              sd2=NULL,
+  #'              ss='http://knmi-ecad-assets-prd.s3.amazonaws.com/download/ECA_nonblend_ss.zip',
+  #'              ss2="http://knmi-ecad-assets-prd.s3.amazonaws.com/download/ECA_blend_source_ss.txt",
+  #'              rr=NULL,
+  #'              rr2=NULL,
+  #'              pp=NULL,
+  #'              pp2=NULL,
+  #'              cc=NULL,
+  #'              cc2=NULL,
+  #'              hu=NULL,
+  #'              hu2=NULL,
+  #'              fg=NULL,
+  #'              fg2=NULL)
+  #' #Delete the downloaded archive (the zip-file)
+  #' file.remove(paste(wd,"\\data\\raw\\","ss.zip",sep=""))
+  #' #Return to user's working directory:
+  #' setwd(wd0)
+  #' #The downloaded files can be found in directory:
+  #' print(wd)
   #' @export
 
   ## 1) a set of variables (tx,tn,tg,sd,ss,rr,cc,hu,fg) which represent the variables analyzed at the INDECIS project.They can be either NULL or a working url, expressed
