@@ -15,3 +15,9 @@ header of an ECA&D file
 \description{
 This function reads one ECA&D file and returns the header (an introductory part of the ECA&D file), so it can be written in the same way
 }
+\examples{
+#Extract the ECA&D data file from the example data folder
+path2inptfl<-system.file("extdata", "CC_SOUID132727.txt", package = "INQC")
+#Read the data file
+head<-readheader(input=path2inptfl)
+}

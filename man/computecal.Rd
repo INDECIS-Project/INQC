@@ -17,3 +17,8 @@ computecal(fy, ly)
 \description{
 This function prepares a calendar frame and returns it as year,month,day (i.e., the 3 first columns of RClimdex format)
 }
+\examples{
+fy<-1981
+ly<-2020
+clndr<-computecal(fy,ly)
+}

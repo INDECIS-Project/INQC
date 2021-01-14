@@ -33,3 +33,27 @@ QC results for CC
 This function will centralize temperature-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
 }
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2cclist<-system.file("extdata", "ECA_blend_source_cc.txt", package = "INQC")
+cclist<-readr::read_lines_raw(path2cclist)
+readr::write_lines(cclist,'ECA_blend_source_cc.txt')
+path2ccdata<-system.file("extdata", "CC_SOUID132727.txt", package = "INQC")
+ccdata<-readr::read_lines_raw(path2ccdata)
+readr::write_lines(ccdata, file=paste(wd,'\\\\raw\\\\CC_SOUID132727.txt',sep=''))
+#Perform QC of Cloud Cover data
+clocov(inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
+}

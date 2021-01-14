@@ -60,3 +60,27 @@ results of QC for PP
 This function will centralize temperature-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column where "1" means test failed.
 }
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2pplist<-system.file("extdata", "ECA_blend_source_pp.txt", package = "INQC")
+pplist<-readr::read_lines_raw(path2pplist)
+readr::write_lines(pplist,'ECA_blend_source_pp.txt')
+path2ppdata<-system.file("extdata", "PP_SOUID132729.txt", package = "INQC")
+ppdata<-readr::read_lines_raw(path2ppdata)
+readr::write_lines(ppdata, file=paste(wd,'\\\\raw\\\\PP_SOUID132729.txt',sep=''))
+#Perform QC of Atmospheric Pressure data
+selepe(inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
+}

@@ -6,6 +6,12 @@ decimaldegrees <- function(dms,sep = ":"){
   #' @param dms ONE ELEMENT from the LAT or LON field in ECA&D listings
   #' @param sep the separator between elements, in ECA&D ":"
   #' @return geographical coordinates (latitude or longitude) in decimal degrees
+  #' @examples
+  #' dms<-'+48:03:00'
+  #' dec<-decimaldegrees(dms)
+  #'
+  #' dms<-'-015:03:00'
+  #' dec<-decimaldegrees(dms)
   #' @export
 
   deg <- as.numeric(unlist(strsplit(dms, split = sep))[1])

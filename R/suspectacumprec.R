@@ -6,6 +6,13 @@ suspectacumprec<-function(datos,limit=2000,tolerance=10){
   #' @param limit threshold/limit value for atmospheric precipitation
   #' @param tolerance how many consecutive days with 0 or NA you need to jump
   #' @return list of positions which do not pass this QC test
+  #' @examples
+  #' #Extract the ECA&D data file from the example data folder
+  #' path2inptfl<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
+  #' #Read the data file
+  #' datos<-readecad(input=path2inptfl,missing= -9999)[,3:4]
+  #' #Find all suspicious positions in the precipitation time series
+  #' suspectacumprec(datos,limit=2000,tolerance=10)
   #' @export
 
   bisco<-NULL

@@ -19,3 +19,11 @@ list of positions which do not pass this QC test. If all positions pass the test
 \description{
 This function splits data by month and looks if a decimal value is repeated too many times
 }
+\examples{
+#Extract the ECA&D data file from the example data folder
+path2inptfl<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
+#Read the data file
+y<-readecad(input=path2inptfl,missing= -9999)[,3:4]
+#Find all suspicious positions in the precipitation time series
+roundprecip(y,blocksize=20,exclude=0) 
+}

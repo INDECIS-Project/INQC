@@ -8,6 +8,18 @@ drywetlong<-function(x,ret=300,sueco=9.9,dry=TRUE,wet=TRUE){
   #' @param dry if set to TRUE, dry sequences are sent to result; if FALSE, omitted
   #' @param wet same as previous, for wet sequences
   #' @return list of positions in the input data time series which do not pass QC test
+  #' @examples
+  #' #Extract the ECA&D data file from the example data folder
+  #' path2inptfl<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
+  #' #Read the data file
+  #' x<-readecad(input=path2inptfl,missing= -9999)[,4:4]
+  #' #Find all suspicious positions in the precipitation time series
+  #' drywetlong(x,ret=300,sueco=9.9,dry=TRUE,wet=TRUE)
+  #'
+  #' #Introduce the long wet period
+  #' x[1:600]<-10
+  #' #Find all suspicious positions in the precipitation time series
+  #' drywetlong(x,ret=300,sueco=9.9,dry=TRUE,wet=TRUE)
   #' @export
 
   todo<-NULL
@@ -44,6 +56,6 @@ drywetlong<-function(x,ret=300,sueco=9.9,dry=TRUE,wet=TRUE){
       start<-end-rocha+1
       if(i==1){todo<-c(start:end)}else{todo<-c(todo,start:end)}
     }
-    return(todo)
   }
+  return(todo)
 }

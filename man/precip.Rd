@@ -69,3 +69,27 @@ results of QC for RR
 This function will centralize precipitation-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
 }
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2rrlist<-system.file("extdata", "ECA_blend_source_rr.txt", package = "INQC")
+rrlist<-readr::read_lines_raw(path2rrlist)
+readr::write_lines(rrlist,'ECA_blend_source_rr.txt')
+path2rrdata<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
+rrdata<-readr::read_lines_raw(path2rrdata)
+readr::write_lines(rrdata, file=paste(wd,'\\\\raw\\\\RR_SOUID132730.txt',sep=''))
+#Perform QC of Atmospheric Precipitation data
+precip(inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
+}

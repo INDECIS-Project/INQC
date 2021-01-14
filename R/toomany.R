@@ -7,6 +7,25 @@ toomany<-function(y,blockmany=15,scope=1,exclude=NULL){
   #' @param scope monthly (1), annual (2)
   #' @param exclude values to exclude, e.g. if precipitation, 0 must be excluded
   #' @return list of positions which do not pass this QC test. If all positions pass the test, returns NULL
+  #' @examples
+  #' #Extract the ECA&D data file (maximum air temperature) from the example data folder
+  #' path2inptfl<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
+  #' #Read the data file
+  #' y<-readecad(input=path2inptfl,missing= -9999)[,3:4]
+  #' #Introduce the errors in first 20 data values
+  #' y[1:20,2]<-30
+  #' #Find all suspicious positions in the time series
+  #' toomany(y,blockmany=15,scope=1,exclude=NULL)
+  #'
+  #' #Extract the ECA&D data file (atmospheric precipitation) from the example data folder
+  #' path2inptfl<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
+  #' #Read the data file
+  #' y<-readecad(input=path2inptfl,missing= -9999)[,3:4]
+  #' #Introduce the errors in first 20 data values
+  #' y[1:20,2]<-10
+  #' #Find all suspicious positions in the time series
+  #' toomany(y,blockmany=15,scope=1,exclude=0)
+  #' @export
 
   bad<-NULL
   if(scope == 1){y[,1]<-as.numeric(substring(y[,1],1,6))}

@@ -18,36 +18,35 @@ windspeed<-function(element='FG',maxseq=3,blocksizeround=20,blockmanymonth=20,bl
   #' @param margina quantile for newfriki function
   #' @param inisia a logical flag. If it is TRUE inithome() will be called
   #' @return results of QC for FG
+  #' @examples
+  #' #Set a temporal working directory:
+  #' wd <- tempdir()
+  #' wd0 <- setwd(wd)
+  #' #Create subdirectory where raw data files have to be located
+  #' dir.create(file.path(wd, 'raw'))
+  #' options("homefolder"='./'); options("blend"=FALSE)
+  #' #Extract the ECA&D data and station files from the example data folder
+  #' path2fglist<-system.file("extdata", "ECA_blend_source_fg.txt", package = "INQC")
+  #' fglist<-readr::read_lines_raw(path2fglist)
+  #' readr::write_lines(fglist,'ECA_blend_source_fg.txt')
+  #' path2fgdata<-system.file("extdata", "FG_SOUID132736.txt", package = "INQC")
+  #' fgdata<-readr::read_lines_raw(path2fgdata)
+  #' readr::write_lines(fgdata, file=paste(wd,'\\raw\\FG_SOUID132736.txt',sep=''))
+  #' #Perform QC of Wind Speed data
+  #' windspeed(inisia=TRUE)
+  #' #Remove some temporary files
+  #' list = list.files(pattern = "Rfwf")
+  #' file.remove(list)
+  #' #Return to user's working directory:
+  #' setwd(wd0)
+  #' #The downloaded files can be found in directory:
+  #' print(wd)
   #' @export
 
-  ##This is old version (v1.0)
-  ##**************************
-  #lista<-list.files(path=paste(home,'raw',sep=''),pattern='SOUID')
-  #tx<-lista[which(substring(lista,1,2)==element)];ene<-length(tx)
-  #if(length(tx)==0){return()}
-  #for(i in 1:ene){
-  #  name<-paste(home,'raw/',tx[i],sep='')
-  #  print(paste(name,i,'of',ene),quote=FALSE)
-  #  x<-readecad(input=name) ; print(Sys.time())
-  #  x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value')
-  #  bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1} ; print(paste(Sys.time(),'Ended duplas'),quote=FALSE)
-  #  bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
-  #  bad<-toomany(x[,3:4],blockmanymonth,1);x$toomanymonth<-0;if(length(bad)!=0){x$toomanymonth[bad]<-1}; print(paste(Sys.time(),'Ended toomany, month'),quote=FALSE)
-  #  bad<-toomany(x[,3:4],blockmanyyear,2);x$toomanyyear<-0;if(length(bad)!=0){x$toomanyyear[bad]<-1}; print(paste(Sys.time(),'Ended toomany, year'),quote=FALSE)
-  #  bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values'),quote=FALSE)
-  #  bad<-flat(x$value%%10,roundmax);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(paste(Sys.time(),'Ended flat for decimal part'),quote=FALSE) #this looks at consecutive decimal parts
-  #  bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(paste(Sys.time(),'Ended rounding'),quote=FALSE)
-  #  bad<-IQRoutliers(x$date,x$value,level,window);x$IQRoutliers<-0;if(length(bad)!=0){x$IQRoutliers[bad]<-1}; print(paste(Sys.time(),'Ended IQRoutliers'),quote=FALSE) # check
-  #  bad<-paretogadget(x[,4],ret);x$paretogadget<-0;if(length(bad)!=0){x$paretogadget[bad]<-1} ; print(paste(Sys.time(),'Ended paretogadget'),quote=FALSE)
-  #  bad<-newfriki(x$date,x$value,margina,times=3);x$friki<-0;if(length(bad)!=0){x$friki[bad]<-1} ; print(paste(Sys.time(),'Ended newfriki for errors'),quote=FALSE)
-  #  bad<-newfriki(x$date,x$value,margina,times=1.5);x$frikilight<-0;if(length(bad)!=0){x$frikilight[bad]<-1} ; print(paste(Sys.time(),'Ended newfriki for suspect'),quote=FALSE)
-  #  bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
-  #  bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
-  #  consolidator(home,tx[i],x)
-  #  utils::write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
-  #}
-  ##**************************
-
+  #Suppress warning messages
+  oldwarn <- getOption("warn")
+  options(warn = -1)
+  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")
@@ -76,4 +75,6 @@ windspeed<-function(element='FG',maxseq=3,blocksizeround=20,blockmanymonth=20,bl
     bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
     consolidator(tx[i],x)
   }
+  
+  options(warn = oldwarn)
 }

@@ -5,6 +5,10 @@ computecal=function(fy,ly){
   #' @param fy first year to work with (past)
   #' @param ly last year to work with (present)
   #' @return 3 columns containing year,month,day
+  #' @examples
+  #' fy<-1981
+  #' ly<-2020
+  #' clndr<-computecal(fy,ly)
   #' @export
 
   fy<-paste(fy,1,1,sep='/')

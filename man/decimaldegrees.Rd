@@ -18,3 +18,10 @@ geographical coordinates (latitude or longitude) in decimal degrees
 This function takes sexagesimal degrees in the ECA&D format and converts them into decimal degrees.
 Initial idea was taken from: https://modtools.wordpress.com/2013/09/25/dms2dec/
 }
+\examples{
+dms<-'+48:03:00'
+dec<-decimaldegrees(dms)
+
+dms<-'-015:03:00'
+dec<-decimaldegrees(dms)
+}

@@ -51,3 +51,27 @@ results of QC for FG
 This function will centralize temperature-like QC routines. It will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed.
 }
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2fglist<-system.file("extdata", "ECA_blend_source_fg.txt", package = "INQC")
+fglist<-readr::read_lines_raw(path2fglist)
+readr::write_lines(fglist,'ECA_blend_source_fg.txt')
+path2fgdata<-system.file("extdata", "FG_SOUID132736.txt", package = "INQC")
+fgdata<-readr::read_lines_raw(path2fgdata)
+readr::write_lines(fgdata, file=paste(wd,'\\\\raw\\\\FG_SOUID132736.txt',sep=''))
+#Perform QC of Wind Speed data
+windspeed(inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
+}

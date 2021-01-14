@@ -23,4 +23,16 @@ This function detects consecutive equal values (e.g., 15.1, 15.1, 15.1, 15.1...)
 y<-rnorm(100)
 y[10:20]<-10
 flat(y,5)
+
+#Extract the ECA&D data file from the example data folder
+path2inptfl<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
+#Read the data file
+y<-readecad(input=path2inptfl,missing= -9999)[,4]
+#Find all consecutive (with a length > 5 elements) equal values in the time series
+flat(y,5)
+
+#Introduce the duplicated dates
+y[6:12]<-10
+#Find all consecutive (with a length > 5 elements) equal values in the time series
+flat(y,5)
 }

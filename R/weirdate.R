@@ -6,6 +6,18 @@ weirddate<-function(x){
   # @param minyear a numeric value identifiying the first year which can contain data. Defaulted to 1800, understanding that most series
   # will not have 18th century data. Customize according to the dataset.
   #' @return list of positions which do not pass this QC test. If all positions pass the test, returns NULL
+  #' @examples
+  #' #Extract the ECA&D data file from the example data folder
+  #' path2inptfl<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
+  #' #Read the data file
+  #' x<-readecad(input=path2inptfl,missing= -9999)[,3:4]
+  #' #Find all suspicious positions in the time series
+  #' weirddate(x)
+  #'
+  #' #Introduce the weird dates
+  #' x[31,1]<-'19610132'
+  #' #Find all suspicious positions in the time series
+  #' weirddate(x) 
   #' @export
 
   ##This is old version (v1.0)

@@ -36,3 +36,27 @@ results of QC for SS
 This function will centralize temperature-like QC routines. Will create a file in the folder QC
 with an additional 0/1 column, where "1" means test failed
 }
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+options("homefolder"='./'); options("blend"=FALSE)
+#Extract the ECA&D data and station files from the example data folder
+path2sslist<-system.file("extdata", "ECA_blend_source_ss.txt", package = "INQC")
+sslist<-readr::read_lines_raw(path2sslist)
+readr::write_lines(sslist,'ECA_blend_source_ss.txt')
+path2ssdata<-system.file("extdata", "SS_SOUID132728.txt", package = "INQC")
+ssdata<-readr::read_lines_raw(path2ssdata)
+readr::write_lines(ssdata, file=paste(wd,'\\\\raw\\\\SS_SOUID132728.txt',sep=''))
+#Perform QC of Sunshine Duration data
+sundur(inisia=TRUE)
+#Remove some temporary files
+list = list.files(pattern = "Rfwf")
+file.remove(list)
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
+}

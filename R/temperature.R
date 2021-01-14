@@ -24,44 +24,39 @@ temperature<-function(element='TX',large=500,small=-500,maxjump=200,maxseq=3,mar
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
   #' @param blockmanyyear maximum number of equal values in a year, FUNCTION: toomany()
   #' @param blocksizeround the maximum number of repeated values with the same decimal, FUNCTION: roundprecip()
-  #' @param qjump quantile for jump2 in quantile mode. Passed on to jump2(). See ?jump2 for further details.
-  #' @param tjump factor to multiply the quantile value for jump2. Passed on to jump2(). See ?jump2 for further details.
+  #' @param qjump quantile for jumps2() in quantile mode. Passed on to jumps2(). See ?jumps2 for further details.
+  #' @param tjump factor to multiply the quantile value for jumps2(). Passed on to jumps2(). See ?jumps2 for further details.
   #' @param inisia logical flag. If it is TRUE inithome() will be called
   #' @return results of QC for TX/TN/TG
+  #' @examples
+  #' #Set a temporal working directory:
+  #' wd <- tempdir()
+  #' wd0 <- setwd(wd)
+  #' #Create subdirectory where raw data files have to be located
+  #' dir.create(file.path(wd, 'raw'))
+  #' options("homefolder"='./'); options("blend"=FALSE)
+  #' #Extract the ECA&D data and station files from the example data folder
+  #' path2tnlist<-system.file("extdata", "ECA_blend_source_tn.txt", package = "INQC")
+  #' tnlist<-readr::read_lines_raw(path2tnlist)
+  #' readr::write_lines(tnlist,'ECA_blend_source_tn.txt')
+  #' path2tndata<-system.file("extdata", "TN_SOUID132733.txt", package = "INQC")
+  #' tndata<-readr::read_lines_raw(path2tndata)
+  #' readr::write_lines(tndata, file=paste(wd,'\\raw\\TN_SOUID132733.txt',sep=''))
+  #' #Perform QC of Air Temperature data
+  #' temperature(element='TN',inisia=TRUE)
+  #' #Remove some temporary files
+  #' list = list.files(pattern = "Rfwf")
+  #' file.remove(list)
+  #' #Return to user's working directory:
+  #' setwd(wd0)
+  #' #The downloaded files can be found in directory:
+  #' print(wd)
   #' @export
 
-  ##This is old version (v1.0)
-  ##**************************
-  #inithome(home)
-  #lista<-list.files(path=paste(home,'raw',sep=''),pattern='SOUID')
-  #tx<-lista[which(substring(lista,1,2)==element)];ene<-length(tx)
-  #if(length(tx)==0){return()}
-  #for(i in 1:ene){
-  #  name<-paste(home,'raw/',tx[i],sep='')
-  #  print(paste(name,i,'of',ene),quote=FALSE)
-  #  x<-readecad(input=name) ; print(paste(Sys.time(),'Ended readecad'),quote=FALSE)
-  #  x<-x[,1:4];colnames(x)<-c('STAID','SOUID','date','value')
-  #  #pattern(x[,4])
-  #  bad<-weirddate(x[,3:4]);x$weirddate<-0;if(length(bad)!=0){x$weirddate[bad]<-1}; print(paste(Sys.time(),'Ended weirddate'),quote=FALSE)
-  #  bad<-duplas(x$date);x$dupli<-0;if(length(bad)!=0){x$dupli[bad]<-1}; print(paste(Sys.time(),'Ended duplas'),quote=FALSE)
-  #  bad<-physics(x$value,large,1);x$large<-0;if(length(bad)!=0){x$large[bad]<-1}; print(paste(Sys.time(),'Ended physics, large'),quote=FALSE)
-  #  bad<-physics(x$value,small,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
-  #  bad<-jumps2(x$date,x$value,force=maxjump);x$jumpABS<-0;if(length(bad)!=0){x$jumpABS[bad]<-1}; print(paste(Sys.time(),'Ended jumps ABSOLUTE'),quote=FALSE)
-  #  bad<-jumps2(x$date,x$value,qjump,tjump);x$jumpQUANT<-0;if(length(bad)!=0){x$jumpQUANT[bad]<-1}; print(paste(Sys.time(),'Ended jumps QUANTILE'),quote=FALSE)
-  #  bad<-flat(x$value,maxseq);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values'),quote=FALSE)
-  #  bad<-flat(x$value%%10,roundmax);x$roundmax<-0;if(length(bad)!=0){x$roundmax[bad]<-1}; print(paste(Sys.time(),'Ended flat for decimal part'),quote=FALSE)
-  #  bad<-newfriki(x$date,x$value,margina,times=3);x$friki<-0;if(length(bad)!=0){x$friki[bad]<-1} ; print(paste(Sys.time(),'Ended newfriki for errors'),quote=FALSE)
-  #  bad<-newfriki(x$date,x$value,margina,times=1.5);x$frikilight<-0;if(length(bad)!=0){x$frikilight[bad]<-1} ; print(paste(Sys.time(),'Ended newfriki for suspect'),quote=FALSE)
-  #  bad<-IQRoutliers(x$date,x$value,level,window);x$IQRoutliers<-0;if(length(bad)!=0){x$IQRoutliers[bad]<-1}; print(paste(Sys.time(),'Ended IQR outliers'),quote=FALSE)
-  #  bad<-toomany(x[,3:4],blockmanymonth,1);x$toomanymonth<-0;if(length(bad)!=0){x$toomanymonth[bad]<-1}; print(paste(Sys.time(),'Ended toomany, monthly'),quote=FALSE)
-  #  bad<-toomany(x[,3:4],blockmanyyear,2);x$toomanyyear<-0;if(length(bad)!=0){x$toomanyyear[bad]<-1}; print(paste(Sys.time(),'Ended toomany, annual'),quote=FALSE)
-  #  bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(paste(Sys.time(),'Ended rounding'),quote=FALSE)
-  #  if(element != 'TG'){bad<-txtn(x[,3:4],tx[i],home);x$txtn<-0;if(length(bad)!=0){x$txtn[bad]<-1}; print(paste(Sys.time(),'Ended txtn'),quote=FALSE)}
-  #  consolidator(home,tx[i],x)
-  #  utils::write.table(x,paste(home,'QC/qc_',tx[i],sep=''),col.names=TRUE,row.names=FALSE,sep='\t',quote=FALSE); print(paste(Sys.time(),'Wrote QC results'),quote=FALSE)
-  #}
-  ##**************************
-
+  #Suppress warning messages
+  oldwarn <- getOption("warn")
+  options(warn = -1)
+  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")
@@ -94,4 +89,6 @@ temperature<-function(element='TX',large=500,small=-500,maxjump=200,maxseq=3,mar
     if(element != 'TG' &  blend){bad<-txtnblend(x[,3:4],tx[i]);x$txtn<-0;if(length(bad)!=0){x$txtn[bad]<-1}; print(paste(Sys.time(),'Ended txtn'),quote=FALSE)}
     consolidator(tx[i],x)
   }
+  
+  options(warn = oldwarn)
 }

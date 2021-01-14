@@ -23,3 +23,12 @@ positions which do not pass this QC test
 \description{
 This function computes outliers centralized around a day, using a number of days around it
 }
+\examples{
+#Extract the ECA&D data file from the example data folder
+path2inptfl<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
+#Read the data file
+date<-readecad(input=path2inptfl,missing= -9999)[,3]
+value<-readecad(input=path2inptfl,missing= -9999)[,4]
+#Find all suspicious positions in the time series
+IQRoutliers(date,value,level=3,window=11,exclude=NULL)
+}

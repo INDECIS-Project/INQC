@@ -46,7 +46,7 @@ and will store there the data}
 
 \item{sd}{link to download daily snow depth or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
-\item{sd2}{link to download snow depth station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
+\item{sd2}{link to download daily snow depth station list or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
 \item{ss}{link to download daily sunshine duration or NULL. Default set to working ECA&D link, as of 22/12/2020. Provided link MUST exist.}
 
@@ -79,4 +79,38 @@ and station files will be stored at the specified homefolder
 \description{
 This function will use the default or specified links to download one or several files from ECA&D and place them for their use
 with INQC. For each variable a data file and a station file will/should be specified.
+}
+\examples{
+#Set a temporal working directory:
+wd <- tempdir()
+wd0 <- setwd(wd)
+#Please note, the command below might take a while and will download the ECA&D data
+#with a size more than 0.5GB
+downloadator('./data',
+             tx=NULL,
+             tx2=NULL,
+             tn=NULL,
+             tn2=NULL,
+             tg=NULL,
+             tg2=NULL,
+             sd=NULL,
+             sd2=NULL,
+             ss='http://knmi-ecad-assets-prd.s3.amazonaws.com/download/ECA_nonblend_ss.zip',
+             ss2="http://knmi-ecad-assets-prd.s3.amazonaws.com/download/ECA_blend_source_ss.txt",
+             rr=NULL,
+             rr2=NULL,
+             pp=NULL,
+             pp2=NULL,
+             cc=NULL,
+             cc2=NULL,
+             hu=NULL,
+             hu2=NULL,
+             fg=NULL,
+             fg2=NULL)
+#Delete the downloaded archive (the zip-file)
+file.remove(paste(wd,"\\\\data\\\\raw\\\\","ss.zip",sep=""))
+#Return to user's working directory:
+setwd(wd0)
+#The downloaded files can be found in directory:
+print(wd)
 }

@@ -25,56 +25,6 @@ consolidator<-function(filename,x){
   #' Verbose QC file, placed at ./QC/qc_VV_SOUIDXXXXXX.txt.
   #' @export
 
-  ##This is old version (v1.0)
-  ##**************************
-  #if(!dir.exists(paste0(home,'/QCConsolidated/'))){dir.create(paste0(home,'/QCConsolidated/'))}
-  #if(!dir.exists(paste0(home,'/QCSummary/'))){dir.create(paste0(home,'/QCSummary/'))}
-  #if(!dir.exists(paste0(home,'/QC/'))){dir.create(paste0(home,'/QC/'))}
-  #header<-readheader(paste0(home,'raw/',filename))
-  #element<-substring(filename,1,2)
-  #stationsummary<-apply(x[,5:ncol(x)],2,sum)
-  #failed<-as.data.frame(stationsummary[which(stationsummary!=0)])
-  #utils::write.table(failed,paste0(home,'/QCSummary/Summary',filename),quote=FALSE,sep='\t',col.names=FALSE)
-  #x$consolidated = 0
-  #prov<-which(is.na(x$value))
-  ### not available (9)
-  #x$consolidated[prov]<-9
-  ### collectively suspect:
-  #x$consolidated[which(x$toomanymonth==1)]<-4
-  #x$consolidated[which(x$toomanyyear==1)]<-4
-  #x$consolidated[which(x$rounding==1)]<-4
-  #x$consolidated[which(x$roundmax==1)]<-4
-  #x$consolidated[which(x$repeatedvalue==1)]<-4
-  #x$consolidated[which(x$drywetlong==1)]<-4
-  #x$consolidated[which(x$suspectacumprec==1)]<-4
-  #x$consolidated[which(x$flat==1)]<-4
-  #x$consolidated[which(x$flatsun==1)]<-4
-  ### outliers (3)
-  #x$consolidated[which(x$paretogadget==1)]<-3
-  #x$consolidated[which(x$IQRoutliers==1)]<-3
-  #x$consolidated[which(x$frikilight==1)]<-3
-  ## almost certain, error (2)
-  #x$consolidated[which(x$jumpQUANT==1)]<-2
-  #x$consolidated[which(x$friki==1)]<-2
-  ### error, with no doubt (1)
-  #x$consolidated[which(x$jumpABS==1)]<-1
-  #x$consolidated[which(x$weirddate==1)]<-1
-  #x$consolidated[which(x$dupli==1)]<-1
-  #x$consolidated[which(x$large==1)]<-1
-  #x$consolidated[which(x$small==1)]<-1
-  #x$consolidated[which(x$txtn==1)]<-1
-  #x$consolidated[which(x$maxsun==1)]<-1
-  #resumen<-as.data.frame(table(x$consolidated));names(resumen)<-c('QC_Code','Freq')
-  #utils::write.table(resumen,paste0(home,'/QCSummary/Summary',filename),quote=FALSE,sep='\t',append=TRUE,col.names=TRUE,row.names=FALSE)
-  #anchos<-c(6,6,8,5,5)
-  #grannyu<-ncol(x)
-  #x<-x[,c(1:4,grannyu)]
-  #utils::write.table('Quality control with INQC V1.0, INDECIS Project, C3/URV',paste0(home,'QCConsolidated/',filename),quote=FALSE,col.names=FALSE,row.names=FALSE,sep=',',na='')
-  #utils::write.table(header,paste0(home,'QCConsolidated/',filename),quote=FALSE,col.names=FALSE,row.names=FALSE,sep=',',na='',append=TRUE)
-  #gdata::write.fwf(x,paste0(home,'QCConsolidated/',filename),colnames=FALSE,rownames=FALSE,sep=',',quote=FALSE,append=TRUE,na='-9999',width=anchos)
-  #print(paste(Sys.time(),'Wrote QCd file'),quote=FALSE)
-  ##**************************
-
   #Get value of 'Global variables' 'homefolder' and 'blend'
   homefolder <- getOption("homefolder")
   blend <- getOption("blend")
