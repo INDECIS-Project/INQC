@@ -49,7 +49,7 @@ hulist<-readr::read_lines_raw(path2hulist)
 readr::write_lines(hulist,'ECA_blend_source_hu.txt')
 path2hudata<-system.file("extdata", "HU_SOUID132735.txt", package = "INQC")
 hudata<-readr::read_lines_raw(path2hudata)
-readr::write_lines(hudata, file=paste(wd,'\\\\raw\\\\HU_SOUID132735.txt',sep=''))
+readr::write_lines(hudata, file=paste(wd,'/raw/HU_SOUID132735.txt',sep=''))
 #Perform QC of Relative Humidity data
 relhum(inisia=TRUE)
 #Remove some temporary files

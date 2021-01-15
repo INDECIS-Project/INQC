@@ -82,7 +82,7 @@ rrlist<-readr::read_lines_raw(path2rrlist)
 readr::write_lines(rrlist,'ECA_blend_source_rr.txt')
 path2rrdata<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
 rrdata<-readr::read_lines_raw(path2rrdata)
-readr::write_lines(rrdata, file=paste(wd,'\\\\raw\\\\RR_SOUID132730.txt',sep=''))
+readr::write_lines(rrdata, file=paste(wd,'/raw/RR_SOUID132730.txt',sep=''))
 #Perform QC of Atmospheric Precipitation data
 precip(inisia=TRUE)
 #Remove some temporary files

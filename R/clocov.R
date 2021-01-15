@@ -24,7 +24,7 @@ clocov<-function(element='CC',maxseq=8,blocksizeround=20,blockmanymonth=20,block
   #' readr::write_lines(cclist,'ECA_blend_source_cc.txt')
   #' path2ccdata<-system.file("extdata", "CC_SOUID132727.txt", package = "INQC")
   #' ccdata<-readr::read_lines_raw(path2ccdata)
-  #' readr::write_lines(ccdata, file=paste(wd,'\\raw\\CC_SOUID132727.txt',sep=''))
+  #' readr::write_lines(ccdata, file=paste(wd,'/raw/CC_SOUID132727.txt',sep=''))
   #' #Perform QC of Cloud Cover data
   #' clocov(inisia=TRUE)
   #' #Remove some temporary files

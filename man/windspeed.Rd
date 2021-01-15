@@ -64,7 +64,7 @@ fglist<-readr::read_lines_raw(path2fglist)
 readr::write_lines(fglist,'ECA_blend_source_fg.txt')
 path2fgdata<-system.file("extdata", "FG_SOUID132736.txt", package = "INQC")
 fgdata<-readr::read_lines_raw(path2fgdata)
-readr::write_lines(fgdata, file=paste(wd,'\\\\raw\\\\FG_SOUID132736.txt',sep=''))
+readr::write_lines(fgdata, file=paste(wd,'/raw/FG_SOUID132736.txt',sep=''))
 #Perform QC of Wind Speed data
 windspeed(inisia=TRUE)
 #Remove some temporary files
