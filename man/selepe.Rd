@@ -73,7 +73,7 @@ pplist<-readr::read_lines_raw(path2pplist)
 readr::write_lines(pplist,'ECA_blend_source_pp.txt')
 path2ppdata<-system.file("extdata", "PP_SOUID132729.txt", package = "INQC")
 ppdata<-readr::read_lines_raw(path2ppdata)
-readr::write_lines(ppdata, file=paste(wd,'\\\\raw\\\\PP_SOUID132729.txt',sep=''))
+readr::write_lines(ppdata, file=paste(wd,'/raw/PP_SOUID132729.txt',sep=''))
 #Perform QC of Atmospheric Pressure data
 selepe(inisia=TRUE)
 #Remove some temporary files

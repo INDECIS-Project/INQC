@@ -74,7 +74,7 @@ tnlist<-readr::read_lines_raw(path2tnlist)
 readr::write_lines(tnlist,'ECA_blend_source_tn.txt')
 path2tndata<-system.file("extdata", "TN_SOUID132733.txt", package = "INQC")
 tndata<-readr::read_lines_raw(path2tndata)
-readr::write_lines(tndata, file=paste(wd,'\\\\raw\\\\TN_SOUID132733.txt',sep=''))
+readr::write_lines(tndata, file=paste(wd,'/raw/TN_SOUID132733.txt',sep=''))
 #Perform QC of Air Temperature data
 temperature(element='TN',inisia=TRUE)
 #Remove some temporary files

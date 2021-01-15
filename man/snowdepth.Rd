@@ -52,7 +52,7 @@ sdlist<-readr::read_lines_raw(path2sdlist)
 readr::write_lines(sdlist,'ECA_blend_source_sd.txt')
 path2sddata<-system.file("extdata", "SD_SOUID132731.txt", package = "INQC")
 sddata<-readr::read_lines_raw(path2sddata)
-readr::write_lines(sddata, file=paste(wd,'\\\\raw\\\\SD_SOUID132731.txt',sep=''))
+readr::write_lines(sddata, file=paste(wd,'/raw/SD_SOUID132731.txt',sep=''))
 #Perform QC of Snow Depth data
 snowdepth(inisia=TRUE)
 #Remove some temporary files

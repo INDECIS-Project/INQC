@@ -49,7 +49,7 @@ sslist<-readr::read_lines_raw(path2sslist)
 readr::write_lines(sslist,'ECA_blend_source_ss.txt')
 path2ssdata<-system.file("extdata", "SS_SOUID132728.txt", package = "INQC")
 ssdata<-readr::read_lines_raw(path2ssdata)
-readr::write_lines(ssdata, file=paste(wd,'\\\\raw\\\\SS_SOUID132728.txt',sep=''))
+readr::write_lines(ssdata, file=paste(wd,'/raw/SS_SOUID132728.txt',sep=''))
 #Perform QC of Sunshine Duration data
 sundur(inisia=TRUE)
 #Remove some temporary files

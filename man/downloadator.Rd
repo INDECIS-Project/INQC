@@ -81,6 +81,7 @@ This function will use the default or specified links to download one or several
 with INQC. For each variable a data file and a station file will/should be specified.
 }
 \examples{
+\dontrun{
 #Set a temporal working directory:
 wd <- tempdir()
 wd0 <- setwd(wd)
@@ -108,9 +109,10 @@ downloadator('./data',
              fg=NULL,
              fg2=NULL)
 #Delete the downloaded archive (the zip-file)
-file.remove(paste(wd,"\\\\data\\\\raw\\\\","ss.zip",sep=""))
+file.remove(paste(wd,"/data/raw/","ss.zip",sep=""))
 #Return to user's working directory:
 setwd(wd0)
 #The downloaded files can be found in directory:
 print(wd)
+}
 }

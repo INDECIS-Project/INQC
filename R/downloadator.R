@@ -79,6 +79,7 @@ downloadator<-function(homefolder='../ecad_updated',
   #' @return For each valid link, the corresponding file will be downloaded. Data files will be unzipped to the ./raw folder (as requested by INQC)
   #' and station files will be stored at the specified homefolder
   #' @examples
+  #' \dontrun{
   #' #Set a temporal working directory:
   #' wd <- tempdir()
   #' wd0 <- setwd(wd)
@@ -106,11 +107,12 @@ downloadator<-function(homefolder='../ecad_updated',
   #'              fg=NULL,
   #'              fg2=NULL)
   #' #Delete the downloaded archive (the zip-file)
-  #' file.remove(paste(wd,"\\data\\raw\\","ss.zip",sep=""))
+  #' file.remove(paste(wd,"/data/raw/","ss.zip",sep=""))
   #' #Return to user's working directory:
   #' setwd(wd0)
   #' #The downloaded files can be found in directory:
   #' print(wd)
+  #' }
   #' @export
 
   ## 1) a set of variables (tx,tn,tg,sd,ss,rr,cc,hu,fg) which represent the variables analyzed at the INDECIS project.They can be either NULL or a working url, expressed
