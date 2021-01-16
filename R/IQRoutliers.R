@@ -4,7 +4,8 @@ IQRoutliers<-function(date,value,level=3,window=11,exclude=NULL){
   #' @description This function computes outliers centralized around a day, using a number of days around it
   #' @param date vector with dates
   #' @param value vector with data values
-  #' @param level number of IQRs
+  #' @param level number of IQRs to be added to percentile 75 and subtracted to percentile 25 to 
+  #' determinate the tolerance interval. Values outside this interval, will be declared as outliers.
   #' @param window number of days to be considered (including the target)
   #' @param exclude if it is not null, the code will exclude this value from the analysis (i.e., good to exclude 0 for precipitation)
   #' @return positions which do not pass this QC test

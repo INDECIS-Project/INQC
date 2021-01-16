@@ -12,7 +12,7 @@ listas(country = "all", name = "allstations.txt")
 \item{name}{output file name, do not touch, default is always good.}
 }
 \value{
-data frame containing all stations for all elements, linking STAID and SOUID and metadata (a file named as specified by name)
+data frame and the list file containing all stations for all elements, linking STAID and SOUID and metadata
 }
 \description{
 This function takes all the elements and rbinds them into a single list to process

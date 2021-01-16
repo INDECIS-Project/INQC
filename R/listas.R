@@ -5,7 +5,7 @@ listas<-function(country='all',name='allstations.txt'){ #NECESITO parametrizar l
   # @param rooty home directory where the "ECA_blend_source*" files are located
   #' @param country country for which the list is created. If all, no country filter.
   #' @param name output file name, do not touch, default is always good.
-  #' @return data frame containing all stations for all elements, linking STAID and SOUID and metadata (a file named as specified by name)
+  #' @return data frame and the list file containing all stations for all elements, linking STAID and SOUID and metadata
   #' @export
 
   #Get value of 'Global variable' 'homefolder'

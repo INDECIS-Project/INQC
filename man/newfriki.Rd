@@ -7,7 +7,7 @@
 newfriki(date, value, margina = 0.999, times = 2)
 }
 \arguments{
-\item{date}{vector of dates with the format of yyyymmdd}
+\item{date}{vector of dates with the ECA&D format yyyymmdd}
 
 \item{value}{vector of data values}
 
@@ -19,6 +19,6 @@ newfriki(date, value, margina = 0.999, times = 2)
 positions which do not pass this QC test
 }
 \description{
-The function isolates values which are not continuous in the distribution. If the gap is larger than a preset big margin,
-the values above (or below) are flagged
+The function isolates extreme values which are not continuous in the distribution. If
+the gap is larger than a pre-set big margin, the values above (or below) are flagged
 }

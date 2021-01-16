@@ -3,7 +3,7 @@ paretogadget<-function(x,ret){
   #' Finds outliers
   #' @description This function finds outliers for variables which can be described/evaluated by means of the Pareto distribution (e.g. atmospheric precipitation or wind speed)
   #' @param x vector of values (a series) to be analyzed
-  #' @param ret pseudo return period
+  #' @param ret pseudo-return period for the pot-pareto distribution approach
   #' @return list of positions which do not pass this QC test (which can be considered as outliers)
   #' @export
 

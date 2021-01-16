@@ -2,7 +2,7 @@
 % Please edit documentation in R/suspectacumprec.R
 \name{suspectacumprec}
 \alias{suspectacumprec}
-\title{Detect precipitation values above limit}
+\title{Detects precipitation values above limit}
 \usage{
 suspectacumprec(datos, limit = 2000, tolerance = 10)
 }

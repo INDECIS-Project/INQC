@@ -39,7 +39,7 @@ windspeed<-function(element='FG',maxseq=3,blocksizeround=20,blockmanymonth=20,bl
   #' file.remove(list)
   #' #Return to user's working directory:
   #' setwd(wd0)
-  #' #The downloaded files can be found in directory:
+  #' #The QC results can be found in the directory:
   #' print(wd)
   #' @export
 

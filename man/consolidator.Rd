@@ -10,7 +10,7 @@ consolidator(filename, x)
 \item{filename}{ECA&D file name, expressed as VV_SOUIDXXXXXX.txt, where "VV" is the two-letters variable code, "SOUID" is literal,
 XXXXXX is the ECA&D SOUID code and ".txt" is literal}
 
-\item{x}{QC'd series, formatted as date, value, QC flag}
+\item{x}{QCed series, formatted as date, value, QC flag}
 }
 \value{
 It does not return any value. Each time when called, it will create three files:

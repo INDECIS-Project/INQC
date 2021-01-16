@@ -9,12 +9,14 @@ returnpotpareto(pato, ret, w = 1.65)
 \arguments{
 \item{pato}{list with results of modelling/fitting the generalized Pareto distribution}
 
-\item{ret}{pseudo return period}
+\item{ret}{pseudo-return period}
 
-\item{w}{multiplier used to calculate a threshold probability}
+\item{w}{parameter to equate to return period to a temporal interval (recall the approach is not
+block maxima but peak over threshold. Typical value of w to equate the return period to years is 1.65
+(See Wilks, 2011. Statistical Analysis for the Atmospheric Sciences)}
 }
 \value{
-percentile of the generalized Pareto distribution corresponding to a threshold probability calculated based on the pseudo return period
+for a given pareto distribution, returns the value representing a requested return period
 }
 \description{
 This function returns a value of a threshold percentile for the Pareto outliers

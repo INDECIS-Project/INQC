@@ -32,7 +32,7 @@ clocov<-function(element='CC',maxseq=8,blocksizeround=20,blockmanymonth=20,block
   #' file.remove(list)
   #' #Return to user's working directory:
   #' setwd(wd0)
-  #' #The downloaded files can be found in directory:
+  #' #The QC results can be found in the directory:
   #' print(wd)
   #' @export
 

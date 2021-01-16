@@ -58,7 +58,7 @@
 
 ### Updates December, 2018:
 * Corrected some labels in for the temperature QC output that were erroneous (e.g., `toomany` instead of `toomanymonth` and `toomanyyear`)
-* Added `consolidator`, a functions which creates a second version of the QC'd data. Creates a replica of the original series, with the same name but with the QC column updated to 0 (OK)
+* Added `consolidator`, a functions which creates a second version of the QCed data. Creates a replica of the original series, with the same name but with the QC column updated to 0 (OK)
 * Corrected wrong default element flag in `selepe`
 * Made a few corrections regarding the chain of functions `txtn()<-closetxtn()<-listas()<-distHaversine()` There were a few errors (hopefully, corrected) and now it is much faster just by limiting the station past as candidates to disthaversine to those in a radius of 1deg lat and 1deg lon from the candidate. For the whole ECA&D, the performance is down from 14 seconds to less than 2!
 ** Further improvements to the `closesetation()` function: does not give an error if the tries to open a file listed but non-existing
