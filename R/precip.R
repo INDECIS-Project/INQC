@@ -48,7 +48,7 @@ precip<-function(element='RR',large=5000,small=0,ret=500,retornoracha=500,margin
   #' file.remove(list)
   #' #Return to user's working directory:
   #' setwd(wd0)
-  #' #The downloaded files can be found in directory:
+  #' #The QC results can be found in the directory:
   #' print(wd)
   #' @export
 

@@ -72,6 +72,6 @@ list = list.files(pattern = "Rfwf")
 file.remove(list)
 #Return to user's working directory:
 setwd(wd0)
-#The downloaded files can be found in directory:
+#The QC results can be found in the directory:
 print(wd)
 }

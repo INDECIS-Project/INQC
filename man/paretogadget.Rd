@@ -9,7 +9,7 @@ paretogadget(x, ret)
 \arguments{
 \item{x}{vector of values (a series) to be analyzed}
 
-\item{ret}{pseudo return period}
+\item{ret}{pseudo-return period for the pot-pareto distribution approach}
 }
 \value{
 list of positions which do not pass this QC test (which can be considered as outliers)

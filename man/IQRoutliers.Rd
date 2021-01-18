@@ -11,7 +11,8 @@ IQRoutliers(date, value, level = 3, window = 11, exclude = NULL)
 
 \item{value}{vector with data values}
 
-\item{level}{number of IQRs}
+\item{level}{number of IQRs to be added to percentile 75 and subtracted to percentile 25 to
+determinate the tolerance interval. Values outside this interval, will be declared as outliers.}
 
 \item{window}{number of days to be considered (including the target)}
 

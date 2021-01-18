@@ -46,7 +46,7 @@ selepe<-function(element='PP',large=15000,small=8000,maxjump=2000,maxseq=3,margi
   #' file.remove(list)
   #' #Return to user's working directory:
   #' setwd(wd0)
-  #' #The downloaded files can be found in directory:
+  #' #The QC results can be found in the directory:
   #' print(wd)
   #' @export
 

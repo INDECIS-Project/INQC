@@ -18,7 +18,7 @@ consolidator<-function(filename,x){
   # @param home homefolder of the ECA&D file name. Defaulted to ./data
   #' @param filename ECA&D file name, expressed as VV_SOUIDXXXXXX.txt, where "VV" is the two-letters variable code, "SOUID" is literal,
   #' XXXXXX is the ECA&D SOUID code and ".txt" is literal
-  #' @param x QC'd series, formatted as date, value, QC flag
+  #' @param x QCed series, formatted as date, value, QC flag
   #' @return It does not return any value. Each time when called, it will create three files:
   #' Summary file,  placed at ./QCSumamry/SummaryVV_SOUIDXXXXXX.txt;
   #' QC consolidated file, placed at ./QCConsolidated/VV_SOUIDXXXXXX.txt;
@@ -66,11 +66,13 @@ consolidator<-function(filename,x){
   utils::write.table(resumen,paste0(homefolder,'/QCSummary/Summary',filename),quote=FALSE,sep='\t',append=TRUE,col.names=TRUE,row.names=FALSE)
   ## Consolidated file
   header<-readheader(paste0(homefolder,'raw/',filename))
-  if(blend){anchos<-c(6,8,5,5)}else{anchos<-c(6,6,8,5,5)}
-  if(blend){x<-x[,-(which(names(x)=='STAID'))]} ### This avoids writing the STAID column in blended files
+  #OS. I commented 2 lines below. The ECA&D blended data now have the same format as non-blended
+  #if(blend){anchos<-c(6,8,5,5)}else{anchos<-c(6,6,8,5,5)}
+  #if(blend){x<-x[,-(which(names(x)=='STAID'))]} ### This avoids writing the STAID column in blended files
+  anchos<-c(6,6,8,5,5)
   grannyu<-ncol(x)
-  x<-x[,c(1:3,grannyu)]
-  utils::write.table('Quality control with INQC V2.0, INDECIS Project, by Dr. Enric Aguilar, C3/URV',paste0(homefolder,'QCConsolidated/',filename),quote=FALSE,col.names=FALSE,row.names=FALSE,sep=',',na='')
+  x<-x[,c(1:4,grannyu)]
+  utils::write.table('Quality control with INQC V2.0.3, INDECIS Project, by Dr. Enric Aguilar, C3/URV',paste0(homefolder,'QCConsolidated/',filename),quote=FALSE,col.names=FALSE,row.names=FALSE,sep=',',na='')
   utils::write.table(header,paste0(homefolder,'QCConsolidated/',filename),quote=FALSE,col.names=FALSE,row.names=FALSE,sep=',',na='',append=TRUE)
   gdata::write.fwf(x,paste0(homefolder,'QCConsolidated/',filename),colnames=FALSE,rownames=FALSE,sep=',',quote=FALSE,append=TRUE,na='-9999',width=anchos)
   print(paste(Sys.time(),'Wrote QC files'),quote=FALSE)

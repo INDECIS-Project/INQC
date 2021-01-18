@@ -49,7 +49,7 @@ temperature<-function(element='TX',large=500,small=-500,maxjump=200,maxseq=3,mar
   #' file.remove(list)
   #' #Return to user's working directory:
   #' setwd(wd0)
-  #' #The downloaded files can be found in directory:
+  #' #The QC results can be found in the directory:
   #' print(wd)
   #' @export
 

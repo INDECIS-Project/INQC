@@ -1,0 +1,3 @@
+STAID,STANAME                                 ,CN,      LAT,       LON,HGHT
+    1,VAEXJOE                                 ,SE,+56:52:00,+014:48:00,  166
+    2,FALUN                                   ,SE,+60:37:00,+015:37:00,  160
