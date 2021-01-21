@@ -39,8 +39,7 @@ snowdepth<-function(element='SD',maxseq=20,blocksizeround=20,blockmanymonth=20,b
   #' @export
 
   #Suppress warning messages
-  oldwarn <- getOption("warn")
-  options(warn = -1)
+  suppressWarnings(warning("snowdepth"))
   
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
@@ -65,6 +64,4 @@ snowdepth<-function(element='SD',maxseq=20,blocksizeround=20,blockmanymonth=20,b
     bad<-flat(x$value,maxseq,exclude=0);x$flat<-0;if(length(bad)!=0){x$flat[bad]<-1}; print(paste(Sys.time(),'Ended flat for values'),quote=FALSE)
     consolidator(tx[i],x)
   }
-  
-  options(warn = oldwarn)
 }

@@ -51,8 +51,7 @@ selepe<-function(element='PP',large=15000,small=8000,maxjump=2000,maxseq=3,margi
   #' @export
 
   #Suppress warning messages
-  oldwarn <- getOption("warn")
-  options(warn = -1)
+  suppressWarnings(warning("selepe"))
   
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
@@ -84,6 +83,4 @@ selepe<-function(element='PP',large=15000,small=8000,maxjump=2000,maxseq=3,margi
     bad<-rounding(x[,3:4],blocksizeround);x$rounding<-0;if(length(bad)!=0){x$rounding[bad]<-1}; print(paste(Sys.time(),'Ended rounding'),quote=FALSE)
     consolidator(tx[i],x)
   }
-  
-  options(warn = oldwarn)
 }

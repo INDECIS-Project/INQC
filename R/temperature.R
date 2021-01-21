@@ -54,8 +54,7 @@ temperature<-function(element='TX',large=500,small=-500,maxjump=200,maxseq=3,mar
   #' @export
 
   #Suppress warning messages
-  oldwarn <- getOption("warn")
-  options(warn = -1)
+  suppressWarnings(warning("temperature"))
   
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
@@ -89,6 +88,4 @@ temperature<-function(element='TX',large=500,small=-500,maxjump=200,maxseq=3,mar
     if(element != 'TG' &  blend){bad<-txtnblend(x[,3:4],tx[i]);x$txtn<-0;if(length(bad)!=0){x$txtn[bad]<-1}; print(paste(Sys.time(),'Ended txtn'),quote=FALSE)}
     consolidator(tx[i],x)
   }
-  
-  options(warn = oldwarn)
 }

@@ -53,8 +53,7 @@ precip<-function(element='RR',large=5000,small=0,ret=500,retornoracha=500,margin
   #' @export
 
   #Suppress warning messages
-  oldwarn <- getOption("warn")
-  options(warn = -1)
+  suppressWarnings(warning("precip"))
   
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
@@ -88,6 +87,4 @@ precip<-function(element='RR',large=5000,small=0,ret=500,retornoracha=500,margin
     bad<-IQRoutliers(x[,3],x[,4],exclude=0,window=window,level = level);x$IQRoutliers<-0;if(length(bad)!=0){x$IQRoutliers[bad]<-1}; print(paste(Sys.time(),'Ended IQROutliers'),quote=FALSE)
     consolidator(tx[i],x)
   }
-  
-  options(warn = oldwarn)
 }
