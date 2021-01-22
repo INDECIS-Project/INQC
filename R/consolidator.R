@@ -63,7 +63,7 @@ consolidator<-function(filename,x){
   x$consolidated[which(x$txtn==1)]<-1
   x$consolidated[which(x$maxsun==1)]<-1
   resumen<-as.data.frame(table(x$consolidated));names(resumen)<-c('QC_Code','Freq')
-  utils::write.table(resumen,paste0(homefolder,'/QCSummary/Summary',filename),quote=FALSE,sep='\t',append=TRUE,col.names=TRUE,row.names=FALSE)
+  suppressWarnings(utils::write.table(resumen,paste0(homefolder,'/QCSummary/Summary',filename),quote=FALSE,sep='\t',append=TRUE,col.names=TRUE,row.names=FALSE))
   ## Consolidated file
   header<-readheader(paste0(homefolder,'raw/',filename))
   #OS. I commented 2 lines below. The ECA&D blended data now have the same format as non-blended

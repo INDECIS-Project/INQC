@@ -38,9 +38,6 @@ snowdepth<-function(element='SD',maxseq=20,blocksizeround=20,blockmanymonth=20,b
   #' print(wd)
   #' @export
 
-  #Suppress warning messages
-  suppressWarnings(warning("snowdepth"))
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")

@@ -55,9 +55,6 @@ inqc<-function(homefolder='./',blend=TRUE){
   #' setwd(wd0)
   #' @export
 
-  #Suppress warning messages
-  suppressWarnings(warning("inqc"))
-  
   options("homefolder"=homefolder)
   options("blend"=blend)
   inithome()

@@ -53,9 +53,6 @@ temperature<-function(element='TX',large=500,small=-500,maxjump=200,maxseq=3,mar
   #' print(wd)
   #' @export
 
-  #Suppress warning messages
-  suppressWarnings(warning("temperature"))
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")

@@ -52,9 +52,6 @@ precip<-function(element='RR',large=5000,small=0,ret=500,retornoracha=500,margin
   #' print(wd)
   #' @export
 
-  #Suppress warning messages
-  suppressWarnings(warning("precip"))
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")

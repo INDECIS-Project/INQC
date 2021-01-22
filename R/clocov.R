@@ -36,9 +36,6 @@ clocov<-function(element='CC',maxseq=8,blocksizeround=20,blockmanymonth=20,block
   #' print(wd)
   #' @export
 
-  #Suppress warning messages
-  suppressWarnings(warning("clocov"))
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   #blend <- getOption("blend")
   homefolder <- getOption("homefolder")

@@ -50,9 +50,6 @@ selepe<-function(element='PP',large=15000,small=8000,maxjump=2000,maxseq=3,margi
   #' print(wd)
   #' @export
 
-  #Suppress warning messages
-  suppressWarnings(warning("selepe"))
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")

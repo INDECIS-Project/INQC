@@ -43,9 +43,6 @@ windspeed<-function(element='FG',maxseq=3,blocksizeround=20,blockmanymonth=20,bl
   #' print(wd)
   #' @export
 
-  #Suppress warning messages
-  suppressWarnings(warning("windspeed"))
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")

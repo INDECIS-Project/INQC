@@ -37,9 +37,6 @@ relhum<-function(element='HU',maxseq=3,blocksizeround=20,blockmanymonth=15,block
   #' print(wd)
   #' @export
 
-  #Suppress warning messages
-  suppressWarnings(warning("relhum"))
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")
