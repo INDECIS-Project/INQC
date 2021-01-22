@@ -37,10 +37,6 @@ relhum<-function(element='HU',maxseq=3,blocksizeround=20,blockmanymonth=15,block
   #' print(wd)
   #' @export
 
-  #Suppress warning messages
-  oldwarn <- getOption("warn")
-  options(warn = -1)
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")
@@ -66,6 +62,4 @@ relhum<-function(element='HU',maxseq=3,blocksizeround=20,blockmanymonth=15,block
     bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
     consolidator(tx[i],x)
   }
-  
-  options(warn = oldwarn)
 }

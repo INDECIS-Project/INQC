@@ -1,6 +1,6 @@
 Package: INQC
 Title: Quality Control of Climatological Daily Time Series
-Version: 2.0.3.9000
+Version: 2.0.4.9000
 Date: 2020-12-24
 Authors@R: c(
     person(given = "Enric", family = "Aguilar", role = c("aut", "cre"), email = "enric.aguilar@urv.cat", comment = c(ORCID = "0000-0002-8384-377X")),

@@ -36,10 +36,6 @@ clocov<-function(element='CC',maxseq=8,blocksizeround=20,blockmanymonth=20,block
   #' print(wd)
   #' @export
 
-  #Suppress warning messages
-  oldwarn <- getOption("warn")
-  options(warn = -1)
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   #blend <- getOption("blend")
   homefolder <- getOption("homefolder")
@@ -64,6 +60,4 @@ clocov<-function(element='CC',maxseq=8,blocksizeround=20,blockmanymonth=20,block
     bad<-physics(x$value,0,3);x$small<-0;if(length(bad)!=0){x$small[bad]<-1}; print(paste(Sys.time(),'Ended physics, small'),quote=FALSE)
     consolidator(tx[i],x)
   }
-  
-  options(warn = oldwarn)
 }

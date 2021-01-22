@@ -37,10 +37,6 @@ sundur<-function(element='SS',maxseq=3,blocksizeround=20,blockmanymonth=15,block
   #' print(wd)
   #' @export
 
-  #Suppress warning messages
-  oldwarn <- getOption("warn")
-  options(warn = -1)
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")
@@ -67,6 +63,4 @@ sundur<-function(element='SS',maxseq=3,blocksizeround=20,blockmanymonth=15,block
     bad<-sunafterdark(x[3:4],substring(tx[i],9,14));x$maxsun<-0;if(length(bad)!=0){x$maxsun[bad]<-1}; print(paste(Sys.time(),'Ended sunafterdark'),quote=FALSE)
     consolidator(tx[i],x)
   }
-  
-  options(warn = oldwarn)
 }

@@ -55,10 +55,6 @@ inqc<-function(homefolder='./',blend=TRUE){
   #' setwd(wd0)
   #' @export
 
-  #Suppress warning messages
-  oldwarn <- getOption("warn")
-  options(warn = -1)
-  
   options("homefolder"=homefolder)
   options("blend"=blend)
   inithome()
@@ -73,6 +69,4 @@ inqc<-function(homefolder='./',blend=TRUE){
   windspeed()
   clocov()
   dostats()
-  
-  options(warn = oldwarn)
 }

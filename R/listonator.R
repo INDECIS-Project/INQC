@@ -8,21 +8,6 @@ listonator<-function(check=TRUE){
   #' @return list of stations to be QCed
   #' @export
 
-  ##This is old version (v1.0)
-  ##**************************
-  #if(!exists("liston") & isTRUE(check)){ ## this takes quite a lot of time, and better if ran only once. Then, the list is declared as a global variable
-  #  liston<-listas(rooty=casa)
-  #  #for(nyu in 1:nrow(liston)){decimaldegrees(liston$LAT[nyu]);print(nyu)}
-  #  lat<-apply(as.data.frame(liston$LAT),1,FUN=decimaldegrees)
-  #  lon<-apply(as.data.frame(liston$LON),1,FUN=decimaldegrees)
-  #  coordinates<-data.frame(lat,lon)
-  #  liston$LAT<-lat
-  #  liston$LON<-lon
-  #  #OS: I commented the line below
-  #  #assign("liston",liston,envir = .GlobalEnv)
-  #}
-  ##**************************
-  
   #Get values of 'Global variables' 'blend' and 'homefolder'
   blend <- getOption("blend")
   homefolder <- getOption("homefolder")
