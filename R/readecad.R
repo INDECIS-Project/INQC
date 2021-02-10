@@ -13,14 +13,6 @@ readecad<-function(input="SS_STAID000143.txt",missing= -9999){
   #' df<-readecad(input=path2inptfl,missing= -9999) 
   #' @export
 
-  ##This is old version (v1.0)
-  ##**************************
-  #x<-utils::read.fwf(input,widths=15)
-  #nyu<-grep('STAID,',x[,1])
-  #x<-utils::read.table(input,na.strings=missing,skip=nyu,sep=',',header=FALSE,stringsAsFactors=FALSE)
-  #return(x)
-  ##**************************
-
   x<-utils::read.fwf(input,widths=15)
   x<-substring(gsub(" ","",x[,1]),1,5)
   nyu<-min(which(x=='STAID' | x=='SOUID'))

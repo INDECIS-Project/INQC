@@ -72,7 +72,7 @@ consolidator<-function(filename,x){
   anchos<-c(6,6,8,5,5)
   grannyu<-ncol(x)
   x<-x[,c(1:4,grannyu)]
-  utils::write.table('Quality control with INQC V2.0.4, INDECIS Project, by Dr. Enric Aguilar, C3/URV',paste0(homefolder,'QCConsolidated/',filename),quote=FALSE,col.names=FALSE,row.names=FALSE,sep=',',na='')
+  utils::write.table('Quality control with INQC V2.0.5, INDECIS Project, by Dr. Enric Aguilar, C3/URV',paste0(homefolder,'QCConsolidated/',filename),quote=FALSE,col.names=FALSE,row.names=FALSE,sep=',',na='')
   utils::write.table(header,paste0(homefolder,'QCConsolidated/',filename),quote=FALSE,col.names=FALSE,row.names=FALSE,sep=',',na='',append=TRUE)
   gdata::write.fwf(x,paste0(homefolder,'QCConsolidated/',filename),colnames=FALSE,rownames=FALSE,sep=',',quote=FALSE,append=TRUE,na='-9999',width=anchos)
   print(paste(Sys.time(),'Wrote QC files'),quote=FALSE)

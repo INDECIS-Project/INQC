@@ -13,7 +13,7 @@ temperature<-function(element='TX',large=500,small=-500,maxjump=200,maxseq=3,mar
   #' 'TN' for daily minimum temperature, 'TG' for daily mean temperature) passed as character string
   #' @param large value above which the observation is considered physically impossible for the region. Defaulted to 500. Passed on to physics(). See ?physics for details
   #' @param small value below which the observation is considered physically impossible for the region. Defaulted to -500. Passed on to physics(). See ?physics for details
-  #' @param maxjump forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.
+  #' @param maxjump forcing for jumps2() in absolute mode (in the same units of the variable). Passed on to jumps2(). See ?jumps2 for further details
   #' @param maxseq maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutive values). Passed on to flat(). See ?flat for details
   #' @param margina tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details
   #' @param level number of IQRs for IQRoutliers()
@@ -24,8 +24,8 @@ temperature<-function(element='TX',large=500,small=-500,maxjump=200,maxseq=3,mar
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
   #' @param blockmanyyear maximum number of equal values in a year, FUNCTION: toomany()
   #' @param blocksizeround the maximum number of repeated values with the same decimal, FUNCTION: roundprecip()
-  #' @param qjump quantile for jumps2() in quantile mode. Passed on to jumps2(). See ?jumps2 for further details.
-  #' @param tjump factor to multiply the quantile value for jumps2(). Passed on to jumps2(). See ?jumps2 for further details.
+  #' @param qjump quantile for jumps2() in quantile mode. Passed on to jumps2(). See ?jumps2 for further details
+  #' @param tjump factor to multiply the quantile value for jumps2(). Passed on to jumps2(). See ?jumps2 for further details
   #' @param inisia logical flag. If it is TRUE inithome() will be called
   #' @return results of QC for TX/TN/TG
   #' @examples

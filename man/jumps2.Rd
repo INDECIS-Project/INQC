@@ -11,9 +11,10 @@ jumps2(date, value, quanty = 0.999, times = 1, force = NULL)
 
 \item{value}{vector of values}
 
-\item{quanty}{numeric value (quantile of the differences) used to aggregate daily differences}
+\item{quanty}{threshold quantile rank (cumulative probability) to define corresponding
+quantiles in the distributions of the interdiurnal differences (for each month separately)}
 
-\item{times}{factor to multiply the quantile value}
+\item{times}{factor to modify (increase/decrease) the threshold quantile values}
 
 \item{force}{value of threshold for daily value differences to be forced}
 }
@@ -21,7 +22,15 @@ jumps2(date, value, quanty = 0.999, times = 1, force = NULL)
 list of positions which do not pass this QC test
 }
 \description{
-This function labels interdiurnal differences considered too large
+This function looks for interdiurnal differences considered too large (larger than
+a threshold value). The threshold can be defined by two different ways: (1) as an absolute value,
+the same for all differences. It is specified directly through the parameter 'force' (see below);
+(2) as a quantile in a probability distribution of the interdiurnal differences (built
+for each month separately). In this case, the threshold is specified indirectly through the
+parameter 'quanty' (see below). The calculated threshold quantiles can be also modified
+(increased/decreased) by means of the parameter 'times' (see below).
+
+Consequently, jumps2() can be used in two different modes: 'absolute' and 'quantile'
 }
 \examples{
 #Extract the ECA&D data file from the example data folder
@@ -29,9 +38,8 @@ path2inptfl<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
 #Read the data file
 date<-readecad(input=path2inptfl,missing= -9999)[,3]
 value<-readecad(input=path2inptfl,missing= -9999)[,4]
-#Find all suspicious positions in the time series
+#Find all suspicious positions in the time series (in 'quantile' mode)
 jumps2(date,value,quanty=0.999,times=1)
-
-#Find all suspicious positions in the time series
+#Find all suspicious positions in the time series (in 'absolute' mode)
 jumps2(date,value,force=100)
 }
