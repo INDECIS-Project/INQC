@@ -22,17 +22,17 @@ dostats<-function(){
     }
     utils::write.table(emu[(divide+1):nrow(emu),],mystats,sep='\t',append=TRUE,row.names=FALSE,quote=FALSE,col.names=FALSE)
   }
-  nyu<-utils::read.table('./QCSummary/Mystats.txt')
+  nyu<-utils::read.table(mystats)
   nyu<-stats::aggregate(nyu[,4],by=list(nyu[,1],nyu[,3]),FUN=sum);names(nyu)<-c('Variable','Code','Freq')
   nyutotal<-stats::aggregate(nyu[,3],list(nyu[,1]),FUN=sum);names(nyutotal)<-c('Variable','Total')
   nyu<-merge(nyu,nyutotal)
   nyu<-nyu[order(nyu[,1],nyu[,2]),]
   nyu$Percentage<-round(nyu$Freq/nyu$Total*100,2)
-  utils::write.table(nyu,'./QCSummary/Mystats.txt',sep='\t',row.names=FALSE,quote=FALSE,col.names=FALSE)
-  nyi<-utils::read.table('./QCSummary/CasesSummary.txt')
+  utils::write.table(nyu,mystats,sep='\t',row.names=FALSE,quote=FALSE,col.names=FALSE)
+  nyi<-utils::read.table(mycases)
   nyi<-stats::aggregate(nyi[,4],by=list(nyi[,1],nyi[,3]),FUN=sum);names(nyi)<-c('Variable','Test','Freq')
   nyitotal<-stats::aggregate(nyi[,3],list(nyi[,1]),FUN=sum);names(nyitotal)<-c('Variable','Total')
   nyu<-merge(nyi,nyitotal)
   nyi[order(nyi[,1],nyi[,2]),]
-  utils::write.table(nyi,'./QCSummary/CasesSummary.txt',sep='\t',row.names=FALSE,quote=FALSE,col.names=FALSE)
+  utils::write.table(nyi,mycases,sep='\t',row.names=FALSE,quote=FALSE,col.names=FALSE)
 }

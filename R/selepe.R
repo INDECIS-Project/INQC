@@ -10,7 +10,7 @@ selepe<-function(element='PP',large=15000,small=8000,maxjump=2000,maxseq=3,margi
   #' @param element two-letters ECA&D code for the element (PP for sea level pressure)
   #' @param large value above which the observation is considered physically impossible for the region
   #' @param small value below which the observation is considered physically impossible for the region
-  #' @param maxjump forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.
+  #' @param maxjump forcing for jumps2() in absolute mode (in the same units of the variable). Passed on to jumps2(). See ?jumps2 for further details.
   #' @param maxseq maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutive values)
   #' @param margina tolerance margin, expressed as quantile of the differences, FUNCTION: newfriki(). Passed on to newfriki(). See ?newfriki for details
   #' @param level number of IQRs for IQR outliers
@@ -21,8 +21,8 @@ selepe<-function(element='PP',large=15000,small=8000,maxjump=2000,maxseq=3,margi
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany()
   #' @param blockmanyyear maximum number of equal values in a year, FUNCTION: toomany()
   #' @param blocksizeround maximum number of values in a month with the same decimal, for rounding function
-  #' @param qjump quantile for the calculated maximum jump allowed
-  #' @param tjump factor to multiply the qjump computed differences
+  #' @param qjump quantile for jumps2() in quantile mode. Passed on to jumps2(). See ?jumps2 for further details
+  #' @param tjump factor to multiply the quantile value for jumps2(). Passed on to jumps2(). See ?jumps2 for further details
   #' @param inisia a logical flag. If it is TRUE inithome() will be called
   #' @return results of QC for PP
   #' @examples

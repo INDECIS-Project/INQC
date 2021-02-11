@@ -30,7 +30,7 @@ temperature(
 
 \item{small}{value below which the observation is considered physically impossible for the region. Defaulted to -500. Passed on to physics(). See ?physics for details}
 
-\item{maxjump}{forcing for jump2() in absolute mode (in the same units of the variable). Passed on to jump2(). See ?jump2 for further details.}
+\item{maxjump}{forcing for jumps2() in absolute mode (in the same units of the variable). Passed on to jumps2(). See ?jumps2 for further details}
 
 \item{maxseq}{maximum number of consecutive repeated values, for flat function (11.1,11.1,11.1 would be 3 consecutive values). Passed on to flat(). See ?flat for details}
 
@@ -48,9 +48,9 @@ temperature(
 
 \item{blocksizeround}{the maximum number of repeated values with the same decimal, FUNCTION: roundprecip()}
 
-\item{qjump}{quantile for jumps2() in quantile mode. Passed on to jumps2(). See ?jumps2 for further details.}
+\item{qjump}{quantile for jumps2() in quantile mode. Passed on to jumps2(). See ?jumps2 for further details}
 
-\item{tjump}{factor to multiply the quantile value for jumps2(). Passed on to jumps2(). See ?jumps2 for further details.}
+\item{tjump}{factor to multiply the quantile value for jumps2(). Passed on to jumps2(). See ?jumps2 for further details}
 
 \item{inisia}{logical flag. If it is TRUE inithome() will be called}
 }
