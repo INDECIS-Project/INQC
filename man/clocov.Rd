@@ -16,7 +16,7 @@ clocov(
 \arguments{
 \item{element}{two-letters ECA&D code for the element (CC for cloud cover)}
 
-\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutive values).}
+\item{maxseq}{maximum number of consecutive repeated values, FUNCTION: flat  (8,8,8 would be 3 consecutive values).}
 
 \item{blocksizeround}{maximum number of values in a month with the same decimal, FUNCTION: rounding}
 

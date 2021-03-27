@@ -1,1 +1,1 @@
- 4970,132730,DEUSELBACH                              ,DE,+49:45:47,+007:03:20, 481, RR3,19610101,19671231,   11,National Climate Data Center (DWD)                
+ 4970,132730,DEUSELBACH                              ,DE,+49:45:47,+007:03:20, 481, RR3,19610101,19661231,   11,National Climate Data Center (DWD)                

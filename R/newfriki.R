@@ -2,12 +2,21 @@ newfriki<-function(date,value,margina=0.999,times=2){
 
   #' Isolates values which are not continuous in the distribution
   #' @description The function isolates extreme values which are not continuous in the distribution. If 
-  #' the gap is larger than a pre-set big margin, the values above (or below) are flagged
+  #' the gap is larger (or smaller) than a pre-set big margin, the values above (or below) are flagged
   #' @param date vector of dates with the ECA&D format yyyymmdd
   #' @param value vector of data values
   #' @param margina tolerance margin, expressed as quantile of the differences
-  #' @param times multiplier for the tolerance margin. Intended usage is to run this twice. Once with times = 1 and flag values as suspect; once with times = 2 and flag as error
+  #' @param times multiplier for the tolerance margin. Intended usage is to run this twice. 
+  #' Once with times = 1 and flag values as suspect; once with times = 2 and flag as error
   #' @return positions which do not pass this QC test
+  #' @examples
+  #' #Extract the ECA&D data file from the example data folder
+  #' path2inptfl<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
+  #' #Read the data file
+  #' date<-readecad(input=path2inptfl,missing= -9999)[,3]
+  #' value<-readecad(input=path2inptfl,missing= -9999)[,4]
+  #' #Find all suspicious positions in the time series
+  #' newfriki(date,value,margina=0.999,times=1)
   #' @export
 
   bad<-NULL

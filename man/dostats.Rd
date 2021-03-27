@@ -10,5 +10,6 @@ dostats()
 files with QC summary
 }
 \description{
-This function creates two report files (Mystats.txt and CasesSummary.txt) with a statistical summary of QCs performed over the whole data set
+This function creates two report files (Mystats.txt and CasesSummary.txt) with a statistical summary
+of QCs performed over the whole data set
 }

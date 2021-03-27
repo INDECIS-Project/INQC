@@ -1,4 +1,7 @@
-# INQC v2.0.0
+# INQC v2.0.6
+
+### Updates March, 2021:
+* Examples for almost all INQC functions were provided
 
 ### Updates December, 2020:
 * Technical conversion to a CRAN package

@@ -2,7 +2,7 @@
 % Please edit documentation in R/flatsun.R
 \name{flatsun}
 \alias{flatsun}
-\title{Flat sequences for sunshine duration}
+\title{Flat sequences for sunshine duration (only for "non-blended" ECA&D data)}
 \usage{
 flatsun(x, maxseq, id, modonube = FALSE)
 }
@@ -11,9 +11,10 @@ flatsun(x, maxseq, id, modonube = FALSE)
 
 \item{maxseq}{maximum number of contiguous repetitions of a value (e.g., if 3, sequences of 4 will be flagged)}
 
-\item{id}{SOUID_SSxxxxxx.txt}
+\item{id}{name of a file ("SS_SOUIDxxxxxx.txt", non-blended) with sunshine data (see parameter x) to be checked}
 
-\item{modonube}{logical flag}
+\item{modonube}{logical flag. If FALSE (the default), the "sun" mode of the function is used. If TRUE, the "cloud" mode
+is used}
 }
 \value{
 list of positions which do not pass this QC test
@@ -21,4 +22,35 @@ list of positions which do not pass this QC test
 \description{
 This function uses flat() and modifies it with "smart" comparison with clouds.
 If close to 8 and close to 0 clouds, allowed; if close to maxsundur and clouds near 0, allowed
+}
+\examples{
+#Set a temporal working directory:
+wd <- tempdir(); wd0 <- setwd(wd)
+#Create subdirectory where raw data files have to be located
+dir.create(file.path(wd, 'raw'))
+#Extract the non-blended ECA&D data and station files from the example data folder
+path2cclist<-system.file("extdata", "ECA_blend_source_cc.txt", package = "INQC")
+cclist<-readr::read_lines_raw(path2cclist)
+readr::write_lines(cclist,'ECA_blend_source_cc.txt')
+path2ccdata<-system.file("extdata", "CC_SOUID132727.txt", package = "INQC")
+ccdata<-readr::read_lines_raw(path2ccdata)
+readr::write_lines(ccdata, file=paste(wd,'/raw/CC_SOUID132727.txt',sep=''))
+path2sslist<-system.file("extdata", "ECA_blend_source_ss.txt", package = "INQC")
+sslist<-readr::read_lines_raw(path2sslist)
+readr::write_lines(sslist,'ECA_blend_source_ss.txt')
+path2ssdata<-system.file("extdata", "SS_SOUID132728.txt", package = "INQC")
+ssdata<-readr::read_lines_raw(path2ssdata)
+readr::write_lines(ssdata, file=paste(wd,'/raw/SS_SOUID132728.txt',sep=''))
+#Read the sunshine data
+x<-readecad(input=path2ssdata,missing= -9999)[,3:4]
+options("homefolder"='./'); options("blend"=FALSE)
+listonator(check=TRUE)
+#Call flatsun()
+flatsun(x,5,"SS_SOUID132728.txt",modonube=FALSE)
+#Introduce error values in the sunshine data
+x[1:10,2]<-10
+#Call flatsun()
+flatsun(x,5,"SS_SOUID132728.txt",modonube=FALSE)
+#Return to user's working directory:
+setwd(wd0)
 }
