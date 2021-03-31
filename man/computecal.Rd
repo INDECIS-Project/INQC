@@ -15,7 +15,7 @@ computecal(fy, ly)
 3 columns containing year,month,day
 }
 \description{
-This function prepares a calendar frame and returns it as year,month,day (i.e., the 3 first columns of RClimdex format)
+This function prepares a calendar frame and returns it as year,month,day (i.e., the 3 first columns of the RClimdex format)
 }
 \examples{
 fy<-1981

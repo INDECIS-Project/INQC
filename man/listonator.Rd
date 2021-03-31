@@ -14,5 +14,33 @@ list of stations to be QCed
 }
 \description{
 This function creates a list (and makes it 'Global' variable) of stations to be QCed.
-It can be 'blended' or 'non-blended' stations. Geographical coordinates are transformed into decimal degrees
+It can be 'blended' or 'non-blended' stations. Geographical coordinates are converted into decimal degrees
+}
+\examples{
+#Set a temporal working directory:
+wd <- tempdir(); wd0 <- setwd(wd)
+#NON-BLENDED ECA&D SERIES
+#Extract the non-blended ECA&D station files from the example data folder
+#Only TX (maximum air temperature) and CC (cloud cover) variables are used in the example
+path2txlist<-system.file("extdata", "ECA_blend_source_tx.txt", package = "INQC")
+txlist<-readr::read_lines_raw(path2txlist)
+readr::write_lines(txlist,'ECA_blend_source_tx.txt')
+path2cclist<-system.file("extdata", "ECA_blend_source_cc.txt", package = "INQC")
+cclist<-readr::read_lines_raw(path2cclist)
+readr::write_lines(cclist,'ECA_blend_source_cc.txt')
+options("homefolder"='./'); options("blend"=FALSE)
+listonator(check=TRUE)
+liston.nb<-getOption("liston")
+#BLENDED ECA&D SERIES
+#Create subdirectory where a station file has to be located
+dir.create(file.path(wd, 'raw'))
+#Extract the blended ECA&D station file from the example data folder
+path2list<-system.file("extdata", "stations.txt", package = "INQC")
+list<-readr::read_lines_raw(path2list)
+readr::write_lines(list,file=paste(wd,'/raw/stations.txt',sep=''))
+options("blend"=TRUE)
+listonator(check=TRUE)
+liston.b<-getOption("liston")
+#Return to user's working directory:
+setwd(wd0)
 }

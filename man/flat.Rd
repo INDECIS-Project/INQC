@@ -17,7 +17,8 @@ flat(y, maxseq, exclude = NULL)
 list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
-This function detects consecutive equal values (e.g., 15.1, 15.1, 15.1, 15.1...). Also can be used to detect consecutive equal decimal part of the values (e.g., 15.1, 12.1, 13.1, 10.1 ...)
+This function detects consecutive equal values (e.g., 15.1, 15.1, 15.1, 15.1...) in a data time series.
+Also can be used to detect consecutive equal decimal part of the values (e.g., 15.1, 12.1, 13.1, 10.1 ...)
 }
 \examples{
 y<-rnorm(100)

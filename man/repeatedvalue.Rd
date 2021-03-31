@@ -9,14 +9,22 @@ repeatedvalue(x, margin = 20, friki = 150)
 \arguments{
 \item{x}{precipitation time series}
 
-\item{margin}{difference in frequency of the nearest value}
+\item{margin}{threshold for differences in frequency of the nearest value}
 
-\item{friki}{minimum value to be considered}
+\item{friki}{minimum of precipitation values to be considered}
 }
 \value{
 list of positions which do not pass this QC test. If all positions pass the test, returns NULL
 }
 \description{
-This function looks for a value which repeats too many times and, given the decaying shape of precipitation of empirical distribution,
-is considered too large to happen that many times
+This function looks for a value which repeats too many times and, given the decaying shape of
+empirical distribution of precipitation data, is considered too large to happen that many times
+}
+\examples{
+#Extract the ECA&D data file from the example data folder
+path2inptfl<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
+#Read the data file
+x<-readecad(input=path2inptfl,missing= -9999)[,4]
+#Find all suspicious positions in the time series
+repeatedvalue(x,margin=10,friki=10)
 }

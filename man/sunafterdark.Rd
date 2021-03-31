@@ -2,7 +2,7 @@
 % Please edit documentation in R/sunafterdark.R
 \name{sunafterdark}
 \alias{sunafterdark}
-\title{Maximum sunshine hours}
+\title{Maximum sunshine hours (only for "non-blended" ECA&D data)}
 \usage{
 sunafterdark(y, code = "991274")
 }
@@ -15,12 +15,34 @@ sunafterdark(y, code = "991274")
 vector with the list of positions which do not pass this test. If all positions pass the test, returns NULL
 }
 \description{
-This function compares sunshine data to the maximum theoretical sunshine an ECA&D station, according the day, lat and lon.
-Maximum sunshine hours are computed from the 'suncalc' package, using "night" and "dawn" parameters.
-This contrasts quite a lot with other functions computing "daylength". This formulation is more conservative
+This function compares sunshine data to the maximum theoretical sunshine at an ECA&D station,
+according the day, lat and lon. Maximum sunshine hours are computed from the "suncalc" package, using
+"night" and "dawn" parameters. This contrasts quite a lot with other functions computing "daylength".
+This formulation is more conservative
 }
 \details{
 depends on either a previous execution of listas() or on a proper execution of listas() to run properly
+}
+\examples{
+#Set a temporal working directory:
+wd <- tempdir(); wd0 <- setwd(wd)
+#Extract the non-blended ECA&D data and a station file from the example data folder
+path2sslist<-system.file("extdata", "ECA_blend_source_ss.txt", package = "INQC")
+sslist<-readr::read_lines_raw(path2sslist)
+readr::write_lines(sslist,'ECA_blend_source_ss.txt')
+path2ssdata<-system.file("extdata", "SS_SOUID132728.txt", package = "INQC")
+#Read the sunshine data
+y<-readecad(input=path2ssdata,missing= -9999)[,3:4]
+options("homefolder"='./'); options("blend"=FALSE)
+listonator(check=TRUE)
+#Call sunafterdark()
+sunafterdark(y,code='132728')
+#Introduce error values in the sunshine data
+y[1:10,2]<-200
+#Call sunafterdark()
+sunafterdark(y,code='132728')
+#Return to user's working directory:
+setwd(wd0)
 }
 \seealso{
 listas()

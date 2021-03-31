@@ -17,3 +17,16 @@ list containing results of modelling/fitting the generalized Pareto distribution
 \description{
 This function fits the Generalized Pareto distribution for exeedances over a threshold
 }
+\examples{
+#Extract the ECA&D precipitation data file from the example data folder
+path2inptfl<-system.file("extdata", "RR_SOUID132730.txt", package = "INQC")
+#Read the data file
+y<-readecad(input=path2inptfl,missing= -9999)[,4]
+#Fit the Generalized Pareto distribution
+pato<-potpareto(y)
+#The parameters of the fitted distribution:
+location<-pato$threshold
+shape<-pato$estimate[2]
+scale<-pato$estimate[1]
+print(c(location,shape,scale))
+}

@@ -8,7 +8,7 @@ inqc<-function(homefolder='./',blend=TRUE){
   #' @examples
   #' #Set a temporal working directory:
   #' wd <- tempdir(); wd0 <- setwd(wd)
-  #' #Create subdirectory where raw non-blended data files have to be located
+  #' #Create subdirectory where raw data files have to be located
   #' dir.create(file.path(wd, 'raw'))
   #' #NON-BLENDED ECA&D SERIES
   #' #Extract the non-blended ECA&D data and station files from the example data folder
@@ -26,7 +26,7 @@ inqc<-function(homefolder='./',blend=TRUE){
   #' ccdata<-readr::read_lines_raw(path2ccdata)
   #' readr::write_lines(ccdata, file=paste(wd,'/raw/CC_SOUID132727.txt',sep=''))
   #' #This is the MAIN starting point of the INQC software calculation:
-  #' inqc(homefolder='./',blend=FALSE) #work with non-blended ECA&D data
+  #' inqc(homefolder='./',blend=FALSE) #Work with non-blended ECA&D data
   #' #Remove some temporary files
   #' list = list.files(pattern = "Rfwf")
   #' file.remove(list)

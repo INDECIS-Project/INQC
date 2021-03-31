@@ -1,22 +1,49 @@
 txtn<-function(y,id){
 
-  #' Comparison of tx an tn data
+  #' Comparison of tx an tn data (for "non-blended" ECA&D data)
   #' @description This function compares tx an tn data. First it looks for the closest station and then merges both
   #' data frames. If one value is flagged, looks at the ecdfs of tx and tn. If the target variable (e.g tx) is central
   #' (between quantiles 0.2 and 0.8) and the other variable (e.g. tn) is outside this range, the value is not flagged,
-  #' assuming the other variable is the culprit.
+  #' assuming the other variable is the culprit
   #' @param y two columns with date and data
-  #' @param id id we are working with
-  # @param home home folder, need to add "raw" inside the fucntion
-  # @param liston a list file with all time series
+  #' @param id name of a file ("xx_SOUIDxxxxxx.txt", non-blended) we are working with
   #' @return list of positions which do not pass this QC test. If all positions pass the test, returns NULL
+  #' @examples
+  #' #Set a temporal working directory:
+  #' wd <- tempdir(); wd0 <- setwd(wd)
+  #' #Create subdirectory where raw data files have to be located
+  #' dir.create(file.path(wd, "raw"))
+  #' #Extract the non-blended ECA&D data and station files from the example data folder
+  #' path2txlist<-system.file("extdata", "ECA_blend_source_tx.txt", package = "INQC")
+  #' txlist<-readr::read_lines_raw(path2txlist)
+  #' readr::write_lines(txlist,"ECA_blend_source_tx.txt")
+  #' path2txdata<-system.file("extdata", "TX_SOUID132734.txt", package = "INQC")
+  #' txdata<-readr::read_lines_raw(path2txdata)
+  #' readr::write_lines(txdata, file=paste(wd,"/raw/TX_SOUID132734.txt",sep=""))
+  #' path2tnlist<-system.file("extdata", "ECA_blend_source_tn.txt", package = "INQC")
+  #' tnlist<-readr::read_lines_raw(path2tnlist)
+  #' readr::write_lines(tnlist,"ECA_blend_source_tn.txt")
+  #' path2tndata<-system.file("extdata", "TN_SOUID132733.txt", package = "INQC")
+  #' tndata<-readr::read_lines_raw(path2tndata)
+  #' readr::write_lines(tndata, file=paste(wd,"/raw/TN_SOUID132733.txt",sep=""))
+  #' #Read the tn data
+  #' y<-readecad(input=path2tndata,missing= -9999)[,3:4]
+  #' options("homefolder"="./"); options("blend"=FALSE)
+  #' listonator(check=TRUE)
+  #' #Call txtn()
+  #' txtn(y,"TN_SOUID132733.txt")
+  #' #Introduce error values in the tn data
+  #' y[c(1,3),2]<-100
+  #' #Call txtn()
+  #' txtn(y,"TN_SOUID132733.txt")
+  #' #Return to user's working directory:
+  #' setwd(wd0)
   #' @export
 
   #Get values of 'Global variables' 'liston' and 'homefolder'
   liston <- getOption("liston")
   homefolder <- getOption("homefolder")
   bad<-NULL
-  #if(!exists("liston")){listonator(home)} ### warning! not working here :-()
   whoami<-substring(id,1,2);if(whoami=='TX'){targetvariable='TN'}else{targetvariable='TX'}
   me<-gdata::first(which(liston$SOUID == substring(id,9,14)))
   em<-gdata::first(which(liston$STAID == liston$STAID[me] & liston$PARID==liston$PARID[me] & liston$ELEI==paste0(targetvariable,substring(liston$ELEI[me],3))))

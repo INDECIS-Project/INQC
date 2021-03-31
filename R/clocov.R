@@ -5,7 +5,7 @@ clocov<-function(element='CC',maxseq=8,blocksizeround=20,blockmanymonth=20,block
   #' with an additional 0/1 column, where "1" means test failed.
   # @param home path to the home directory
   #' @param element two-letters ECA&D code for the element (CC for cloud cover)
-  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat  (11.1,11.1,11.1 would be 3 consecutive values).
+  #' @param maxseq maximum number of consecutive repeated values, FUNCTION: flat  (8,8,8 would be 3 consecutive values).
   #' @param blocksizeround maximum number of values in a month with the same decimal, FUNCTION: rounding
   #' @param blockmanymonth maximum number of equal values in a month, FUNCTION: toomany
   #' @param blockmanyyear maximum number of equal values in a year, FUNCTION: toomany
