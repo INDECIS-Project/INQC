@@ -1,0 +1,2 @@
+rappd00000001d.txt	48	21	36	35	05	06	 142.0	UA	Dnipro
+rappd00000012d.txt	49	36	34	34	32	41	 160.0	UA	Poltava

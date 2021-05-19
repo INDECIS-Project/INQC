@@ -1,0 +1,3 @@
+ratmd00000001d.txt	48	21	36	35	05	06	 142.0	UA	Dnipro
+ratmd00000005d.txt	50	23	32	30	32	11	 166.0	UA	Kyiv
+
