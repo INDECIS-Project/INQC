@@ -1,5 +1,8 @@
 # INQC v2.0.6
 
+### Updates May, 2021:
+* Two functions (i.e., `climdex2ecad()` and `cost2ecad()`) have been added. They provide useful tools to convert data to the ECA&D format (the main format of input data in INQC). The conversion can be performed for the COST Home and the RClimDex formats. 
+
 ### Updates March, 2021:
 * Examples for almost all INQC functions were provided
 
